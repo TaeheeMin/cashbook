@@ -4,6 +4,7 @@ public class Cash {
 	private int csahNo;
 	// map을 사용안하려면 private Category category로 이너조인으로 받아올수있음 -> Cash타입으로 사용 
 	private int categoryNo; // 참조키 이너조인 필요 -> map타입으로 사용
+	private String cashDate;
 	private long csahPrice;
 	private String csahMemo;
 	private String updatedate;
@@ -20,6 +21,12 @@ public class Cash {
 	}
 	public void setCategoryNo(int categoryNo) {
 		this.categoryNo = categoryNo;
+	}
+	public String getCashDate() {
+		return cashDate;
+	}
+	public void setCashDate(String cashDate) {
+		this.cashDate = cashDate;
 	}
 	public long getCsahPrice() {
 		return csahPrice;
@@ -45,4 +52,5 @@ public class Cash {
 	public void setCreatedate(String createdate) {
 		this.createdate = createdate;
 	}
+	
 }
