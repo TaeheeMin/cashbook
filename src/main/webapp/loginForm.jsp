@@ -18,13 +18,13 @@
 				<tr>
 					<td>id</td>
 					<td>
-						<input type="text" name="id">
+						<input type="text" name="memberId">
 					</td>
 				</tr>
 				<tr>
 					<td>pw</td>
 					<td>
-						<input type="text" name="pw">
+						<input type="password" name="memberPw">
 					</td>
 				</tr>
 			</table>

@@ -112,16 +112,30 @@
 			</table>
 		</div>
 		<div>
-			<%
-				for(HashMap<String, Object> m : list) {
-					// 출력
-			%>
-				<%=(int)m.get("cashNo")%>
-			<%
-				}
-			
-			%>
+			<table border="1">
+				<tr>
+					<th>cashNo</th>
+					<th>cashDate</th>
+					<th>cashPrice</th>
+					<th>categoryNo</th>
+					<th>categoryKind</th>
+					<th>categoryName</th>
+				</tr>
+				<%
+					for(HashMap<String, Object> m : list) {
+						%>
+						<tr>
+							<td><%=(Integer)m.get("cashNo")%></td>
+							<td><%=(String)m.get("cashDate")%></td>
+							<td><%=(Integer)m.get("cashPrice")%></td>
+							<td><%=(Integer)m.get("categoryNo")%></td>
+							<td><%=(String)m.get("categoryKind")%></td>
+							<td><%=(String)m.get("categoryName")%></td>
+						</tr>
+						<%
+					}
+				%>
+			</table>
 		</div>
-		
 	</body>
 </html>
