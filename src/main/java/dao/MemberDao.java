@@ -39,7 +39,9 @@ public class MemberDao {
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, paramMember.getMemberId());
 		ResultSet rs = stmt.executeQuery();
-		
+		while(rs.next()) {
+			
+		}
 		
 		return resultRow;
 	}
