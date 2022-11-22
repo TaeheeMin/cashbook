@@ -10,7 +10,7 @@ import vo.*;
 
 public class CategoryDao {
 	public ArrayList<Category> selectCategoryList() throws Exception {
-		ArrayList<Category> categoryList = new ArrayList<Category>();
+
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		String sql = "SELECT"
@@ -19,18 +19,19 @@ public class CategoryDao {
 				+ ", category_name categoryName"
 				+ "FROM category"
 				+ "ORDER BY category_kind ASC";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		
-		ResultSet rs = stmt.executeQuery();
-		while(rs.next()) {
-			HashMap<String, Object> m = new HashMap<String, Object>();
-			m.put("categoryNo", rs.getInt("categoryNo"));
-			m.put("categoryKind", rs.getString("categoryKind"));
-			m.put("categoryName", rs.getString("categoryName"));
-			categoryList.add(m);
-		}
 		// ORDER BY category_kind
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		
+		ArrayList<Category> categoryList = new ArrayList<Category>();
+	
+		while(rs.next()) {
+			Category category = new Category();
+			category.setCategoryNo(rs.getInt("categoryNo"));
+			category.setCategoryKind(rs.getString("categoryKind"));
+			category.setCategoryName(rs.getString("categoryName"));
+			categoryList.add(category);
+		}
 		return categoryList;
 	}
-
 }
