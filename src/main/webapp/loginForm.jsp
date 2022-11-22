@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import = "java.net.URLEncoder" %>
 <%
+	//session 유효성 검증 코드
+	request.setCharacterEncoding("utf-8");
+	if(session.getAttribute("loginMember") != null){
+		response.sendRedirect(request.getContextPath()+"/cash/cashList.jsp");
+		System.out.println("로그인중");
+		return;
+	}
 
 %>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,7 +19,15 @@
 	
 	<body>
 		<h1>로그인</h1>
-		
+			<%
+			if(request.getParameter("msg") != null) {         
+				%>   
+					<div>
+						<%=request.getParameter("msg")%>
+					</div>
+				<%   
+			}
+			%>
 		<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
 			<table>
 				<tr>
@@ -30,5 +45,8 @@
 			</table>
 			<button type="submit">로그인</button>
 		</form>
+		<div >
+			<button type="button" onclick="location.href='<%=request.getContextPath()%>/insertMemberForm.jsp'">회원가입</button>
+		</div>
 	</body>
 </html>

@@ -33,6 +33,14 @@ public class MemberDao {
 	// 회원가입
 	public int insertMember(Member paramMember) throws Exception {
 		int resultRow = 0;
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "SELECT * FROM member WHERE member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, paramMember.getMemberId());
+		ResultSet rs = stmt.executeQuery();
+		
+		
 		return resultRow;
 	}
 	

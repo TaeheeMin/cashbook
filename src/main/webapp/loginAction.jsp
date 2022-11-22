@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="dao.*"%>
+<%@ page import = "dao.*"%>
 <%@ page import = "vo.*" %>
+<%@ page import = "java.net.URLEncoder" %>
 <%
 	//1. 요정분석 : 로그인 사용할 아이디와 비밀번호 입력받아 사용
 	request.setCharacterEncoding("utf-8");
 	// 작성 확인
 	if(request.getParameter("memberId") == null || request.getParameter("memberPw") == null || request.getParameter("memberId").equals("") || request.getParameter("memberPw").equals("")){
+		String msg = URLEncoder.encode("입력정보를 작성해주세요","utf-8");
 		System.out.println("1.로그인실패");
-		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
+		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
 		return;
 	} // 내용 미입력시 메세지, 폼이동
 	
@@ -26,10 +28,11 @@
 	// 메서드에서 결과값(resultMember)을 returnMember에 넣어서 가져옴
 
 	// 로그인 확인 -> 페이지 이동
-	String redirectUrl = "/loginForm.jsp";
+	String msg = URLEncoder.encode("입력정보를 확인해주세요","utf-8");
+	String redirectUrl = "/loginForm.jsp?msg="+msg;
 	if(returnMember != null) { // 로그인 결과있음
 		System.out.println("로그인 성공");
-		session.setAttribute("loginMember", returnMember);
+		session.setAttribute("insertMember", returnMember);
 		redirectUrl = "/cash/cashList.jsp";
 	}
 	

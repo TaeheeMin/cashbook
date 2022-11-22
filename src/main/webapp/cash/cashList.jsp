@@ -1,9 +1,18 @@
-<%@page import="vo.Cash"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="vo.*"%>
 <%@ page import="dao.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import = "java.net.URLEncoder" %>
 <%
 	// controller : session 검증
+	// 로그인 세션 정보 확인
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	if(loginMember == null){
+		String msg = URLEncoder.encode("로그인해주세요","utf-8");
+		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
+		System.out.println("로그인 필요");
+		return;
+	}
 	// request -> 년도 + 월
 	int year = 0;
 	int month = 0;
@@ -49,12 +58,11 @@
 	
 	// Model : 일별 cash목록
 	CashDao cashDao = new CashDao();
-	ArrayList<HashMap<String, Object>> list = cashDao.selectCashListByMonth(year, month+1);
-	
+	ArrayList<HashMap<String, Object>> list = cashDao.selectCashListByMonth(loginMember.getMemberId(), year, month+1);
 	// view : 달력 출력+ 일별 csah 목록
 	// 날짜 클릭 수입지출 내역 확인 기능
 	// 수입 지출 입력 기능
-
+	// 
 %>
 
 <!DOCTYPE html>
@@ -73,17 +81,23 @@
 		</div>
 		
 		<div>
-			<%=year %>년 <%=month +1%> 월
+			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>
+			
+			<%=year%>년 <%=month+1%> 월
+			
+			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
+			<a href="<%=request.getContextPath()%>/cash/logout.jsp">로그아웃</a>
 		</div>
+		
 		<div>
-			<table border="1">
+			<table border="1" width="80%">
 				<tr>
 					<th>일</th>
 					<th>월</th>
 					<th>화</th>
 					<th>수</th>
 					<th>목</th>
-					<th>굼</th>
+					<th>금</th>
 					<th>토</th>
 				</tr>
 				<tr>
@@ -95,10 +109,31 @@
 							int date = i - beginBlank;
 							if(date > 0 && date <= lastDate) {
 							%>
-								<%=date%>
+								<div>
+									<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&day=<%=date%>">
+										<%=date%>
+									</a>
+								</div>
+								<div>
+									<%
+										//날짜별 수입지출
+										for(HashMap<String, Object> m : list){
+											String cashDate = (String)m.get("cashDate");
+											if(Integer.parseInt(cashDate.substring(8)) == date) {
+									%>
+												<div>
+													[<%=(String)m.get("categoryKind")%>]
+													<%=(String)m.get("categoryName")%>
+													&nbsp;
+													<%=(Integer)m.get("cashPrice")%>원
+												</div>
+									<%
+											}
+										}
+									%>
+								</div>
 							<%
 							}
-							
 							%>
 						</td>
 						<%
@@ -111,6 +146,7 @@
 					%>
 			</table>
 		</div>
+		<%-- 
 		<div>
 			<table border="1">
 				<tr>
@@ -125,7 +161,7 @@
 					for(HashMap<String, Object> m : list) {
 						%>
 						<tr>
-							<td><%=(Integer)m.get("cashNo")%></td>
+							<td><%=(Integer)m.get("cashNo")%></td> <!-- 숫자는 기본타입이라 int로 형변환안됨 -->
 							<td><%=(String)m.get("cashDate")%></td>
 							<td><%=(Integer)m.get("cashPrice")%></td>
 							<td><%=(Integer)m.get("categoryNo")%></td>
@@ -137,5 +173,6 @@
 				%>
 			</table>
 		</div>
+		 --%>
 	</body>
 </html>
