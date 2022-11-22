@@ -64,7 +64,7 @@ public class CashDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		String sql = "SELECT "
-				+ "c.cash_no cashNo"
+				+ " c.cash_no cashNo"
 				+ ", c.cash_date cashDate"
 				+ ", c.cash_price cashPrice"
 				+ ", ct.category_kind categoryKind"
@@ -75,7 +75,7 @@ public class CashDao {
 				+ "WHERE c.member_id = ? "
 				+ "AND YEAR(c.cash_date) = ? "
 				+ "AND MONTH(c.cash_date) = ? "
-				+ "AND DA(c.cash_date) = ? "
+				+ "AND DAY(c.cash_date) = ? "
 				+ "ORDER BY c.cash_date ASC, ct.category_no ASC";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, memberId);

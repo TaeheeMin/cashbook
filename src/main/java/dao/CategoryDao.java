@@ -13,11 +13,11 @@ public class CategoryDao {
 
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
-		String sql = "SELECT"
+		String sql = "SELECT "
 				+ "category_no categoryNo"
 				+ ", category_kind categoryKind"
 				+ ", category_name categoryName"
-				+ "FROM category"
+				+ "FROM category "
 				+ "ORDER BY category_kind ASC";
 		// ORDER BY category_kind
 		PreparedStatement stmt = conn.prepareStatement(sql);

@@ -29,11 +29,11 @@
 	// Model : 일별 cash목록
 	CashDao cashDao = new CashDao();
 	ArrayList<HashMap<String, Object>> dateList = cashDao.selectCashListByDate(loginMember.getMemberId(), year, month, date);
-	/* 
+	
 	// Model : 카테고리 목록
-	CashDao cashDao = new CashDao();
-	ArrayList<HashMap<String, Object>> categoryList = cashDao.seleCategoryList();
-	 */
+	CategoryDao categoryDao = new CategoryDao();
+	ArrayList<Category> categoryList = categoryDao.selectCategoryList();
+
 %>
 
 <!DOCTYPE html>
@@ -53,15 +53,14 @@
 					<td>
 						<select name="catagoryNo">
 							<%
-								/*
 								// 카테고리 넘버
 								for(Category c : categoryList) {
 									%>
-										<option value="<%=%>">
+										<option value="<%=c.getCategoryNo()%>">
+											[<%=c.getCategoryKind()%>] <%=c.getCategoryName()%>
 										</option>
 									<%
 								}
-							 	*/
 							%>
 						</select>
 					</td>
