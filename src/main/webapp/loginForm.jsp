@@ -15,19 +15,19 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Login Form</title>
+		<script type="text/javascript">
+			<%
+			if(request.getParameter("msg") != null) {         
+				%>   
+				alert("<%=request.getParameter("msg")%>");
+				<%   
+			}
+			%>
+		</script>
 	</head>
 	
 	<body>
 		<h1>로그인</h1>
-			<%
-			if(request.getParameter("msg") != null) {         
-				%>   
-					<div>
-						<%=request.getParameter("msg")%>
-					</div>
-				<%   
-			}
-			%>
 		<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
 			<table>
 				<tr>

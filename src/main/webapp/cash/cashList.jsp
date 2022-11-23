@@ -70,6 +70,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Cash List</title>
+		<script type="text/javascript">
+			<%
+			if(request.getParameter("msg") != null) {         
+				%>   
+				alert("<%=request.getParameter("msg")%>");
+				<%   
+			}
+			%>
+		</script>
 	</head>
 	
 	<body>
@@ -86,7 +95,7 @@
 			<%=year%>년 <%=month+1%> 월
 			
 			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
-			<a href="<%=request.getContextPath()%>/cash/logout.jsp">로그아웃</a>
+			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 		</div>
 		
 		<div>
@@ -146,33 +155,5 @@
 					%>
 			</table>
 		</div>
-		<%-- 
-		<div>
-			<table border="1">
-				<tr>
-					<th>cashNo</th>
-					<th>cashDate</th>
-					<th>cashPrice</th>
-					<th>categoryNo</th>
-					<th>categoryKind</th>
-					<th>categoryName</th>
-				</tr>
-				<%
-					for(HashMap<String, Object> m : list) {
-						%>
-						<tr>
-							<td><%=(Integer)m.get("cashNo")%></td> <!-- 숫자는 기본타입이라 int로 형변환안됨 -->
-							<td><%=(String)m.get("cashDate")%></td>
-							<td><%=(Integer)m.get("cashPrice")%></td>
-							<td><%=(Integer)m.get("categoryNo")%></td>
-							<td><%=(String)m.get("categoryKind")%></td>
-							<td><%=(String)m.get("categoryName")%></td>
-						</tr>
-						<%
-					}
-				%>
-			</table>
-		</div>
-		 --%>
 	</body>
 </html>

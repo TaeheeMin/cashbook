@@ -29,21 +29,75 @@ public class MemberDao {
 		return resultMember;
 	}
 	
-	
 	// 회원가입
-	public int insertMember(Member paramMember) throws Exception {
-		int resultRow = 0;
+	// 중복확인위해 boolean타입으로 만들어??-> insert도 boolean으로 만들어서 확인
+	// action페이지에서는 메서드 하나씩 호출해서 true/false로 체크하고 가입확인/실패 안내
+	public boolean memeberIdCheck(String memberId) throws Exception {
+		// db연결
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
+		
+		// 중복검사
 		String sql = "SELECT * FROM member WHERE member_id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, paramMember.getMemberId());
-		ResultSet rs = stmt.executeQuery();
-		while(rs.next()) {
-			
-		}
+		stmt.setString(1, memberId);
 		
-		return resultRow;
+		boolean result = false;
+		int row = stmt.executeUpdate();
+		if(row == 1) {
+			result = true;
+			System.out.println("가입성공");
+			return true;
+		}
+		stmt.close();
+		conn.close();
+		return result;
+	}
+	
+	// 회원가입
+	public boolean insertMemeber(Member paramMember) throws Exception {
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		// db추가
+		String sql = "INSERT INTO member (member_id, member_pw, member_name, updatedate, createdate) VALUES ( ?, PASSWORD(?), ?, NOW(), NOW())";
+		/*
+			INSERT INTO member (member_id, member_pw, member_name, updatedate, createdate) VALUES ( ?, PASSWORD(?), ?, NOW(), NOW())
+		*/
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, paramMember.getMemberId());
+		stmt.setString(2, paramMember.getMemberPw());
+		stmt.setString(3, paramMember.getMemberName());
+		
+		boolean result = false;
+		int row = stmt.executeUpdate();
+		if(row == 1) {
+			result = true;
+			System.out.println("가입성공");
+			return true;
+		}
+		stmt.close();
+		conn.close();
+		return result;
+	}
+	
+	
+	// 회원정보 수정
+	public int updateMember(String memberId, String memberPw, String memberName) throws Exception { 
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "UPDATE member SET member_name =? WHERE member_id = ? AND member_pw = PASSWORD(?)";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, memberName);
+		stmt.setString(2, memberId);
+		stmt.setString(3, memberPw);
+		int updateRow = stmt.executeUpdate();
+		
+		stmt.close();
+		conn.close();
+		return updateRow;
 	}
 	
 }

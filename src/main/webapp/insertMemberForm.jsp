@@ -4,18 +4,20 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>회원가입</title>
+		<script type="text/javascript">
+			<%
+			if(request.getParameter("msg") != null) {         
+				%>   
+				alert("<%=request.getParameter("msg")%>");
+				<%   
+			}
+			%>
+		</script>
 	</head>
 	
 	<body>
 		<h3>회원가입</h3>
 		<form method="post" action="<%=request.getContextPath()%>/insertMemberAction.jsp">
-			<%
-			if(request.getParameter("msg") != null){
-			%>
-			<div class="text-center"><%=request.getParameter("msg")%></div>
-			<%
-			}
-			%>
 			<table border="1">
 				<tr>
 					<td>아이디</td>

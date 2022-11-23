@@ -34,10 +34,10 @@
 	String redirectUrl = "/loginForm.jsp?msg="+msg;
 	if(returnMember != null) { // 로그인 결과있음
 		System.out.println("로그인 성공");
+		msg = URLEncoder.encode("로그인 성공","utf-8");
+		redirectUrl = "/cash/cashList.jsp?msg="+msg;
 		session.setAttribute("loginMember", returnMember);
-		redirectUrl = "/cash/cashList.jsp";
 	}
-	
 	response.sendRedirect(request.getContextPath()+redirectUrl);
 %>
 <!DOCTYPE html>

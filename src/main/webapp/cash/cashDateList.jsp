@@ -41,6 +41,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<script type="text/javascript">
+			<%
+			if(request.getParameter("msg") != null) {         
+				%>   
+				alert("<%=request.getParameter("msg")%>");
+				<%   
+			}
+			%>
+		</script>
 	</head>
 	
 	<body>
@@ -69,6 +78,12 @@
 					<td>cashDate</td>
 					<td>
 						<input type="text" name="cashDate" value="<%=year%>-<%=month%>-<%=date%>" readonly="readonly">
+					</td>
+				</tr>
+				<tr>
+					<td>cashPrice</td>
+					<td>
+						<input type="text" name="cashPrice">
 					</td>
 				</tr>
 				<tr>
@@ -114,8 +129,8 @@
 						<%=(String)m.get("cashMemo")%>
 					</td>
 					<td>
-						<a href="<%=request.getContextPath()%>">수정</a>
-						<a href="<%=request.getContextPath()%>">삭제</a>
+						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>">수정</a>
+						<a href="<%=request.getContextPath()%>/cash/deleteCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>">삭제</a>
 					</td>
 				</tr>
 			<%

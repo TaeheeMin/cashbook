@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import vo.*;
 
@@ -16,15 +15,13 @@ public class CategoryDao {
 		String sql = "SELECT "
 				+ "category_no categoryNo"
 				+ ", category_kind categoryKind"
-				+ ", category_name categoryName"
-				+ "FROM category "
-				+ "ORDER BY category_kind ASC";
+				+ ", category_name categoryName "
+				+ "FROM category";
 		// ORDER BY category_kind
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		
 		ArrayList<Category> categoryList = new ArrayList<Category>();
-	
 		while(rs.next()) {
 			Category category = new Category();
 			category.setCategoryNo(rs.getInt("categoryNo"));

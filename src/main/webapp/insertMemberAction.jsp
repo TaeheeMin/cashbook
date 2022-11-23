@@ -30,24 +30,27 @@
 	
 	//모델 호출시 매개값, 메서드로 들어가려면 묶어주는게 필요하니까 이걸로 묶어서 param으로 메서드들어감
 	Member paramMember = new Member();
-	paramMember.setMemberId(memberId);
-	paramMember.setMemberPw(memberPw);
-
+	paramMember.setMemberId("memberId");
+	paramMember.setMemberPw("memberPw");
+	paramMember.setMemberName("memberName");
+	
 	// 분리된 m(모델)을 호출
 	MemberDao memberDao = new MemberDao();
-	Member returnMember = memberDao.login(paramMember);
 	
-	// 로그인 확인 -> 페이지 이동
-	String msg = URLEncoder.encode("ID 중복 확인해주세요","utf-8");
+	// 중복확인, insert 두 개 필요 -> 중복 false면 insert실행
+	String msg = URLEncoder.encode("ID 중복! 확인해주세요","utf-8");
 	String redirectUrl = "/insertMemberForm.jsp?msg="+msg;
-	if(returnMember != null) { // 로그인 결과있음
-		System.out.println("가입 성공");
-		session.setAttribute("loginMember", returnMember);
+	
+	if(memberDao.memeberIdCheck(paramMember.getMemberId())){
+		// 중복 존재 -> 가입 폼으로 다시 이동
+		System.out.println("아이디 중복");
+	} else if(memberDao.insertMemeber(paramMember)) {
+		// 회원 가입 성공 -> 로그인 폼으로 이동
+		msg = URLEncoder.encode("회원가입 성공","utf-8");
 		redirectUrl = "/loginForm.jsp?msg="+msg;
 	}
-	
 	response.sendRedirect(request.getContextPath()+redirectUrl);
-	%>
+%>
 
 
 <!DOCTYPE html>
