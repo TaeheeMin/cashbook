@@ -29,10 +29,9 @@ public class MemberDao {
 		return resultMember;
 	}
 	
-	// 회원가입
-	// 중복확인위해 boolean타입으로 만들어??-> insert도 boolean으로 만들어서 확인
-	// action페이지에서는 메서드 하나씩 호출해서 true/false로 체크하고 가입확인/실패 안내
-	public boolean memeberIdCheck(String memberId) throws Exception {
+	// 2-1 중복확인
+	public int memeberIdCheck(String memberId) throws Exception {
+		int checkRow = 0;
 		// db연결
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -41,45 +40,34 @@ public class MemberDao {
 		String sql = "SELECT * FROM member WHERE member_id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, memberId);
+		ResultSet rs = stmt.executeQuery();
 		
-		boolean result = false;
-		int row = stmt.executeUpdate();
-		if(row == 1) {
-			result = true;
-			System.out.println("가입성공");
-			return true;
+		if(!rs.next()){	//중복되는 아이디가 없다면
+			checkRow = 1;
 		}
 		stmt.close();
 		conn.close();
-		return result;
+		return checkRow;
 	}
 	
-	// 회원가입
-	public boolean insertMemeber(Member paramMember) throws Exception {
-		// db연결
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
+	// 2-2 회원가입
+	public int insertMemeber(Member insertMember) throws Exception{
+		int insertRow = 0;
 		
 		// db추가
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+				
 		String sql = "INSERT INTO member (member_id, member_pw, member_name, updatedate, createdate) VALUES ( ?, PASSWORD(?), ?, NOW(), NOW())";
-		/*
-			INSERT INTO member (member_id, member_pw, member_name, updatedate, createdate) VALUES ( ?, PASSWORD(?), ?, NOW(), NOW())
-		*/
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, paramMember.getMemberId());
-		stmt.setString(2, paramMember.getMemberPw());
-		stmt.setString(3, paramMember.getMemberName());
+		stmt.setString(1, (String)insertMember.getMemberId());
+		stmt.setString(2, (String)insertMember.getMemberPw());
+		stmt.setString(3, (String)insertMember.getMemberName());
+		insertRow = stmt.executeUpdate();
 		
-		boolean result = false;
-		int row = stmt.executeUpdate();
-		if(row == 1) {
-			result = true;
-			System.out.println("가입성공");
-			return true;
-		}
 		stmt.close();
 		conn.close();
-		return result;
+		return insertRow;
 	}
 	
 	

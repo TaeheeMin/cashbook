@@ -27,8 +27,6 @@
 	Member returnMember = memberDao.login(paramMember);
 	// 메서드에서 결과값(resultMember)을 returnMember에 넣어서 가져옴
 	
-	
-
 	// 로그인 확인 -> 페이지 이동
 	String msg = URLEncoder.encode("입력정보를 확인해주세요","utf-8");
 	String redirectUrl = "/loginForm.jsp?msg="+msg;

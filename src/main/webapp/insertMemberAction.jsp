@@ -10,12 +10,14 @@
 	String pw2 = request.getParameter("memberPw2");
 	String memberName = request.getParameter("memberName");
 	String memberPw = null;
+	String msg = null;
+	String redirectUrl = "/insertMemberForm.jsp?msg="+msg;
 	
 	// 작성 확인
 	if(memberId == null || pw1 == null || pw2 == null || memberName == null || 
 		memberId.equals("") || pw1.equals("") || pw2.equals("") || memberName.equals("")){
-		String insertMsg = URLEncoder.encode("내용을 입력하세요", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+insertMsg);
+		msg = URLEncoder.encode("내용을 입력하세요", "utf-8");
+		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+msg);
 		return;
 	} // 내용 미입력시 메세지, 폼이동
 	
@@ -23,35 +25,38 @@
 	if(pw1.equals(pw2)){
 		memberPw = pw1;
 	} else {
-		String msg = URLEncoder.encode("비밀번호를 확인해 주세요", "utf-8");
+		msg = URLEncoder.encode("비밀번호를 확인해 주세요", "utf-8");
 		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+msg);
 		return;
 	} // 비밀번호 불일치시 메세지, 폼이동
 	
-	//모델 호출시 매개값, 메서드로 들어가려면 묶어주는게 필요하니까 이걸로 묶어서 param으로 메서드들어감
-	Member paramMember = new Member();
-	paramMember.setMemberId("memberId");
-	paramMember.setMemberPw("memberPw");
-	paramMember.setMemberName("memberName");
+	// 객체생성 -> 모델 호출시 매개값
+	Member insertMember = new Member();
+	insertMember.setMemberId(memberId);
+	insertMember.setMemberPw(memberPw);
+	insertMember.setMemberName(memberName);
 	
 	// 분리된 m(모델)을 호출
+	// 중복확인, insert 두 개 필요
 	MemberDao memberDao = new MemberDao();
 	
-	// 중복확인, insert 두 개 필요 -> 중복 false면 insert실행
-	String msg = URLEncoder.encode("ID 중복! 확인해주세요","utf-8");
-	String redirectUrl = "/insertMemberForm.jsp?msg="+msg;
+	int checkRow = memberDao.memeberIdCheck(memberId);
 	
-	if(memberDao.memeberIdCheck(paramMember.getMemberId())){
-		// 중복 존재 -> 가입 폼으로 다시 이동
-		System.out.println("아이디 중복");
-	} else if(memberDao.insertMemeber(paramMember)) {
+	if(checkRow != 1){
+		msg = URLEncoder.encode("ID 중복! 확인해주세요","utf-8");
+		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+msg);
+		return;
+	}
+	
+	int resultRow = memberDao.insertMemeber(insertMember);
+	if(resultRow == 1){
 		// 회원 가입 성공 -> 로그인 폼으로 이동
 		msg = URLEncoder.encode("회원가입 성공","utf-8");
 		redirectUrl = "/loginForm.jsp?msg="+msg;
 	}
+	
 	response.sendRedirect(request.getContextPath()+redirectUrl);
 %>
-
 
 <!DOCTYPE html>
 <html>
