@@ -24,6 +24,7 @@
 	System.out.println("date : " + date);
 	System.out.println("month : " + month);
 	System.out.println("year ; " + year);
+	// 이거 방지 코드 필요할 듯
 
 	
 	// Model : 일별 cash목록
@@ -53,6 +54,7 @@
 	</head>
 	
 	<body>
+		
 		<!-- 입력폼 -->
 		<form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp" method="post">
 			<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">

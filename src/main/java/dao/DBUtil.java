@@ -15,4 +15,18 @@ public class DBUtil {
 		Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPw);
 		return conn;
 	}
+	
+	public void close(ResultSet rs, PreparedStatement stmt, Connection conn) throws Exception {
+		// 3가지 꼭 모두 사용안함 사용하는것만 -> null값 아니면 close
+		if(rs != null) {
+			rs.close(); 
+		}
+		if(stmt != null) {
+			stmt.close();
+		}
+		if(conn != null) {
+			conn.close();
+		}
+		
+	}
 }

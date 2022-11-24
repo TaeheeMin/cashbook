@@ -9,7 +9,11 @@
 	int cashNo = Integer.parseInt(request.getParameter("cashNo"));
 	String memberId = request.getParameter("memberId");
 	String memberPw = request.getParameter("memberPw");
-	
+	// 디버깅
+	System.out.println(memberId + "<- delCashAc Id");
+	System.out.println(memberPw + "<- delCashAc pw");
+	System.out.println(cashNo + "-< delCashAc cashNo");
+
 	// 작성 확인
 	if(memberPw == null || memberPw.equals("")){
 		String insertMsg = URLEncoder.encode("내용을 입력하세요", "utf-8");
@@ -21,6 +25,7 @@
 	int resultRow = cashDao.deleteCash(cashNo, memberId, memberPw);
 	String msg = URLEncoder.encode("삭제실패","utf-8");
 	String redirectUrl = "/cash//cashList.jsp?msg="+msg;
+	System.out.println(resultRow + "<- deleCashAc resultRow");
 	
 	if(resultRow == 1){
 		//삭제성공

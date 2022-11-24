@@ -30,22 +30,13 @@
 	// 로그인 확인 -> 페이지 이동
 	String msg = URLEncoder.encode("입력정보를 확인해주세요","utf-8");
 	String redirectUrl = "/loginForm.jsp?msg="+msg;
+	
 	if(returnMember != null) { // 로그인 결과있음
 		System.out.println("로그인 성공");
 		msg = URLEncoder.encode("로그인 성공","utf-8");
 		redirectUrl = "/cash/cashList.jsp?msg="+msg;
 		session.setAttribute("loginMember", returnMember);
+		// 관리자기능위해 세션에 memberLevel도 추가해야함 
 	}
 	response.sendRedirect(request.getContextPath()+redirectUrl);
 %>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Login Action</title>
-	</head>
-	
-	<body>
-		
-	</body>
-</html>

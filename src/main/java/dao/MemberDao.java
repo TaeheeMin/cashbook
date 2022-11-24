@@ -12,7 +12,7 @@ public class MemberDao {
 		// db연결 -> 따로 분리해서 사용
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
-		String sql = "SELECT member_id, member_name FROM member WHERE member_id = ? AND member_pw = PASSWORD(?)";
+		String sql = "SELECT member_id, member_name, member_level FROM member WHERE member_id = ? AND member_pw = PASSWORD(?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, paramMember.getMemberId());
 		stmt.setString(2, paramMember.getMemberPw());
@@ -22,13 +22,11 @@ public class MemberDao {
 			resultMember.setMemberId(rs.getString("member_id"));
 			resultMember.setMemberName(rs.getString("member_name"));
 		}
-		
-		rs.close();
-		stmt.close();
-		conn.close();
+		dbUtil.close(rs, stmt, conn);
 		return resultMember;
 	}
 	
+	// 회원가입
 	// 2-1 중복확인
 	public int memeberIdCheck(String memberId) throws Exception {
 		int checkRow = 0;
@@ -42,12 +40,31 @@ public class MemberDao {
 		stmt.setString(1, memberId);
 		ResultSet rs = stmt.executeQuery();
 		
-		if(!rs.next()){	//중복되는 아이디가 없다면
+		if(rs.next()){	//중복되는 아이디가 없다면
 			checkRow = 1;
 		}
-		stmt.close();
-		conn.close();
+		dbUtil.close(rs, stmt, conn);
 		return checkRow;
+	}
+	
+	// 중복확인 다른 방법으로 확인
+	// 반환값 t -> 중복있음, f -> 사용 가능
+	public boolean selectMemberIdCk(String memberId) throws Exception{
+		boolean result = false;
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		// 중복검사
+		String sql = "SELECT memberId FROM member WHERE member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, memberId);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()){
+			result = true;
+		}
+		dbUtil.close(rs, stmt, conn);
+		return result;
 	}
 	
 	// 2-2 회원가입
@@ -58,18 +75,23 @@ public class MemberDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 				
-		String sql = "INSERT INTO member (member_id, member_pw, member_name, updatedate, createdate) VALUES ( ?, PASSWORD(?), ?, NOW(), NOW())";
+		String sql = "INSERT INTO member("
+				+ "member_id"
+				+ ", member_pw"
+				+ ", member_name"
+				+ ", updatedate"
+				+ ", createdate"
+				+ ") VALUES ("
+				+ " ?, PASSWORD(?), ?, NOW(), NOW())";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, (String)insertMember.getMemberId());
 		stmt.setString(2, (String)insertMember.getMemberPw());
 		stmt.setString(3, (String)insertMember.getMemberName());
 		insertRow = stmt.executeUpdate();
 		
-		stmt.close();
-		conn.close();
+		dbUtil.close(null, stmt, conn);
 		return insertRow;
 	}
-	
 	
 	// 회원정보 수정
 	public int updateMember(String memberId, String memberPw, String memberName) throws Exception { 

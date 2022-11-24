@@ -84,9 +84,15 @@
 	<body>
 		<div>
 			<!-- 로그인 정보(세션 loginMember 변수이름으로 정보) 출력 -->
-			<table>
-			
-			</table>
+			<h1><%=loginMember.getMemberId() %>님 반갑습니다.</h1>
+			<%
+				if(loginMember.getMemberLevel() > 0) {
+					%>
+						<a href="<%=request.getContextPath()%>/admin/adminMain.jsp">관리자 페이지</a>
+					<%
+				}
+			%>
+
 		</div>
 		
 		<div>

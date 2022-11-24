@@ -5,20 +5,39 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import vo.*;
 
 public class CashDao {
-	/*
-	SELECT c.cash_no cashNo
-		, c.cash_date cashDate
-		, c.cash_price cashPrce
-		, ct.category_no categoryNo
-		, ct.category_kind categoryKind
-		, ct.category_name categoryName
-	FROM cash c INNER JOIN category ct
-	ON c.category_no = ct.category_no
-	WHERE YEAR(c.cash_date) = ? AND MONTH(c.cash_date) = ?
-	ORDER BY c.cash_date ASC;
-	 */
+	// cash insert 등록
+	public int insertCash (int categoryNo, String cashDate, String cashMemo, String memberId, int cashPrice) throws Exception { 
+		// db연결 
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		int insertRow = 0;
+		// 등록
+		String sql = "INSERT INTO cash("
+				+ "category_no"
+				+ ", cash_date"
+				+ ", cash_memo"
+				+ ", cash_price"
+				+ ", member_id"
+				+ ", updatedate"
+				+ ", createdate"
+				+ ") VALUES (?, ?, ?, ?, NOW(), NOW());";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, categoryNo);
+		stmt.setString(2, cashDate);
+		stmt.setString(3, cashMemo);
+		stmt.setInt(4, cashPrice);
+		stmt.setString(5, memberId);
+	
+		insertRow = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return insertRow;
+	}
+	
+	// cash list 달력목록
 	public ArrayList<HashMap<String, Object>> selectCashListByMonth(String memberId, int year, int month) throws Exception{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		DBUtil dbUtil = new DBUtil();
@@ -52,13 +71,11 @@ public class CashDao {
 			list.add(m);
 		}
 		
-		rs.close();
-		stmt.close();
-		conn.close();
+		dbUtil.close(rs, stmt, conn);
 		return list;
 	}
 	
-	// cashDateList
+	// cashDateList 날짜별 목록
 	public ArrayList<HashMap<String, Object>> selectCashListByDate(String memberId, int year, int month, int date) throws Exception{
 		ArrayList<HashMap<String, Object>> dateList = new ArrayList<HashMap<String, Object>>();
 		DBUtil dbUtil = new DBUtil();
@@ -69,14 +86,14 @@ public class CashDao {
 				+ ", c.cash_price cashPrice"
 				+ ", ct.category_kind categoryKind"
 				+ ", ct.category_name categoryName"
-				+ ", c.cash_memo cashMemo "
-				+ "FROM cash c INNER JOIN category ct "
-				+ "ON c.category_no = ct.category_no "
-				+ "WHERE c.member_id = ? "
-				+ "AND YEAR(c.cash_date) = ? "
-				+ "AND MONTH(c.cash_date) = ? "
-				+ "AND DAY(c.cash_date) = ? "
-				+ "ORDER BY c.cash_date ASC, ct.category_no ASC";
+				+ ", c.cash_memo cashMemo"
+				+ " FROM cash c INNER JOIN category ct"
+				+ " ON c.category_no = ct.category_no"
+				+ " WHERE c.member_id = ?"
+				+ " AND YEAR(c.cash_date) = ?"
+				+ " AND MONTH(c.cash_date) = ?"
+				+ " AND DAY(c.cash_date) = ?"
+				+ " ORDER BY c.cash_date ASC, ct.category_no ASC";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, memberId);
 		stmt.setInt(2, year);
@@ -95,13 +112,59 @@ public class CashDao {
 			dateList.add(m);
 		}
 		
-		rs.close();
-		stmt.close();
-		conn.close();
+		dbUtil.close(rs, stmt, conn);
 		return dateList;
 	}
 	
-	 // cash delete 
+	// cashOne 하나만 출력
+		public Cash cashOne(String memberId, int cashNo) throws Exception{
+			DBUtil dbUtil = new DBUtil();
+			Connection conn = dbUtil.getConnection();
+			String sql = "SELECT "
+					+ " cash_no cashNo"
+					+ ", cash_date cashDate"
+					+ ", cash_price cashPrice"
+					+ ", category_no categoryNo"
+					+ ", cash_memo cashMemo"
+					+ " FROM cash"
+					+ " WHERE member_id = ?"
+					+ " AND cash_no = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			stmt.setInt(2, cashNo);
+			ResultSet rs = stmt.executeQuery();
+			Cash resultCash = new Cash();
+			while(rs.next()) {
+				resultCash  = new Cash();
+				resultCash.setCsahNo(rs.getInt("cashNo"));
+				resultCash.setCashDate(rs.getString("cashDate"));
+				resultCash.setCsahPrice(rs.getInt("cashPrice"));;
+				resultCash.setCategoryNo(rs.getInt("categoryNo"));;
+				resultCash.setCsahMemo(rs.getString("cashMemo"));;
+			}
+			dbUtil.close(rs, stmt, conn);
+			return resultCash;
+		}
+		
+	// cash update
+	public int updateCash (int cashNo, String memberId, int cashPrice, String cashMemo) throws Exception { 
+		// db연결 
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		// 수정
+		String sql = "UPDATE cash SET cash_price = ?, cash_memo = ? WHERE cash_no = ? AND member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, cashPrice);
+		stmt.setString(2, cashMemo);
+		stmt.setInt(3, cashNo);
+		stmt.setString(4, memberId);
+		int updateRow = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return updateRow;
+	}
+	
+	 // cash delete 삭제
 	public int deleteCash (int cashNo, String memberId, String memberPw) throws Exception { 
 		// db연결 
 		DBUtil dbUtil = new DBUtil();
@@ -114,54 +177,10 @@ public class CashDao {
 		stmt.setString(3, memberPw);
 		int deleteRow = stmt.executeUpdate();
 		
-		stmt.close();
-		conn.close();
+		dbUtil.close(null, stmt, conn);
 		return deleteRow;
 	}
 	
-	// cash update
-	public int updateCash (int cashNo, String memberId, int cashPrice, String cashMemo) throws Exception { 
-	// db연결 
-	DBUtil dbUtil = new DBUtil();
-	Connection conn = dbUtil.getConnection();
-	// 수정
-	String sql = "UPDATE cash SET cash_price = ?, cash_memo = ? WHERE cash_no = ? AND member_id = ?";
-	PreparedStatement stmt = conn.prepareStatement(sql);
-	stmt.setInt(1, cashPrice);
-	stmt.setString(2, cashMemo);
-	stmt.setInt(3, cashNo);
-	stmt.setString(4, memberId);
-	int updateRow = stmt.executeUpdate();
 	
-	stmt.close();
-	conn.close();
-	return updateRow;
-	}
-	
-	// cash insert
-	public int insertCash (int categoryNo, String cashDate, String cashMemo, String memberId) throws Exception { 
-		// db연결 
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
-		// 수정
-		String sql = "INSERT INTO cash("
-				+ "category_no categoryNo"
-				+ ", cash_date cashDate"
-				+ ", cash_memo cashMemo"
-				+ ", cash_price cashPrice"
-				+ ", updatedate"
-				+ ", createdate"
-				+ ") VALUES (?, ?, ?, NOW(), NOW());";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, categoryNo);
-		stmt.setString(2, cashDate);
-		stmt.setString(3, cashMemo);
-		stmt.setString(4, memberId);
-		int insertRow = stmt.executeUpdate();
-		
-		stmt.close();
-		conn.close();
-		return insertRow;
-		}
 	
 }
