@@ -122,6 +122,7 @@ public class CashDao {
 			Connection conn = dbUtil.getConnection();
 			String sql = "SELECT "
 					+ " cash_no cashNo"
+					+ ", category_no categoryNo"
 					+ ", cash_date cashDate"
 					+ ", cash_price cashPrice"
 					+ ", category_no categoryNo"
@@ -137,8 +138,9 @@ public class CashDao {
 			while(rs.next()) {
 				resultCash  = new Cash();
 				resultCash.setCsahNo(rs.getInt("cashNo"));
+				resultCash.setCategoryNo(rs.getInt("categoryNo"));
 				resultCash.setCashDate(rs.getString("cashDate"));
-				resultCash.setCsahPrice(rs.getInt("cashPrice"));;
+				resultCash.setCsahPrice(rs.getLong("cashPrice"));;
 				resultCash.setCategoryNo(rs.getInt("categoryNo"));;
 				resultCash.setCsahMemo(rs.getString("cashMemo"));;
 			}
@@ -146,6 +148,38 @@ public class CashDao {
 			return resultCash;
 		}
 		
+	/*
+	public Cash oneCash(Cash paramCash) throws Exception{
+		Cash resultCash = null;
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String sql = "SELECT cash_no cashNo, category_no categoryNo, cash_date cashDate, cash_price cashPrice, cash_memo cashMemo FROM cash WHERE cash_no = ? AND member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, paramCash.getcashNo());
+		stmt.setString(2, paramCash.getMemberId());
+
+		ResultSet rs = stmt.executeQuery();
+		
+		if(rs.next()) {
+			resultCash = new Cash();
+			resultCash.setCashNo(rs.getInt("cashNo"));
+			resultCash.setCategoryNo(rs.getInt("categoryNo"));
+			resultCash.setCashDate(rs.getString("cashDate"));
+			resultCash.setCashPrice(rs.getLong("cashPrice"));
+			resultCash.setCashMemo(rs.getString("cashMemo"));
+			rs.close();
+			stmt.close();
+			conn.close();
+			return resultCash;
+		}
+		rs.close();
+		stmt.close();
+		conn.close();
+		return null;
+	}
+	*/
 	// cash update
 	public int updateCash (int cashNo, String memberId, int cashPrice, String cashMemo) throws Exception { 
 		// db연결 

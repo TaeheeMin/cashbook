@@ -24,8 +24,14 @@
 	System.out.println("date : " + date);
 	System.out.println("month : " + month);
 	System.out.println("year ; " + year);
-	// 이거 방지 코드 필요할 듯
-
+	/* 
+	// 방어 코드
+	if(request.getParameter("cashNo") == null || request.getParameter("year") == null 
+		|| request.getParameter("month") == null || request.getParameter("day") == null){
+		response.sendRedirect(request.getContextPath()+"/cash/cashDateList.jsp?year="+year+"&month="+ month + "&day="+date);
+		return;
+	}
+ */
 	
 	// Model : 일별 cash목록
 	CashDao cashDao = new CashDao();
@@ -115,23 +121,13 @@
 					if(Integer.parseInt(cashDate.substring(8)) == date) {
 			%>
 				<tr>
+					<td><%=(String)m.get("cashDate")%></td>
+					<td>[<%=(String)m.get("categoryKind")%>]</td>
+					<td><%=(String)m.get("categoryName")%></td>
+					<td><%=(Integer)m.get("cashPrice")%>원</td>
+					<td><%=(String)m.get("cashMemo")%></td>
 					<td>
-						<%=(String)m.get("cashDate")%>
-					</td>
-					<td>
-						[<%=(String)m.get("categoryKind")%>]
-					</td>
-					<td>
-						<%=(String)m.get("categoryName")%>
-					</td>
-					<td>
-						<%=(Integer)m.get("cashPrice")%>원
-					</td>
-					<td>
-						<%=(String)m.get("cashMemo")%>
-					</td>
-					<td>
-						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>">수정</a>
+						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>&year=<%=year%>&month=<%=month%>&day=<%=date%>">수정</a>
 						<a href="<%=request.getContextPath()%>/cash/deleteCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>">삭제</a>
 					</td>
 				</tr>
