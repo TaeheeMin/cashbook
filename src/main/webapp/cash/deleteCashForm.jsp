@@ -8,7 +8,6 @@
 	int cashNo = Integer.parseInt(request.getParameter("cashNo"));
 	System.out.println(cashNo+"<-cashNo");
 	
-	
 	// controller : session 검증
 	// 로그인 세션 정보 확인
 	Member loginMember = (Member)session.getAttribute("loginMember");

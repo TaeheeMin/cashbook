@@ -16,15 +16,15 @@
 
 	// 작성 확인
 	if(memberPw == null || memberPw.equals("")){
-		String insertMsg = URLEncoder.encode("내용을 입력하세요", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+insertMsg);
+		String msg = URLEncoder.encode("내용을 입력하세요", "utf-8");
+		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+msg);
 		return;
 	} // 내용 미입력시 메세지, 폼이동
 	
 	CashDao cashDao = new CashDao();
 	int resultRow = cashDao.deleteCash(cashNo, memberId, memberPw);
 	String msg = URLEncoder.encode("삭제실패","utf-8");
-	String redirectUrl = "/cash//cashList.jsp?msg="+msg;
+	String redirectUrl = "/cash/cashList.jsp?msg="+msg;
 	System.out.println(resultRow + "<- deleCashAc resultRow");
 	
 	if(resultRow == 1){
@@ -35,17 +35,4 @@
 	}
 	
 	response.sendRedirect(request.getContextPath()+redirectUrl);
-	
-
 %>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
-	</head>
-	
-	<body>
-		
-	</body>
-</html>

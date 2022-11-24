@@ -114,19 +114,18 @@ public class MemberDao {
 	}
 	
 	// 회원탈퇴
-	public int deleteMember(Member paramDelete) throws Exception {
+	public int deleteMember(String memberId, String memberPw) throws Exception {
 		// db연결
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
-		String sql = "UPDATE member SET member_name =? WHERE member_id = ? AND member_pw = PASSWORD(?)";
+		// 삭제
+		String sql = "DELETE FROM member WHERE member_id=? AND member_pw=PASSWORD(?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, paramDelete.getMemberName());
-		stmt.setString(2, paramDelete.getMemberId());
-		stmt.setString(3, paramDelete.getMemberPw());
-		int updateRow = stmt.executeUpdate();
+		stmt.setString(1, memberId);
+		stmt.setString(2, memberPw);
+		int deleteRow = stmt.executeUpdate();
 		
 		dbUtil.close(null, stmt, conn);
-		return updateRow;
-				
+		return deleteRow;
 	}
 }
