@@ -1,21 +1,20 @@
 package vo;
 
 public class Cash {
-	private int csahNo;
+	private int cashNo;
 	// map을 사용안하려면 private Category category로 이너조인으로 받아올수있음 -> Cash타입으로 사용 
 	private int categoryNo; // 참조키 이너조인 필요 -> map타입으로 사용
 	private String memberId;
 	private String cashDate;
-	private long csahPrice;
-	private String csahMemo;
+	private long cashPrice; 
+	private String cashMemo;
 	private String updatedate;
 	private String createdate;
-	
-	public int getCsahNo() {
-		return csahNo;
+	public int getCashNo() {
+		return cashNo;
 	}
-	public void setCsahNo(int csahNo) {
-		this.csahNo = csahNo;
+	public void setCashNo(int cashNo) {
+		this.cashNo = cashNo;
 	}
 	public int getCategoryNo() {
 		return categoryNo;
@@ -35,17 +34,17 @@ public class Cash {
 	public void setCashDate(String cashDate) {
 		this.cashDate = cashDate;
 	}
-	public long getCsahPrice() {
-		return csahPrice;
+	public long getCashPrice() {
+		return cashPrice;
 	}
-	public void setCsahPrice(long csahPrice) {
-		this.csahPrice = csahPrice;
+	public void setCashPrice(long cashPrice) {
+		this.cashPrice = cashPrice;
 	}
-	public String getCsahMemo() {
-		return csahMemo;
+	public String getCashMemo() {
+		return cashMemo;
 	}
-	public void setCsahMemo(String csahMemo) {
-		this.csahMemo = csahMemo;
+	public void setCashMemo(String cashMemo) {
+		this.cashMemo = cashMemo;
 	}
 	public String getUpdatedate() {
 		return updatedate;
@@ -59,5 +58,5 @@ public class Cash {
 	public void setCreatedate(String createdate) {
 		this.createdate = createdate;
 	}
-
+	
 }

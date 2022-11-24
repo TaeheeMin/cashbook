@@ -16,7 +16,6 @@
 	// request -> 년도 + 월
 	int year = 0;
 	int month = 0;
-	
 	// 오늘 년도구하는 알고리즘
 	if(request.getParameter("year") == null || request.getParameter("month") == null) {
 		Calendar today = Calendar.getInstance(); // 오늘 날짜
@@ -101,6 +100,7 @@
 			<%=year%>년 <%=month+1%> 월
 			
 			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
+			<a href="<%=request.getContextPath()%>/updateMemberForm.jsp">내정보수정</a>
 			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 		</div>
 		

@@ -1,9 +1,13 @@
 package dao;
 
 import java.sql.*;
+
+import org.apache.jasper.tagplugins.jstl.core.Param;
+
 import vo.Member;
 
 public class MemberDao {
+	// 로그인
 	public Member login(Member paramMember) throws Exception { 
 		// login 성공하면 리스트로 이동
 		// 멤버 타입으로 받고 세션에 멤버로 넣음
@@ -27,7 +31,7 @@ public class MemberDao {
 	}
 	
 	// 회원가입
-	// 2-1 중복확인
+	// 1-1 중복확인
 	public int memeberIdCheck(String memberId) throws Exception {
 		int checkRow = 0;
 		// db연결
@@ -67,7 +71,7 @@ public class MemberDao {
 		return result;
 	}
 	
-	// 2-2 회원가입
+	// 1-2 회원가입
 	public int insertMemeber(Member insertMember) throws Exception{
 		int insertRow = 0;
 		
@@ -94,20 +98,35 @@ public class MemberDao {
 	}
 	
 	// 회원정보 수정
-	public int updateMember(String memberId, String memberPw, String memberName) throws Exception { 
+	public int updateMember(Member paraMember) throws Exception { 
 		// db연결
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		String sql = "UPDATE member SET member_name =? WHERE member_id = ? AND member_pw = PASSWORD(?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, memberName);
-		stmt.setString(2, memberId);
-		stmt.setString(3, memberPw);
+		stmt.setString(1, paraMember.getMemberName());
+		stmt.setString(2, paraMember.getMemberId());
+		stmt.setString(3, paraMember.getMemberPw());
 		int updateRow = stmt.executeUpdate();
 		
-		stmt.close();
-		conn.close();
+		dbUtil.close(null, stmt, conn);
 		return updateRow;
 	}
 	
+	// 회원탈퇴
+	public int deleteMember(Member paramDelete) throws Exception {
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "UPDATE member SET member_name =? WHERE member_id = ? AND member_pw = PASSWORD(?)";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, paramDelete.getMemberName());
+		stmt.setString(2, paramDelete.getMemberId());
+		stmt.setString(3, paramDelete.getMemberPw());
+		int updateRow = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return updateRow;
+				
+	}
 }

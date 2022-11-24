@@ -17,6 +17,9 @@
 	
 	<body>
 		<h3>회원가입</h3>
+		<div>
+			<a href="<%=request.getContextPath()%>/loginForm.jsp">홈으로</a>
+		</div>
 		<form method="post" action="<%=request.getContextPath()%>/insertMemberAction.jsp">
 			<table border="1">
 				<tr>
@@ -28,8 +31,8 @@
 				<tr>
 					<td>비밀번호</td>
 					<td>
-						<input type="text" name="memberPw1"> <br>
-						<input type="text" name="memberPw2">
+						<input type="password" name="memberPw1"> <br>
+						<input type="password" name="memberPw2">
 					</td>
 				</tr>
 				<tr>

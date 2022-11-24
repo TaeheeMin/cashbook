@@ -24,14 +24,7 @@
 	System.out.println("date : " + date);
 	System.out.println("month : " + month);
 	System.out.println("year ; " + year);
-	/* 
-	// 방어 코드
-	if(request.getParameter("cashNo") == null || request.getParameter("year") == null 
-		|| request.getParameter("month") == null || request.getParameter("day") == null){
-		response.sendRedirect(request.getContextPath()+"/cash/cashDateList.jsp?year="+year+"&month="+ month + "&day="+date);
-		return;
-	}
- */
+
 	
 	// Model : 일별 cash목록
 	CashDao cashDao = new CashDao();
@@ -60,7 +53,12 @@
 	</head>
 	
 	<body>
-		
+		<h1><%=year%>년 <%=month+1%> 월 <%=date %>일</h1>
+		<div>
+			<a href="<%=request.getContextPath()%>/cash/cashList.jsp">달력보기</a>
+			<a href="<%=request.getContextPath()%>/updateMemberForm.jsp">내정보수정</a>
+			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+		</div>
 		<!-- 입력폼 -->
 		<form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp" method="post">
 			<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
@@ -119,6 +117,7 @@
 					System.out.println((String)m.get("cashDate"));
 
 					if(Integer.parseInt(cashDate.substring(8)) == date) {
+					int cashNo = (Integer)m.get("cashNo");
 			%>
 				<tr>
 					<td><%=(String)m.get("cashDate")%></td>
@@ -127,8 +126,8 @@
 					<td><%=(Integer)m.get("cashPrice")%>원</td>
 					<td><%=(String)m.get("cashMemo")%></td>
 					<td>
-						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>&year=<%=year%>&month=<%=month%>&day=<%=date%>">수정</a>
-						<a href="<%=request.getContextPath()%>/cash/deleteCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>">삭제</a>
+						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=cashNo%>&year=<%=year %>&month=<%=month %>&day=<%=date %>">수정</a>
+						<a href="<%=request.getContextPath()%>/cash/deleteCashForm.jsp?cashNo=<%=cashNo%>">삭제</a>
 					</td>
 				</tr>
 			<%

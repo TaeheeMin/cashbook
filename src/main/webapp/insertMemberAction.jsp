@@ -13,12 +13,6 @@
 	String msg = null;
 	String redirectUrl = "/insertMemberForm.jsp?msg="+msg;
 	
-	// 객체생성 -> 모델 호출시 매개값
-	Member insertMember = new Member();
-	insertMember.setMemberId(memberId);
-	insertMember.setMemberPw(memberPw);
-	insertMember.setMemberName(memberName);
-
 	// 작성 확인
 	if(memberId == null || pw1 == null || pw2 == null || memberName == null || 
 		memberId.equals("") || pw1.equals("") || pw2.equals("") || memberName.equals("")){
@@ -36,13 +30,19 @@
 		return;
 	} // 비밀번호 불일치시 메세지, 폼이동
 	
+	// 객체생성 -> 모델 호출시 매개값
+	Member insertMember = new Member();
+	insertMember.setMemberId(memberId);
+	insertMember.setMemberPw(memberPw);
+	insertMember.setMemberName(memberName);
+
 	// 2. model
 	// 분리된 m(모델)을 호출 -> 중복확인, insert 두 개 필요
 	MemberDao memberDao = new MemberDao();
-	
 	int checkRow = memberDao.memeberIdCheck(memberId);
 	System.out.println("insertMemberAction checkRow : " + checkRow);
-	if(checkRow != 1){
+	
+	if(checkRow == 1){
 		msg = URLEncoder.encode("ID 중복! 확인해주세요","utf-8");
 		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+msg);
 		return;

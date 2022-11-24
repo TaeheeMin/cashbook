@@ -137,68 +137,41 @@ public class CashDao {
 			Cash resultCash = new Cash();
 			while(rs.next()) {
 				resultCash  = new Cash();
-				resultCash.setCsahNo(rs.getInt("cashNo"));
+				resultCash.setCashNo(rs.getInt("cashNo"));
 				resultCash.setCategoryNo(rs.getInt("categoryNo"));
 				resultCash.setCashDate(rs.getString("cashDate"));
-				resultCash.setCsahPrice(rs.getLong("cashPrice"));;
+				resultCash.setCashPrice(rs.getLong("cashPrice"));;
 				resultCash.setCategoryNo(rs.getInt("categoryNo"));;
-				resultCash.setCsahMemo(rs.getString("cashMemo"));;
+				resultCash.setCashMemo(rs.getString("cashMemo"));;
 			}
 			dbUtil.close(rs, stmt, conn);
 			return resultCash;
 		}
 		
-	/*
-	public Cash oneCash(Cash paramCash) throws Exception{
-		Cash resultCash = null;
-		
-		DBUtil dbUtil = new DBUtil();
-		Connection conn = dbUtil.getConnection();
-		
-		String sql = "SELECT cash_no cashNo, category_no categoryNo, cash_date cashDate, cash_price cashPrice, cash_memo cashMemo FROM cash WHERE cash_no = ? AND member_id = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, paramCash.getcashNo());
-		stmt.setString(2, paramCash.getMemberId());
-
-		ResultSet rs = stmt.executeQuery();
-		
-		if(rs.next()) {
-			resultCash = new Cash();
-			resultCash.setCashNo(rs.getInt("cashNo"));
-			resultCash.setCategoryNo(rs.getInt("categoryNo"));
-			resultCash.setCashDate(rs.getString("cashDate"));
-			resultCash.setCashPrice(rs.getLong("cashPrice"));
-			resultCash.setCashMemo(rs.getString("cashMemo"));
-			rs.close();
-			stmt.close();
-			conn.close();
-			return resultCash;
-		}
-		rs.close();
-		stmt.close();
-		conn.close();
-		return null;
-	}
-	*/
 	// cash update
-	public int updateCash (int cashNo, String memberId, int cashPrice, String cashMemo) throws Exception { 
+	public int updateCash (Cash paramCash) throws Exception { 
 		// db연결 
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		// 수정
-		String sql = "UPDATE cash SET cash_price = ?, cash_memo = ? WHERE cash_no = ? AND member_id = ?";
+		String sql = "UPDATE cash SET"
+				+ " category_no = ?"
+				+ ", cash_price = ?"
+				+ ", cash_memo = ?"
+				+ " WHERE cash_no = ? AND member_id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, cashPrice);
-		stmt.setString(2, cashMemo);
-		stmt.setInt(3, cashNo);
-		stmt.setString(4, memberId);
+		stmt.setInt(1, paramCash.getCategoryNo());
+		stmt.setLong(2, paramCash.getCashPrice());
+		stmt.setString(3, paramCash.getCashMemo());
+		stmt.setInt(4, paramCash.getCashNo());;
+		stmt.setString(5, paramCash.getMemberId());
 		int updateRow = stmt.executeUpdate();
 		
 		dbUtil.close(null, stmt, conn);
 		return updateRow;
 	}
 	
-	 // cash delete 삭제
+	// cash delete 삭제
 	public int deleteCash (int cashNo, String memberId, String memberPw) throws Exception { 
 		// db연결 
 		DBUtil dbUtil = new DBUtil();
@@ -214,7 +187,4 @@ public class CashDao {
 		dbUtil.close(null, stmt, conn);
 		return deleteRow;
 	}
-	
-	
-	
 }

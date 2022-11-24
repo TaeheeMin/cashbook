@@ -15,7 +15,6 @@
 		return;
 	}
 	// 정보 수정 누르면 아이디 받아와서 비밀번호 확인, 이름 수정
-	// action으로 보내서(입력값) dao로 처리하고(반환값 필요없음)-> db적용
 %>
 
 <!DOCTYPE html>
@@ -35,6 +34,13 @@
 	</head>
 	
 	<body>
+		<h1>내 정보 수정</h1>
+		<div>
+			<a href="<%=request.getContextPath()%>/cash/cashList.jsp">달력보기</a>
+			<a href="<%=request.getContextPath()%>/updateMemberForm.jsp">내정보수정</a>
+			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+			<a href="<%=request.getContextPath()%>/deleteMemberForm.jsp">회원탈퇴</a>
+		</div>
 		<form method="post" action="<%=request.getContextPath()%>/updateMemberAction.jsp">
 			<table border="1">
 				<tr>
