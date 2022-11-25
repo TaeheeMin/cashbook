@@ -19,7 +19,7 @@ public class MemberDao {
 				+ ", member_name memberName"
 				+ ", updatedate"
 				+ ", createdate"
-				+ " FROM member ORDER BY createdate DESC";
+				+ " FROM member ORDER BY createdate DESC LIMIT ?, ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, beginRow);
 		stmt.setInt(2, rowPerPage);
@@ -57,8 +57,9 @@ public class MemberDao {
 		return count;
 	} 
 	
-	// 관리자 회원 강제 탈퇴 기능  -> 오버 라이딩?
+	// 관리자 회원 강제 탈퇴 기능
 	public int deleteMemberByAdmin(Member member) throws Exception {
+		String sql = "DELETE FROM member WHERE member_no=?";
 		return 0;
 	}
 	

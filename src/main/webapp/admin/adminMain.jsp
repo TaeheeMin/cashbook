@@ -37,7 +37,8 @@
 	ArrayList<Member> memberList = memberDao.selectMemverListByPage(beginRow, rowPerPage);
 	int memberCount = memberDao.selectMemberCount();
 	int memberLastPage = (int)Math.ceil((double)memberCount / (double)rowPerPage);
-	System.out.println(memberCount + "<-memberCount/" + memberLastPage + "lastPage" );
+	System.out.println(memberCount + "<-memberCount/" + memberLastPage + "lastPage"+ rowPerPage);
+	
 	
 	// 공지 페이징 알고리즘
 	NoticeDao noticeDao = new NoticeDao();
