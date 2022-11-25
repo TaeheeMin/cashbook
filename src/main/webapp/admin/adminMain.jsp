@@ -1,27 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "vo.*" %>
 <%@ page import = "dao.*" %>
+<%@ page import = "java.util.*"%>
 <%@ page import = "java.net.URLEncoder" %>
 <%
-	
 	// 1.controller
- 
-	Member loginMember = (Member)session.getAttribute("login");
 	// 로그인관리자를 그냥 통으로 가져옴
-	String rdirectUrl = "/admin/adminMain.jsp";
-	String msg = URLEncoder.encode("관리자 페이지입니다.","utf-8");
-	
+	// 방어코드 안되는데? 아무것도 아
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	String msg = URLEncoder.encode("로그인 필요.","utf-8");
+	String rdirectUrl = "/admin/adminMain.jsp?msg="+msg;
+	/*
 	// 로그인 세션 검증
 	if(loginMember == null || loginMember.getMemberLevel() < 1) {
 		rdirectUrl= "/loginForm.jsp?msg="+msg;
-		response.sendRedirect(request.getContextPath()+rdirectUrl);
 		return;
 	}
+	response.sendRedirect(request.getContextPath()+rdirectUrl);
+	
+	
+	*/
 	// 2. model
 	// 최근 공지 5개, 최근멤버 5명
 	
+	// 페이징 알고리즘
+	int currentPage = 1;
+	if(request.getParameter("currentPage") != null) {
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	}
+	int rowPerPage = 5;
+	int beginRow = (currentPage-1) * rowPerPage;
+	
+	// 2. model
+	// 회원 페이징 알고리즘
+	MemberDao memberDao = new MemberDao();
+	ArrayList<Member> memberList = memberDao.selectMemverListByPage(beginRow, rowPerPage);
+	int memberCount = memberDao.selectMemberCount();
+	int memberLastPage = (int)Math.ceil((double)memberCount / (double)rowPerPage);
+	System.out.println(memberCount + "<-memberCount/" + memberLastPage + "lastPage" );
+	
+	// 공지 페이징 알고리즘
+	NoticeDao noticeDao = new NoticeDao();
+	ArrayList<Notice> noticeList = noticeDao.selectNoticeByPage(beginRow, rowPerPage);
+	int noticeCount = noticeDao.selectNoticeCount();
+	int noticeLastPage = (int)Math.ceil((double)noticeCount / (double)rowPerPage);
+	System.out.println(noticeCount + "<-noticeCount/" + noticeLastPage + "lastPage" );
+	
 	// 3.view
-
 %>
 <!DOCTYPE html>
 <html>
@@ -31,10 +56,63 @@
 	</head>
 	
 	<body>
+		<h1>관리자 페이지</h1>
 		<ul>
-			<li><a href = "">공지관리</a></li>
-			<li><a href = "">카테고리관리</a></li>
-			<li><a href = "">회원관리(목록, 레벨수정, 강제탈퇴)</a></li>
+			<li><a href="<%=request.getContextPath() %>/admin/noticeList.jsp?currentPage=1">공지관리</a></li> <!-- notice 메서드 사용 -->
+			<li><a href="<%=request.getContextPath() %>/admin/categoryList.jsp">카테고리관리</a></li> <!-- category 메서드 사용 -->
+			<li><a href="<%=request.getContextPath() %>/admin/memberList.jsp">회원관리</a></li>
+			<li><a href="<%=request.getContextPath() %>/logout.jsp">로그아웃</a></li>
 		</ul>
+		<div>
+			<!-- adbmin 컨텐츠 내용 -->
+			<!-- 3가지 목록 모두 CRUD 필요+ 페이징 -->
+			<!-- noticeDao -> CRUD  카테고리 ->  페이징X -->
+			<h2>공지</h2>
+			<table border="1">
+				<tr>
+					<th>번호</th>
+					<th>공지내용</th>
+					<th>작성일</th>
+				</tr>
+				<%
+					for(Notice n : noticeList){
+					%>
+						<tr>
+							<td><%=n.getNoticeNo()%></td>
+							<td><%=n.getNoticeMemo() %></td>
+							<td><%=n.getCreatedate() %></td>
+						</tr>
+					<%
+					}
+				%>
+			</table>
+			<h2>회원</h2>
+			<table border="1">
+				<tr>
+					<th>NO</th>
+					<th>ID</th>
+					<th>LEVEL</th>
+					<th>NAME</th>
+					<th>CREATEDATE</th>
+					<th>UPDATE DATE</th>
+				</tr>
+				<%
+					for(Member m : memberList) {
+						%>
+						<tr>
+							<td><%=m.getMemberNo() %></td>
+							<td><%=m.getMemberId() %></td>
+							<td><%=m.getMemberLevel() %></td>
+							<td><%=m.getMemberName() %></td>
+							<td><%=m.getCreatedate() %></td>
+							<td><%=m.getUpdatedate() %></td>
+						</tr>
+						<%
+					}
+				%>
+			</table>
+			
+		
+		</div>
 	</body>
 </html>

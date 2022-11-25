@@ -1,6 +1,6 @@
 package dao;
 import vo.*;
-
+import dao.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,5 +48,40 @@ public class NoticeDao {
 		dbUtil.close(rs, stmt, conn);
 		return list;
 	}
-
+	
+	// 공지 등록
+	public int insertNotice(String noticeMemo) throws Exception {
+		int insertRow = 0;
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "INSERT INTO notice(notice_memo, updatedate, createdate) VALUES (?, NOW(), NOW());";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, noticeMemo);
+		insertRow = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return insertRow;
+	}
+	
+	// 공지 수정
+	public int updateNotice(Notice notice) throws Exception {
+		int updateRow = 0;
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "UPDATE notice SET notice_memo = ? WHERE notice_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, notice.getNoticeMemo());
+		stmt.setInt(2, notice.getNoticeNo());
+		dbUtil.close(null, stmt, conn);
+		return updateRow;
+	}
+	
+	// 공지 삭제
+	public int deleteNotice(Notice notice) {
+		String sql = "DELETE FROM notice WHERE notice_no = ?";
+		
+		return 0;
+	}
 }

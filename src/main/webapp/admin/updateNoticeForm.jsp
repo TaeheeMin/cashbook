@@ -4,6 +4,8 @@
 <%@ page import="java.util.*"%>
 <%@ page import = "java.net.URLEncoder" %>
 <%
+	// 공지 내용 하나 가져와서 내용 보여주고 수정
+	// 공지 번호가져와서 select -> notice로 받아와서 출력 -> memo만 수정가능하게 
 	//session 유효성 검증 코드
 	request.setCharacterEncoding("utf-8");
 	Member loginMember = (Member)session.getAttribute("loginMember");
@@ -13,14 +15,20 @@
 		System.out.println("로그인 필요");
 		return;
 	}
-	// 정보 수정 누르면 아이디 받아와서 비밀번호 확인, 이름 수정
+	
+	int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+	
+	//Notice notice = new Notice();
+	//notice.setNoticeNo(noticeNo);
+	
+	
 %>
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>update member</title>
+		<title>updateNoticeForm</title>
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -33,18 +41,20 @@
 	</head>
 	
 	<body>
-		<h1>내 정보 수정</h1>
-		<div>
-			<a href="<%=request.getContextPath()%>/cash/cashList.jsp">달력보기</a>
-			<a href="<%=request.getContextPath()%>/updateMemberForm.jsp">내정보수정</a>
-			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
-			<a href="<%=request.getContextPath()%>/deleteMemberForm.jsp">회원탈퇴</a>
-		</div>
-		<form method="post" action="<%=request.getContextPath()%>/updateMemberAction.jsp">
+		<ul>
+			<li><a href="<%=request.getContextPath() %>/admin/adminMain.jsp">관리자 페이지</a></li>
+			<li><a href="<%=request.getContextPath() %>/admin/noticeList.jsp?currentPage=1">공지관리</a></li> <!-- notice 메서드 사용 -->
+			<li><a href="<%=request.getContextPath() %>/admin/categoryList.jsp">카테고리관리</a></li> <!-- category 메서드 사용 -->
+			<li><a href="<%=request.getContextPath() %>/admin/memberList.jsp">회원관리</a></li>
+			<li><a href="<%=request.getContextPath() %>/logout.jsp">로그아웃</a></li>
+		</ul>
+		<h1>공지 수정</h1>
+		<form method="post" action="<%=request.getContextPath()%>/admin/updateNoticeAction.jsp">
 			<table border="1">
 				<tr>
-					<td>아이디</td>
+					<td>내용</td>
 					<td>
+					<textarea rows="5" cols="150" ></textarea>
 						<input type="text" name="memberId" readonly="readonly" value="<%=loginMember.getMemberId()%>">
 					</td>
 				</tr>
@@ -67,5 +77,6 @@
 				</tr>
 			</table>
 		</form>
+		
 	</body>
 </html>

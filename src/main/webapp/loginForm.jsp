@@ -5,7 +5,6 @@
 <%@page import="java.util.*"%>
 <%@ page import = "dao.*" %>
 <%@ page import = "vo.*" %>
-
 <%
 	//session 유효성 검증 코드
 	request.setCharacterEncoding("utf-8");
@@ -27,7 +26,6 @@
 	
 	int count = noticeDao.selectNoticeCount();
 	int lastPage = (int)Math.ceil((double)count / (double)rowPerPage); // 구하기
-	
 %>
 <!DOCTYPE html>
 <html>

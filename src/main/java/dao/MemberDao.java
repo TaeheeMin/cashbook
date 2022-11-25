@@ -1,12 +1,72 @@
 package dao;
 
 import java.sql.*;
-
-import org.apache.jasper.tagplugins.jstl.core.Param;
-
+import java.util.ArrayList;
 import vo.Member;
 
 public class MemberDao {
+	// 관리자 회원 목록
+	public ArrayList<Member> selectMemverListByPage(int beginRow, int rowPerPage) throws Exception {
+		ArrayList<Member> list = new ArrayList<Member>();
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String sql = "SELECT"
+				+ " member_no memberNo"
+				+ ", member_id memberId"
+				+ ", member_level memberLevel"
+				+ ", member_name memberName"
+				+ ", updatedate"
+				+ ", createdate"
+				+ " FROM member ORDER BY createdate DESC";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, beginRow);
+		stmt.setInt(2, rowPerPage);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			Member m = new Member();
+			m.setMemberNo(rs.getInt("memberNo"));
+			m.setMemberId(rs.getString("memberId"));
+			m.setMemberLevel(rs.getInt("memberLevel"));
+			m.setMemberName(rs.getString("memberName"));
+			m.setUpdatedate(rs.getString("updatedate"));
+			m.setCreatedate(rs.getString("createdate"));
+			list.add(m);
+		}
+		dbUtil.close(rs, stmt, conn);
+		return list;
+	}
+	
+	// 관리자 회원 목록 전체 페이지 수
+	public int selectMemberCount() throws Exception {
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "SELECT COUNT(*) FROM member";
+		PreparedStatement stmt = conn.prepareStatement(sql);;
+		ResultSet rs = stmt.executeQuery();
+		int count = 0;
+		if(rs.next()) {
+			count = rs.getInt("COUNT(*)");
+		}	
+		
+		dbUtil.close(rs, stmt, conn);
+		return count;
+	} 
+	
+	// 관리자 회원 강제 탈퇴 기능  -> 오버 라이딩?
+	public int deleteMemberByAdmin(Member member) throws Exception {
+		return 0;
+	}
+	
+	// 관리자 회원 레벨 수정
+	public int updateMemberLevel(Member member) {
+	return 0;
+	}
+	
 	// 로그인
 	public Member login(Member paramMember) throws Exception { 
 		// login 성공하면 리스트로 이동
@@ -25,6 +85,7 @@ public class MemberDao {
 			resultMember = new Member();
 			resultMember.setMemberId(rs.getString("member_id"));
 			resultMember.setMemberName(rs.getString("member_name"));
+			resultMember.setMemberLevel(rs.getInt("member_level"));
 		}
 		dbUtil.close(rs, stmt, conn);
 		return resultMember;
@@ -119,7 +180,7 @@ public class MemberDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		// 삭제
-		String sql = "DELETE FROM member WHERE member_id=? AND member_pw=PASSWORD(?)";
+		String sql = "DELETE FROM member WHERE member_id = ? AND member_pw = PASSWORD(?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, memberId);
 		stmt.setString(2, memberPw);
