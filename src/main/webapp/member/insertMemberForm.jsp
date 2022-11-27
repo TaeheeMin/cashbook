@@ -20,7 +20,7 @@
 		<div>
 			<a href="<%=request.getContextPath()%>/loginForm.jsp">홈으로</a>
 		</div>
-		<form method="post" action="<%=request.getContextPath()%>/insertMemberAction.jsp">
+		<form method="post" action="<%=request.getContextPath()%>/member/insertMemberAction.jsp">
 			<table border="1">
 				<tr>
 					<td>아이디</td>

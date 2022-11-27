@@ -11,13 +11,13 @@
 	String memberName = request.getParameter("memberName");
 	String memberPw = null;
 	String msg = null;
-	String redirectUrl = "/insertMemberForm.jsp?msg="+msg;
+	String redirectUrl = "/member/insertMemberForm.jsp?msg="+msg;
 	
 	// 작성 확인
 	if(memberId == null || pw1 == null || pw2 == null || memberName == null || 
 		memberId.equals("") || pw1.equals("") || pw2.equals("") || memberName.equals("")){
 		msg = URLEncoder.encode("내용을 입력하세요", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+msg);
+		response.sendRedirect(request.getContextPath()+"/member/insertMemberForm.jsp?msg="+msg);
 		return;
 	} // 내용 미입력시 메세지, 폼이동
 	
@@ -26,7 +26,7 @@
 		memberPw = pw1;
 	} else {
 		msg = URLEncoder.encode("비밀번호를 확인해 주세요", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+msg);
+		response.sendRedirect(request.getContextPath()+"/member/insertMemberForm.jsp?msg="+msg);
 		return;
 	} // 비밀번호 불일치시 메세지, 폼이동
 	
@@ -44,7 +44,7 @@
 	
 	if(checkRow == 1){
 		msg = URLEncoder.encode("ID 중복! 확인해주세요","utf-8");
-		response.sendRedirect(request.getContextPath()+"/insertMemberForm.jsp?msg="+msg);
+		response.sendRedirect(request.getContextPath()+"/member/insertMemberForm.jsp?msg="+msg);
 		return;
 	}
 	

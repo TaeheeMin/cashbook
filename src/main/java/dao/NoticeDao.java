@@ -1,6 +1,8 @@
 package dao;
 import vo.*;
 import dao.*;
+
+import java.lang.annotation.Native;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +16,8 @@ public class NoticeDao {
 		
 		int count =0;
 		String sql = "SELECT COUNT(*) FROM notice"; 
-		PreparedStatement stmt = conn.prepareStatement(sql);;
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
 			count = rs.getInt("COUNT(*)");
@@ -26,6 +29,7 @@ public class NoticeDao {
 	// loginForm 공지목록
 	public ArrayList<Notice> selectNoticeByPage(int beginRow, int rowPerPage) throws Exception {
 		ArrayList<Notice> list = new ArrayList<Notice>();
+		
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		
@@ -36,7 +40,6 @@ public class NoticeDao {
 		stmt.setInt(1, beginRow);
 		stmt.setInt(2, rowPerPage);
 		ResultSet rs = stmt.executeQuery();
-		
 		while(rs.next()) {
 			Notice n = new Notice();
 			n.setNoticeNo(rs.getInt("noticeNo"));
@@ -55,6 +58,7 @@ public class NoticeDao {
 		// db연결
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
+		
 		String sql = "INSERT INTO notice(notice_memo, updatedate, createdate) VALUES (?, NOW(), NOW());";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, noticeMemo);
@@ -65,23 +69,55 @@ public class NoticeDao {
 	}
 	
 	// 공지 수정
-	public int updateNotice(Notice notice) throws Exception {
+	// 1-1 공지 하나 가져오기
+	public Notice noticeOne(int noticeNo) throws Exception {
+		Notice n = new Notice();
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String sql = "SELECT notice_memo noticeMemo FROM notice WHERE notice_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, noticeNo);
+		
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			n.setNoticeMemo(rs.getString("noticeMemo"));
+		}
+		
+		dbUtil.close(rs, stmt, conn);
+		return n;
+	}
+	// 1-2 공지 수정
+	public int updateNotice(int noticeNo, String noticeMemo) throws Exception {
 		int updateRow = 0;
 		// db연결
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
+		
 		String sql = "UPDATE notice SET notice_memo = ? WHERE notice_no = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, notice.getNoticeMemo());
-		stmt.setInt(2, notice.getNoticeNo());
+		stmt.setString(1, noticeMemo);
+		stmt.setInt(2, noticeNo);
+		updateRow = stmt.executeUpdate();
+		
 		dbUtil.close(null, stmt, conn);
 		return updateRow;
 	}
 	
 	// 공지 삭제
-	public int deleteNotice(Notice notice) {
-		String sql = "DELETE FROM notice WHERE notice_no = ?";
+	public int deleteNotice(int noticeNo) throws Exception{
+		int deleteRow = 0;
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
 		
-		return 0;
+		String sql = "DELETE FROM notice WHERE notice_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, noticeNo);
+		deleteRow = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return deleteRow;
 	}
 }

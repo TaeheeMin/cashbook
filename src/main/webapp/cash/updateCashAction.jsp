@@ -15,58 +15,45 @@
 		return;
 	}
 	
-	String memberId = request.getParameter("memberId");
 	int year = Integer.parseInt(request.getParameter("year"));
 	int month = Integer.parseInt(request.getParameter("month"));
 	int date = Integer.parseInt(request.getParameter("date"));
 	
-	System.out.println(request.getParameter("cashNo") + "<- upCashAc cashNo");
+	// 작성 확인
+	if(request.getParameter("categoryNo") == null || request.getParameter("cashPrice") == null || request.getParameter("cashMemo") == null ||
+		request.getParameter("categoryNo").equals("") || request.getParameter("cashPrice").equals("") || request.getParameter("cashMemo").equals("")){
+		String msg = URLEncoder.encode("내용을 입력하세요", "utf-8");
+		String redirectUrl = "/cash/updateCashForm.jsp?cashNo="+request.getParameter("cashNo")+"&msg="+msg+"&year="+ year+"&month="+month+"&day="+date;
+		response.sendRedirect(request.getContextPath()+redirectUrl+msg);
+		return;
+	} // 내용 미입력시 메세지, 폼이동
+	
+	String memberId = request.getParameter("memberId");
 	int categoryNo = Integer.parseInt(request.getParameter("categoryNo"));
 	String cashDate = request.getParameter("cashDate");
 	Long cashPrice = Long.parseLong(request.getParameter("cashPrice"));
 	String cashMemo = request.getParameter("cashMemo");
 	int cashNo = Integer.parseInt(request.getParameter("cashNo"));
 	
-	// 디버깅
-	System.out.println(memberId + "<- upCashAc Id");
-	System.out.println(categoryNo + "<- upCashAc categoryNo");
-	System.out.println(cashDate + "<- upCashAc cashDate");
-	System.out.println(cashMemo + "<- upCashAc cashMemo");
-	/* 
-	// 작성 확인
-	if(request.getParameter("categoryNo") == null || request.getParameter("categoryNo").equals("") ||
-		request.getParameter("cashDate") == null || request.getParameter("cashDate").equals("")||
-		request.getParameter("cashPrice") == null || request.getParameter("cashPrice").equals("") ||
-		request.getParameter("cashMemo") == null || request.getParameter("cashMemo").equals("")){
-		String insertMsg = URLEncoder.encode("내용을 입력하세요", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/cashList.jsp?msg="+insertMsg+"&year="+year+"&month="+month+"&day="+date);
-		return;
-	} // 내용 미입력시 메세지, 폼이동
-	 */
-	Cash paramCash = new Cash();
-	//paramCash.setCsahNo(cashNo);
-	paramCash.setCategoryNo(categoryNo);
-	paramCash.setCashPrice(cashPrice);
-	paramCash.setCashNo(cashNo);
-	paramCash.setCashMemo(cashMemo);
+	Cash cash = new Cash();
+	cash.setCashNo(cashNo);
+	cash.setCategoryNo(categoryNo);
+	cash.setCashPrice(cashPrice);
+	cash.setCashNo(cashNo);
+	cash.setCashMemo(cashMemo);
+	cash.setMemberId(memberId);
 	
 	CashDao cashDao = new CashDao();
-	int resultRow = cashDao.updateCash(paramCash);
-	String redirectUrl = null;
+	int resultRow = cashDao.updateCash(cash);
+
+	String msg = URLEncoder.encode("수정실패","utf-8");
+	String redirectUrl = "/cash/cashUpdateForm.jsp?msg="+msg;
 	
 	if(resultRow == 1){
-		//삭제성공
 		System.out.println("수정성공");
-		String msg = URLEncoder.encode("수정성공","utf-8");
+		msg = URLEncoder.encode("수정성공","utf-8");
 		redirectUrl = "/cash/cashDateList.jsp?msg="+msg+"&year="+year+"&month="+(month)+"&day="+date+"&day="+"&cahsNo="+cashNo;
-	} else {
-		String msg = URLEncoder.encode("수정실패","utf-8");
-		redirectUrl = "/cash/cashDateList.jsp?msg="+msg+"&year="+year+"&month="+(month)+"&day="+date+"&day="+"&cahsNo="+cashNo;
-		System.out.println(resultRow + "<- upCashAc resultRow");
-		
 	}
 	
 	response.sendRedirect(request.getContextPath()+redirectUrl);
-	
-
 %>

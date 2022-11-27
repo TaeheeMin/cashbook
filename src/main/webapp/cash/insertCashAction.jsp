@@ -5,38 +5,36 @@
 <%@ page import = "java.net.URLEncoder" %>
 <%
 	request.setCharacterEncoding("utf-8");
-
 	// 1. controller
-	String memberId = request.getParameter("memberId");
-	int catagoryNo = Integer.parseInt(request.getParameter("catagoryNo"));
+	// 로그인 세션 정보 확인
+	int categoryNo = Integer.parseInt(request.getParameter("catagoryNo"));
 	String cashDate = request.getParameter("cashDate");
-	int cashPrice = Integer.parseInt(request.getParameter("cashPrice"));
+	Long cashPrice = Long.parseLong(request.getParameter("cashPrice"));
 	String cashMemo = request.getParameter("cashMemo");
-	// 디버깅
-	System.out.println("insCashAc Id" + memberId);
-	System.out.println("insCashAc catagoryNo" + catagoryNo);
-	System.out.println("insCashAc cashDate" + cashDate);
-	System.out.println("insCashAc cashPrice" + cashPrice);
-	System.out.println("insCashAc cashMemo" + cashMemo);
+	String memberId = request.getParameter("memberId");
 	
 	// 작성 확인
-	if(memberId == null || catagoryNo == 0 || cashDate == null || cashPrice == 0 || cashMemo == null || 
-		memberId.equals("") || cashDate.equals("") || cashMemo.equals("")){
-		String insertMsg = URLEncoder.encode("내용을 입력하세요", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/cashDateList.jsp?msg="+insertMsg);
+	if(categoryNo == 0 || cashDate == null || cashPrice == 0 || cashMemo == null || 
+		cashDate.equals("") || cashMemo.equals("")){
+		String msg = URLEncoder.encode("내용을 입력하세요", "utf-8");
+		response.sendRedirect(request.getContextPath()+"/cashDateList.jsp?msg="+msg);
 		return;
 	} // 내용 미입력시 메세지, 폼이동
 	
 	// 2. model
+	Cash cash = new Cash();
+	cash.setCategoryNo(categoryNo);
+	cash.setMemberId(memberId);
+	cash.setCashDate(cashDate);
+	cash.setCashPrice(cashPrice);
+	cash.setCashMemo(cashMemo);
+	
 	CashDao cashDao = new CashDao();
-	int resultRow = cashDao.insertCash(catagoryNo, cashDate, cashMemo, memberId, cashPrice);
+	int resultRow = cashDao.insertCash(cash);
 	String msg = URLEncoder.encode("작성실패","utf-8");
 	String redirectUrl = "/cash//cashList.jsp?msg="+msg;
-	System.out.println("inserCashAction resultRow : " + resultRow);
 	
 	if(resultRow == 1){
-		//삭제성공
-		System.out.println("작성성공");
 		msg = URLEncoder.encode("작성성공","utf-8");
 		redirectUrl = "/cash/cashList.jsp?msg="+msg;
 	}

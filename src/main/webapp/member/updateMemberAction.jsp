@@ -14,7 +14,7 @@
 	if(memberId == null || memberPw == null || memberName == null || 
 		memberId.equals("") || memberPw.equals("") || memberName.equals("")){
 		String msg = URLEncoder.encode("내용을 입력하세요", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/updateMemberForm.jsp?msg="+ msg);
+		response.sendRedirect(request.getContextPath()+"/member/updateMemberForm.jsp?msg="+ msg);
 		return;
 	} // 내용 미입력시 메세지, 폼이동
 	
@@ -33,7 +33,7 @@
 	MemberDao memberDao = new MemberDao();
 
 	String msg = URLEncoder.encode("수정성공","utf-8");
-	String redirectUrl = "/updateMemberForm.jsp?msg="+msg;
+	String redirectUrl = "/member/updateMemberForm.jsp?msg="+msg;
 	int resultRow = memberDao.updateMember(paramUpdate);
 	if(resultRow == 1){
 		// 수정 성공 -> 폼으로 이동
@@ -42,7 +42,7 @@
 	} else {
 		// 수정 실패 -> 폼으로 이동
 		msg = URLEncoder.encode("비밀번호를 확인해주세요", "utf-8");
-		redirectUrl = "/updateMemberForm.jsp?msg="+msg;
+		redirectUrl = "/member/updateMemberForm.jsp?msg="+msg;
 	}
 	response.sendRedirect(request.getContextPath()+redirectUrl);
 %>

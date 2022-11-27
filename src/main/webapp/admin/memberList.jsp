@@ -5,17 +5,20 @@
 <%@ page import = "java.net.URLEncoder" %>
 <%
 	// 1.controller
+	// controller : session 검증
 	Member loginMember = (Member)session.getAttribute("loginMember");
-	String rdirectUrl = "/admin/adminMain.jsp";
-	String msg = URLEncoder.encode("관리자 페이지입니다.","utf-8");
+	String msg = URLEncoder.encode("삭제 실패","utf-8");;
+	String redirectUrl = "/admin/noticeList.jsp?msg="+msg;
 	
-	// 로그인 세션 검증
 	if(loginMember == null || loginMember.getMemberLevel() < 1) {
-		rdirectUrl= "/loginForm.jsp?msg="+msg;
-		response.sendRedirect(request.getContextPath()+rdirectUrl);
+		msg = URLEncoder.encode("관리자 권한 필요","utf-8");
+		redirectUrl= "/loginForm.jsp?msg="+msg;
+		response.sendRedirect(request.getContextPath()+redirectUrl);
 		return;
 	}
-	// 페이징 알고리즘
+	
+	// 2. model
+	// 페이징
 	int currentPage = 1;
 	if(request.getParameter("currentPage") != null) {
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -23,13 +26,13 @@
 	int rowPerPage = 10;
 	int beginRow = (currentPage-1) * rowPerPage;
 	
-	// 2. model
 	MemberDao memberDao = new MemberDao();
 	ArrayList<Member> list = memberDao.selectMemverListByPage(beginRow, rowPerPage);
 	
 	int memberCount = memberDao.selectMemberCount();
 	int lastPage = (int)Math.ceil((double)memberCount / (double)rowPerPage);
 	System.out.println(memberCount + "<-noticeCount/" + lastPage + "lastPage" );
+	
 	// 3.view
 %>
 <!DOCTYPE html>
@@ -57,7 +60,6 @@
 			<li><a href="<%=request.getContextPath() %>/logout.jsp">로그아웃</a></li>
 		</ul>
 
-		<!-- adbmin 컨텐츠 내용 -->
 		<!-- 회원관리(목록, 레벨수정, 강제탈퇴)  -->
 		<h1>회원 목록</h1>
 		<div>
@@ -111,6 +113,5 @@
 			<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=lastPage%>">마지막</a>
 		</div>
 		
-
 	</body>
 </html>

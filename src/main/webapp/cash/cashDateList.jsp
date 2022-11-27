@@ -56,7 +56,7 @@
 		<h1><%=year%>년 <%=month+1%> 월 <%=date %>일</h1>
 		<div>
 			<a href="<%=request.getContextPath()%>/cash/cashList.jsp">달력보기</a>
-			<a href="<%=request.getContextPath()%>/updateMemberForm.jsp">내정보수정</a>
+			<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp">내정보수정</a>
 			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 		</div>
 		<!-- 입력폼 -->
@@ -127,7 +127,7 @@
 					<td><%=(String)m.get("cashMemo")%></td>
 					<td>
 						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=cashNo%>&year=<%=year %>&month=<%=month %>&day=<%=date %>">수정</a>
-						<a href="<%=request.getContextPath()%>/cash/deleteCashForm.jsp?cashNo=<%=cashNo%>">삭제</a>
+						<a href="<%=request.getContextPath()%>/cash/deleteCashForm.jsp?cashNo=<%=cashNo%>&year=<%=year %>&month=<%=month %>&day=<%=date %>">삭제</a>
 					</td>
 				</tr>
 			<%

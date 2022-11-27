@@ -9,12 +9,10 @@ import vo.*;
 
 public class CashDao {
 	// cash insert 등록
-	public int insertCash (int categoryNo, String cashDate, String cashMemo, String memberId, int cashPrice) throws Exception { 
+	public int insertCash (Cash cash) throws Exception { 
 		// db연결 
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
-		int insertRow = 0;
-		// 등록
 		String sql = "INSERT INTO cash("
 				+ "category_no"
 				+ ", cash_date"
@@ -23,14 +21,15 @@ public class CashDao {
 				+ ", member_id"
 				+ ", updatedate"
 				+ ", createdate"
-				+ ") VALUES (?, ?, ?, ?, NOW(), NOW());";
+				+ ") VALUES (?, ?, ?, ?, ?, NOW(), NOW());";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, categoryNo);
-		stmt.setString(2, cashDate);
-		stmt.setString(3, cashMemo);
-		stmt.setInt(4, cashPrice);
-		stmt.setString(5, memberId);
+		stmt.setInt(1, cash.getCategoryNo());
+		stmt.setString(2, cash.getCashDate());
+		stmt.setString(3, cash.getCashMemo());
+		stmt.setLong(4, cash.getCashPrice());
+		stmt.setString(5, cash.getMemberId());
 	
+		int insertRow = 0;
 		insertRow = stmt.executeUpdate();
 		
 		dbUtil.close(null, stmt, conn);
@@ -149,7 +148,7 @@ public class CashDao {
 		}
 		
 	// cash update
-	public int updateCash (Cash paramCash) throws Exception { 
+	public int updateCash (Cash cash) throws Exception { 
 		// db연결 
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -160,11 +159,11 @@ public class CashDao {
 				+ ", cash_memo = ?"
 				+ " WHERE cash_no = ? AND member_id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, paramCash.getCategoryNo());
-		stmt.setLong(2, paramCash.getCashPrice());
-		stmt.setString(3, paramCash.getCashMemo());
-		stmt.setInt(4, paramCash.getCashNo());;
-		stmt.setString(5, paramCash.getMemberId());
+		stmt.setInt(1, cash.getCategoryNo());
+		stmt.setLong(2, cash.getCashPrice());
+		stmt.setString(3, cash.getCashMemo());
+		stmt.setInt(4, cash.getCashNo());;
+		stmt.setString(5, cash.getMemberId());
 		int updateRow = stmt.executeUpdate();
 		
 		dbUtil.close(null, stmt, conn);

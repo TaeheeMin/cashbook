@@ -8,7 +8,6 @@
 	// 로그인 세션 정보 확인
 	request.setCharacterEncoding("utf-8");
 	System.out.println(request.getParameter("cashNo")+"<-updateForm cashNo값");
-
 	
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	if(loginMember == null){
@@ -23,16 +22,11 @@
 	int month = Integer.parseInt(request.getParameter("month"));
 	String date = request.getParameter("day");
 	int cashNo = Integer.parseInt(request.getParameter("cashNo"));
-	System.out.println(year+"<-updateForm param값");
-	System.out.println(month+"<-updateForm param값");
-	System.out.println(date+"<-updateForm param값");
-	System.out.println(cashNo+"<-updateForm cashNo param값");
-	 
+	
 	// Model : 카테고리 목록
 	CategoryDao categoryDao = new CategoryDao();
 	ArrayList<Category> categoryList = categoryDao.selectCategoryList();
 	
-	// 한 날짜 값을 가져와서 그걸로 폼 값 넣어주고 수정 진행
 	CashDao cashDao = new CashDao();
 	Cash cashOne = cashDao.cashOne(loginMember.getMemberId(), cashNo);
 	
@@ -54,6 +48,13 @@
 	</head>
 	
 	<body>
+		<h1><%=year%>년 <%=month+1%> 월 <%=date %>일</h1>
+		<div>
+			<a href="<%=request.getContextPath()%>/cash/cashList.jsp">달력보기</a>
+			<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp">내정보수정</a>
+			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+		</div>
+		
 		<form action="<%=request.getContextPath()%>/cash/updateCashAction.jsp?cashNo=<%=cashNo %>" method="post">
 			<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
 			<input type="hidden" name="year" value="<%=year%>">

@@ -28,6 +28,11 @@
 	</head>
 	
 	<body>
+		<div>
+			<a href="<%=request.getContextPath()%>/cash/cashList.jsp">달력보기</a>
+			<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp">내정보수정</a>
+			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+		</div>
 		<form action="<%=request.getContextPath()%>/cash/deleteCashAction.jsp" method="post">
 			<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
 			<input type="hidden" name="cashNo" value="<%=cashNo %>">

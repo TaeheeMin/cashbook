@@ -7,19 +7,20 @@
 
 <%
 	// 1.controller
+	// controller : session 검증
 	Member loginMember = (Member)session.getAttribute("loginMember");
-	String rdirectUrl = "/admin/adminMain.jsp";
-	String msg = URLEncoder.encode("관리자 페이지입니다.","utf-8");
+	String msg = URLEncoder.encode("삭제 실패","utf-8");;
+	String redirectUrl = "/admin/noticeList.jsp?msg="+msg;
 	
-	// 로그인 세션 검증
 	if(loginMember == null || loginMember.getMemberLevel() < 1) {
-		msg = URLEncoder.encode("로그인 필요.","utf-8");
-		rdirectUrl= "/loginForm.jsp?msg="+msg;
-		response.sendRedirect(request.getContextPath()+rdirectUrl);
+		msg = URLEncoder.encode("관리자 권한 필요","utf-8");
+		redirectUrl= "/loginForm.jsp?msg="+msg;
+		response.sendRedirect(request.getContextPath()+redirectUrl);
 		return;
 	}
 	
-	// 페이징 알고리즘
+	// 2. model : notice List
+	// 페이징
 	int currentPage = 1;
 	if(request.getParameter("currentPage") != null) {
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -27,9 +28,7 @@
 	int rowPerPage = 10;
 	int beginRow = (currentPage-1) * rowPerPage;
 	
-	// 2. model : notice List
 	NoticeDao noticeDao = new NoticeDao();
-	// 페이징 알고리즘
 	ArrayList<Notice> list = noticeDao.selectNoticeByPage(beginRow, rowPerPage);
 	
 	int noticeCount = noticeDao.selectNoticeCount();
@@ -82,8 +81,8 @@
 								<td><%=n.getCreatedate() %></td>
 								<td>
 									<input type="hidden" name="noticeNo" value="<%=n.getNoticeNo()%>">
-									<a href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp">수정</a>
-									<a href="<%=request.getContextPath()%>/admin/deleteNoticeForm.jsp">삭제</a>
+									<a href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp?noticeNo=<%=n.getNoticeNo()%>">수정</a>
+									<a href="<%=request.getContextPath()%>/admin/deleteNoticeAction.jsp?noticeNo=<%=n.getNoticeNo()%>">삭제</a>
 								</td>
 							</tr>
 						<%
@@ -109,22 +108,21 @@
 			</div>
 			
 			<div>
-			<!-- 입력폼 -->
-			<form action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp" method="post">
-				<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
-				<table border="1">
-					<tr>
-						<td>공지내용</td>
-						<td>
-							<textarea rows="5" cols="150" name="noticeMemo"></textarea>
-						</td>
-					</tr>
-					<tr>
-					<td colspan="2"><button type="submit">등록</button></td>
-					</tr>
-				</table>
-			</form>
+				<!-- 입력폼 -->
+				<form action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp" method="post">
+					<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
+					<table border="1">
+						<tr>
+							<td>공지내용</td>
+							<td>
+								<textarea rows="5" cols="150" name="noticeMemo"></textarea>
+							</td>
+						</tr>
+						<tr>
+						<td colspan="2"><button type="submit">등록</button></td>
+						</tr>
+					</table>
+				</form>
 			</div>
-			
 	</body>
 </html>

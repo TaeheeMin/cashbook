@@ -1,9 +1,9 @@
 package vo;
 
 public class Cash {
-	private int cashNo;
 	// map을 사용안하려면 private Category category로 이너조인으로 받아올수있음 -> Cash타입으로 사용 
 	private int categoryNo; // 참조키 이너조인 필요 -> map타입으로 사용
+	private int cashNo;
 	private String memberId;
 	private String cashDate;
 	private long cashPrice; 

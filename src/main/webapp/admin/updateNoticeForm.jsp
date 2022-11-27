@@ -1,27 +1,29 @@
+<%@page import="javax.management.ValueExp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vo.*"%>
 <%@ page import="dao.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import = "java.net.URLEncoder" %>
 <%
-	// 공지 내용 하나 가져와서 내용 보여주고 수정
-	// 공지 번호가져와서 select -> notice로 받아와서 출력 -> memo만 수정가능하게 
-	//session 유효성 검증 코드
+	// 1.controller
+	// controller : session 검증
 	request.setCharacterEncoding("utf-8");
 	Member loginMember = (Member)session.getAttribute("loginMember");
-	if(loginMember == null){
-		String msg = URLEncoder.encode("로그인해주세요","utf-8");
-		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
-		System.out.println("로그인 필요");
+	String msg = URLEncoder.encode("삭제 실패","utf-8");;
+	String redirectUrl = "/admin/noticeList.jsp?msg="+msg;
+	
+	if(loginMember == null || loginMember.getMemberLevel() < 1) {
+		msg = URLEncoder.encode("관리자 권한 필요","utf-8");
+		redirectUrl= "/loginForm.jsp?msg="+msg;
+		response.sendRedirect(request.getContextPath()+redirectUrl);
 		return;
 	}
 	
+	// 2. model
 	int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 	
-	//Notice notice = new Notice();
-	//notice.setNoticeNo(noticeNo);
-	
-	
+	NoticeDao noticeDao = new NoticeDao();
+	Notice notice = noticeDao.noticeOne(noticeNo);
 %>
 
 <!DOCTYPE html>
@@ -50,24 +52,12 @@
 		</ul>
 		<h1>공지 수정</h1>
 		<form method="post" action="<%=request.getContextPath()%>/admin/updateNoticeAction.jsp">
+			<input type="hidden" value="<%=noticeNo%>" name="noticeNo">
 			<table border="1">
 				<tr>
 					<td>내용</td>
 					<td>
-					<textarea rows="5" cols="150" ></textarea>
-						<input type="text" name="memberId" readonly="readonly" value="<%=loginMember.getMemberId()%>">
-					</td>
-				</tr>
-				<tr>
-					<td>비밀번호</td>
-					<td>
-						<input type="password" name="memberPw">
-					</td>
-				</tr>
-				<tr>
-					<td>이름</td>
-					<td>
-						<input type="text" name="memberName" value="<%=loginMember.getMemberName()%>">
+					<textarea rows="5" cols="150" name="noticeMemo"><%=notice.getNoticeMemo()%></textarea>
 					</td>
 				</tr>
 				<tr>

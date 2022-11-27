@@ -5,25 +5,20 @@
 <%@ page import = "java.net.URLEncoder" %>
 <%
 	// 1.controller
-	// 로그인관리자를 그냥 통으로 가져옴
-	// 방어코드 안되는데? 아무것도 아
+	// controller : session 검증
 	Member loginMember = (Member)session.getAttribute("loginMember");
-	String msg = URLEncoder.encode("로그인 필요.","utf-8");
-	String rdirectUrl = "/admin/adminMain.jsp?msg="+msg;
-	/*
-	// 로그인 세션 검증
+	String msg = URLEncoder.encode("삭제 실패","utf-8");;
+	String redirectUrl = "/admin/noticeList.jsp?msg="+msg;
+	
 	if(loginMember == null || loginMember.getMemberLevel() < 1) {
-		rdirectUrl= "/loginForm.jsp?msg="+msg;
+		msg = URLEncoder.encode("관리자 권한 필요","utf-8");
+		redirectUrl= "/loginForm.jsp?msg="+msg;
+		response.sendRedirect(request.getContextPath()+redirectUrl);
 		return;
 	}
-	response.sendRedirect(request.getContextPath()+rdirectUrl);
-	
-	
-	*/
+
 	// 2. model
-	// 최근 공지 5개, 최근멤버 5명
-	
-	// 페이징 알고리즘
+	// 최근 공지 5개, 최근멤버 5명 페이징
 	int currentPage = 1;
 	if(request.getParameter("currentPage") != null) {
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -31,16 +26,14 @@
 	int rowPerPage = 5;
 	int beginRow = (currentPage-1) * rowPerPage;
 	
-	// 2. model
-	// 회원 페이징 알고리즘
+	// 회원 페이징
 	MemberDao memberDao = new MemberDao();
 	ArrayList<Member> memberList = memberDao.selectMemverListByPage(beginRow, rowPerPage);
 	int memberCount = memberDao.selectMemberCount();
 	int memberLastPage = (int)Math.ceil((double)memberCount / (double)rowPerPage);
 	System.out.println(memberCount + "<-memberCount/" + memberLastPage + "lastPage"+ rowPerPage);
 	
-	
-	// 공지 페이징 알고리즘
+	// 공지 페이징
 	NoticeDao noticeDao = new NoticeDao();
 	ArrayList<Notice> noticeList = noticeDao.selectNoticeByPage(beginRow, rowPerPage);
 	int noticeCount = noticeDao.selectNoticeCount();
@@ -87,7 +80,9 @@
 					}
 				%>
 			</table>
+			
 			<h2>회원</h2>
+			
 			<table border="1">
 				<tr>
 					<th>NO</th>
@@ -112,8 +107,6 @@
 					}
 				%>
 			</table>
-			
-		
 		</div>
 	</body>
 </html>

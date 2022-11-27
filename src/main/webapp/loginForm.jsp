@@ -99,7 +99,7 @@
 			<button type="submit">로그인</button>
 		</form>
 		<div >
-			<button type="button" onclick="location.href='<%=request.getContextPath()%>/insertMemberForm.jsp'">회원가입</button>
+			<button type="button" onclick="location.href='<%=request.getContextPath()%>/member/insertMemberForm.jsp'">회원가입</button>
 		</div>
 	</body>
 </html>
