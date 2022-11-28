@@ -5,11 +5,11 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String msg = URLEncoder.encode("수정 실패","utf-8");
-	String redirectUrl = "/admin/noticeList.jsp?msg="+msg;
+	String redirectUrl = "/admin/categoryList.jsp?msg=";
 
 	// 작성 확인
-	if(request.getParameter("categoryKind") == null || request.getParameter("categoryKind").equals("")
-		|| (request.getParameter("categoryName") == null || request.getParameter("categoryName").equals(""))){
+	//request.getParameter("categoryKind") == null || request.getParameter("categoryKind").equals("")
+	if((request.getParameter("categoryName") == null || request.getParameter("categoryName").equals(""))){
 		msg = URLEncoder.encode("내용을 입력하세요", "utf-8");
 		redirectUrl = "/admin/updateNoticeForm.jsp?categoryNo="+request.getParameter("categoryNo")+"&msg="+msg;
 		response.sendRedirect(request.getContextPath()+redirectUrl+msg);
@@ -17,15 +17,15 @@
 	} // 내용 미입력시 메세지, 폼이동
 		
 	int categoryNo = Integer.parseInt(request.getParameter("categoryNo"));
-	String categoryKind = request.getParameter("categoryKind");
-	System.out.println(categoryKind+"<-categoryKind");
 	String categoryName = request.getParameter("categoryName");
+	//String categoryKind = request.getParameter("categoryKind");
+	//System.out.println(categoryKind+"<-categoryKind");
 	
 	CategoryDao categoryDao = new CategoryDao();
-	int updateRow = categoryDao.updateCategory(categoryNo, categoryKind, categoryName);
+	int updateRow = categoryDao.updateCategory(categoryNo, categoryName);
 	
 	if(updateRow == 1){
 		msg = URLEncoder.encode("수정 성공","utf-8");
-		response.sendRedirect(request.getContextPath()+redirectUrl);
+		response.sendRedirect(request.getContextPath()+redirectUrl+msg);
 	}
 %>

@@ -48,9 +48,11 @@
 		
 		<h1>카테고리 수정</h1>
 		<form method ="post" action="<%=request.getContextPath()%>/admin/updateCategoryAction.jsp?categoryNo=<%=categoryNo%>">
+			<!-- 
 			categoryKind
 			<input type="radio" name="categoryKind" value="수입">수입
 			<input type="radio" name="categoryKind" value="지출">지출
+			 -->
 			categoryName
 			<input type="text" name="categoryName" value="<%=category.getCategoryName()%>">
 			<button>수정</button>

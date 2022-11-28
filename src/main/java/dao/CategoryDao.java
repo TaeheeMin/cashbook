@@ -160,10 +160,9 @@ public class CategoryDao {
 	}
 	
 	// 1-2 categoryUpdate
-	public int updateCategory(int categoryNo, String categoryName, String categoryKind) throws Exception {
+	public int updateCategory(int categoryNo, String categoryName) throws Exception {
 		String sql = "UPDATE category"
 				+ " SET category_name = ?"
-				+ ", category_kind = ?"
 				+ ", updatedate = CURDATE()"
 				+ " WHERE category_no = ?";
 		DBUtil dbutil = new DBUtil();
@@ -174,8 +173,7 @@ public class CategoryDao {
 		conn = dbutil.getConnection();
 		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, categoryName);
-		stmt.setString(2, categoryKind);
-		stmt.setInt(3, categoryNo);
+		stmt.setInt(2, categoryNo);
 		int updateRow = 0;
 		updateRow = stmt.executeUpdate();
 		
