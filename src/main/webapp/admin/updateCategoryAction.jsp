@@ -8,7 +8,6 @@
 	String redirectUrl = "/admin/categoryList.jsp?msg=";
 
 	// 작성 확인
-	//request.getParameter("categoryKind") == null || request.getParameter("categoryKind").equals("")
 	if((request.getParameter("categoryName") == null || request.getParameter("categoryName").equals(""))){
 		msg = URLEncoder.encode("내용을 입력하세요", "utf-8");
 		redirectUrl = "/admin/updateNoticeForm.jsp?categoryNo="+request.getParameter("categoryNo")+"&msg="+msg;

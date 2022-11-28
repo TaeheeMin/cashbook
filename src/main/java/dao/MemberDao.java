@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-import vo.Member;
+import vo.*;
 
 public class MemberDao {
 	// 관리자 회원 목록
@@ -58,14 +58,84 @@ public class MemberDao {
 	} 
 	
 	// 관리자 회원 강제 탈퇴 기능
-	public int deleteMemberByAdmin(Member member) throws Exception {
+	public int deleteMemberByAdmin(int memberNo) throws Exception {
 		String sql = "DELETE FROM member WHERE member_no=?";
-		return 0;
+		
+		DBUtil dbUtil = new DBUtil();
+		//db 자원 초기화(jdbc api자원) 
+		Connection conn = null; 
+		PreparedStatement stmt = null; 
+		conn = dbUtil.getConnection();
+		stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, memberNo);
+		
+		int deleteMember = 0;
+		deleteMember = stmt.executeUpdate();
+			
+		// db자원 반납(jdbc api자원)
+		dbUtil.close(null, stmt, conn);
+		return deleteMember;
 	}
 	
 	// 관리자 회원 레벨 수정
-	public int updateMemberLevel(Member member) {
-	return 0;
+	// 1-1 memberOne
+	public Member memberOneByAdmin(int memberNo) throws Exception {
+		String sql = "SELECT"
+				+ " member_no memberNo"
+				+ ", member_id memberId"
+				+ ", member_name memberName"
+				+ ", member_level memberLevel"
+				+ " FROM member"
+				+ " WHERE member_no =?";
+		
+		DBUtil dbUtil = new DBUtil();
+		//db 자원 초기화(jdbc api자원) 
+		Connection conn = null; 
+		PreparedStatement stmt = null; 
+		ResultSet rs = null;
+		
+		conn = dbUtil.getConnection();
+		stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, memberNo);
+		rs = stmt.executeQuery();
+		
+		Member memberOne = null;
+		while(rs.next()) {
+			memberOne = new Member();
+			memberOne.setMemberNo(rs.getInt("memberNo"));
+			memberOne.setMemberId(rs.getString("memberId"));
+			memberOne.setMemberName(rs.getString("memberName"));
+			memberOne.setMemberLevel(rs.getInt("memberLevel"));
+		}
+		// db자원 반납(jdbc api자원)
+		dbUtil.close(rs, stmt, conn);
+		return memberOne;
+	}
+	
+	// 1-2 updateMember
+	public int updateMemberByAdmin(Member member) throws Exception {
+		String sql = "UPDATE member"
+				+ " SET member_name = ?"
+				+ ", member_level = ?"
+				+ ", updatedate = CURDATE()"
+				+ " WHERE member_no = ?";
+		
+		DBUtil dbUtil = new DBUtil();
+		//db 자원 초기화(jdbc api자원) 
+		Connection conn = null; 
+		PreparedStatement stmt = null; 
+
+		conn = dbUtil.getConnection();
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, member.getMemberName());
+		stmt.setInt(2, member.getMemberLevel());
+		stmt.setInt(3, member.getMemberNo());
+		int updateMember=0;
+		updateMember = stmt.executeUpdate();
+			
+		// db자원 반납(jdbc api자원)
+		dbUtil.close(null, stmt, conn);
+		return updateMember;
 	}
 	
 	// 로그인
@@ -173,6 +243,29 @@ public class MemberDao {
 		
 		dbUtil.close(null, stmt, conn);
 		return updateRow;
+	}
+	
+	// 회원 비밀번호 수정
+	public int updatePwMember(String memberId, String newMemberPw, String memberPw) throws Exception {
+		// db연결
+		DBUtil dbUtil = new DBUtil();
+		String sql = "UPDATE member SET member_pw = PASSWORD(?) WHERE member_id = ? AND member_pw = PASSWORD(?)";
+		//db 자원 초기화(jdbc api자원) 
+		Connection conn = null; 
+		PreparedStatement stmt = null; 
+
+		conn = dbUtil.getConnection();
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, newMemberPw);
+		stmt.setString(2, memberId);
+		stmt.setString(3, memberPw);
+		int updateMember=0;
+		updateMember = stmt.executeUpdate();
+		
+			
+		// db자원 반납(jdbc api자원)
+		dbUtil.close(null, stmt, conn);
+		return updateMember;
 	}
 	
 	// 회원탈퇴

@@ -133,7 +133,7 @@ public class CashDao {
 			stmt.setString(1, memberId);
 			stmt.setInt(2, cashNo);
 			ResultSet rs = stmt.executeQuery();
-			Cash resultCash = new Cash();
+			Cash resultCash = null;
 			while(rs.next()) {
 				resultCash  = new Cash();
 				resultCash.setCashNo(rs.getInt("cashNo"));

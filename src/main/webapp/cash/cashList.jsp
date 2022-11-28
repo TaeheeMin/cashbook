@@ -12,7 +12,13 @@
 		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
 		System.out.println("로그인 필요");
 		return;
+	} else if(loginMember.getMemberLevel() >= 1){
+		String msg = URLEncoder.encode("관리자 페이지입니다.","utf-8");
+		response.sendRedirect(request.getContextPath()+"/admin/adminMain.jsp?msg="+msg);
+		System.out.println("관리자 로그인");
+		return;
 	}
+	
 	// request -> 년도 + 월
 	int year = 0;
 	int month = 0;

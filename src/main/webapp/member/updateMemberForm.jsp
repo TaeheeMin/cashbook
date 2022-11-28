@@ -13,7 +13,6 @@
 		System.out.println("로그인 필요");
 		return;
 	}
-	// 정보 수정 누르면 아이디 받아와서 비밀번호 확인, 이름 수정
 %>
 
 <!DOCTYPE html>
@@ -33,13 +32,16 @@
 	</head>
 	
 	<body>
-		<h1>내 정보 수정</h1>
 		<div>
 			<a href="<%=request.getContextPath()%>/cash/cashList.jsp">달력보기</a>
 			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 			<a href="<%=request.getContextPath()%>/member/deleteMemberForm.jsp">회원탈퇴</a>
 		</div>
+		
+		<!-- 개인정보 수정 -->
+		<h1>정보 수정</h1>
 		<form method="post" action="<%=request.getContextPath()%>/member/updateMemberAction.jsp">
+			
 			<table border="1">
 				<tr>
 					<td>아이디</td>
@@ -50,13 +52,34 @@
 				<tr>
 					<td>비밀번호</td>
 					<td>
-						<input type="password" name="memberPw">
+						<input type="password" name="memberPw" placeholder="비밀번호 확인">
 					</td>
 				</tr>
 				<tr>
 					<td>이름</td>
 					<td>
 						<input type="text" name="memberName" value="<%=loginMember.getMemberName()%>">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<button type="submit">수정</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<!-- 비밀번호 수정 -->
+		<h1>비밀번호 수정</h1>
+		<form method="post" action="<%=request.getContextPath()%>/member/updateMemberPwAction.jsp">
+			<input type="hidden" name="memberId" value="<%=loginMember.getMemberId()%>">
+			<table border="1">
+				<tr>
+					<td>비밀번호</td>
+					<td>
+						<input type="password" name="memberPw" placeholder="현재 비밀번호"> <br>
+						<input type="password" name="memberPw1" placeholder="새비밀번호"> <br>
+						<input type="password" name="memberPw2" placeholder="비밀번호 확인">
 					</td>
 				</tr>
 				<tr>

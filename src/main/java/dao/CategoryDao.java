@@ -45,14 +45,14 @@ public class CategoryDao {
 				+ ", createdate"
 				+ " FROM category";
 		
-		DBUtil dbutil = new DBUtil();
+		DBUtil dbUtil = new DBUtil();
 		
 		//db 자원 초기화(jdbc api자원) 
 		Connection conn = null; 
 		PreparedStatement stmt = null; 
 		ResultSet rs = null; 
 		
-		conn = dbutil.getConnection();
+		conn = dbUtil.getConnection();
 		stmt = conn.prepareStatement(sql);
 		rs = stmt.executeQuery();
 		// executeQuery -> ResultSet 리턴 값이 행을 반환함, 논리적으로 사용하는 테이블
@@ -71,7 +71,7 @@ public class CategoryDao {
 		}
 		
 		// db자원 반납(jdbc api자원)
-		dbutil.close(rs, stmt, conn);
+		dbUtil.close(rs, stmt, conn);
 		
 		return list;
 	}

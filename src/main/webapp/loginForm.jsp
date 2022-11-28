@@ -2,7 +2,7 @@
 <%@page import="java.lang.reflect.Array"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "java.net.URLEncoder" %>
-<%@page import="java.util.*"%>
+<%@ page import="java.util.*"%>
 <%@ page import = "dao.*" %>
 <%@ page import = "vo.*" %>
 <%

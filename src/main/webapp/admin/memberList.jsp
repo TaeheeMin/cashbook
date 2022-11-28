@@ -26,6 +26,7 @@
 	int rowPerPage = 10;
 	int beginRow = (currentPage-1) * rowPerPage;
 	
+	// model 호출
 	MemberDao memberDao = new MemberDao();
 	ArrayList<Member> list = memberDao.selectMemverListByPage(beginRow, rowPerPage);
 	
@@ -85,10 +86,10 @@
 							<td><%=m.getCreatedate() %></td>
 							<td><%=m.getUpdatedate() %></td>
 							<td>
-								<a href="<%=request.getContextPath()%>/admin/updateMemberForm.jsp">수정</a>
+								<a href="<%=request.getContextPath()%>/admin/updateMemberForm.jsp?memberNo=<%=m.getMemberNo()%>">수정</a>
 							</td>
 							<td>
-								<a href="<%=request.getContextPath()%>/admin/deleteMemberForm.jsp">삭제</a>
+								<a href="<%=request.getContextPath()%>/admin/deleteMember.jsp?memberNo=<%=m.getMemberNo()%>">삭제</a>
 							</td>
 						</tr>
 						<%

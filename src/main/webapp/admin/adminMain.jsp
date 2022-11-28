@@ -47,6 +47,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>관리자 페이지</title>
+		<script type="text/javascript">
+			<%
+			if(request.getParameter("msg") != null) {         
+				%>   
+				alert("<%=request.getParameter("msg")%>");
+				<%   
+			}
+			%>
+		</script>
 	</head>
 	
 	<body>
