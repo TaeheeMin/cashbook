@@ -43,6 +43,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>noticeList</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -52,21 +54,46 @@
 			}
 			%>
 		</script>
+		<style>
+			body {
+				padding: 4.5em;
+				background: #f5f5f5
+			}
+			table {
+			 	border: 1px #a39485 solid;
+				font-size: .9em;
+				box-shadow: 0 2px 5px rgba(0,0,0,.25);
+				border-collapse: collapse;
+				border-radius: 5px;
+				margin-left: auto; 
+				margin-right: auto;
+				width: 50%;
+			}
+			a {
+				text-decoration: none;
+			}
+			textarea {
+				border: 0.5px #a39485 solid;
+				font-size: .9em;
+				outline: none;
+				padding-left: 10px;
+				width: 100%;
+			}
+			button {
+				border: 0;
+			}
+		</style>
 	</head>
 	
 	<body>
-		<ul>
-			<li><a href="<%=request.getContextPath() %>/admin/adminMain.jsp">관리자 페이지</a></li>
-			<li><a href="<%=request.getContextPath() %>/admin/noticeList.jsp?currentPage=1">공지관리</a></li> <!-- notice 메서드 사용 -->
-			<li><a href="<%=request.getContextPath() %>/admin/categoryList.jsp">카테고리관리</a></li> <!-- category 메서드 사용 -->
-			<li><a href="<%=request.getContextPath() %>/admin/memberList.jsp">회원관리</a></li>
-			<li><a href="<%=request.getContextPath() %>/logout.jsp">로그아웃</a></li>
-		</ul>
+		<div>
+			<jsp:include page="/inc/adminMenu.jsp"></jsp:include>
+		</div>
 			<!-- adbmin 컨텐츠 내용 -->
-			<h1>공지</h1>
+			<h1 Style="text-align:center;"></h1>
 			<div>
-				<table border="1">
-					<tr>
+				<table class="table table-bordered">
+					<tr Style="text-align:center;">
 						<th>번호</th>
 						<th>공지내용</th>
 						<th>작성일</th>
@@ -76,10 +103,10 @@
 						for(Notice n : list){
 						%>
 							<tr>
-								<td><%=n.getNoticeNo()%></td>
+								<td Style="text-align:center; width:100px;"><%=n.getNoticeNo()%></td>
 								<td><%=n.getNoticeMemo() %></td>
-								<td><%=n.getCreatedate() %></td>
-								<td>
+								<td style="text-align:center; width:200px;"><%=n.getCreatedate() %></td>
+								<td style="text-align:center; width:200px;">
 									<input type="hidden" name="noticeNo" value="<%=n.getNoticeNo()%>">
 									<a href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp?noticeNo=<%=n.getNoticeNo()%>">수정</a>
 									<a href="<%=request.getContextPath()%>/admin/deleteNoticeAction.jsp?noticeNo=<%=n.getNoticeNo()%>">삭제</a>
@@ -90,6 +117,7 @@
 					%>
 				</table>
 				
+				<div style="text-align:center;">
 				<!-- 페이징 -->
 				<a href="<%=request.getContextPath()%>/admin/noticeList.jsp?currentPage=1">처음</a>
 				<%
@@ -105,23 +133,23 @@
 					}
 				%>
 				<a href="<%=request.getContextPath()%>/admin/noticeList.jsp?currentPage=<%=lastPage%>">마지막</a>
+				</div>
 			</div>
 			
-			<div>
+			<div Style="padding: 4.0em;">
 				<!-- 입력폼 -->
 				<form action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp" method="post">
 					<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
-					<table border="1">
+					<table class="table table-bordered">
 						<tr>
-							<td>공지내용</td>
+							<th style="text-align:center;">공지등록</th>
 							<td>
 								<textarea rows="5" cols="150" name="noticeMemo"></textarea>
 							</td>
-						</tr>
-						<tr>
-						<td colspan="2"><button type="submit">등록</button></td>
-						</tr>
 					</table>
+					<div class="position-relative">
+					    <button type="submit" class="position-absolute top-100 start-50 translate-middle">등록</button>
+					</div>
 				</form>
 			</div>
 	</body>

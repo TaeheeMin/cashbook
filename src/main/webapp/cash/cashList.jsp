@@ -12,11 +12,6 @@
 		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
 		System.out.println("로그인 필요");
 		return;
-	} else if(loginMember.getMemberLevel() >= 1){
-		String msg = URLEncoder.encode("관리자 페이지입니다.","utf-8");
-		response.sendRedirect(request.getContextPath()+"/admin/adminMain.jsp?msg="+msg);
-		System.out.println("관리자 로그인");
-		return;
 	}
 	
 	// request -> 년도 + 월
@@ -84,35 +79,57 @@
 			}
 			%>
 		</script>
+		<style>
+			body {
+				padding: 3.5em;
+				background: #f5f5f5
+			}
+			table {
+			 	border: 1px #a39485 solid;
+				font-size: .9em;
+				box-shadow: 0 2px 5px rgba(0,0,0,.25);
+				border-collapse: collapse;
+				border-radius: 5px;
+				margin-left: auto; 
+				margin-right: auto;
+				width: 80%;
+			}
+			a {
+				text-decoration: none;
+			}
+			td {
+				height: 150px;
+			}
+		</style>
 	</head>
 	
 	<body>
 		<div>
-			<!-- 로그인 정보(세션 loginMember 변수이름으로 정보) 출력 -->
-			<h1><%=loginMember.getMemberId() %>님 반갑습니다.</h1>
+		</div>
+		<div>
 			<%
 				if(loginMember.getMemberLevel() > 0) {
 					%>
-						<a href="<%=request.getContextPath()%>/admin/adminMain.jsp">관리자 페이지</a>
+						<jsp:include page="/inc/adminMenu.jsp"></jsp:include>
+					<%
+				} else {
+					%>
+						<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
 					<%
 				}
 			%>
-
 		</div>
 		
 		<div>
-			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>
-			
-			<%=year%>년 <%=month+1%> 월
-			
-			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
-			<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp">내정보수정</a>
-			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+			<h1 class="text-center"><%=year%>년 <%=month+1%> 월</h1>
+			<div class="d-flex justify-content-center">
+				<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>&nbsp;
+				<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
+			</div>
 		</div>
-		
 		<div>
-			<table border="1" width="80%">
-				<tr>
+			<table class="table table-bordered">
+				<tr Style="text-align:center;">
 					<th>일</th>
 					<th>월</th>
 					<th>화</th>

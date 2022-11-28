@@ -6,7 +6,7 @@
 	request.setCharacterEncoding("utf-8");
 	
 	String msg = null;
-	String redirectUrl = "/admin/noticeList.jsp?msg="+msg;
+	String redirectUrl = "/admin/noticeList.jsp?msg=";
 	
 	// 작성 확인
 	if(request.getParameter("noticeMemo") == null || request.getParameter("noticeMemo").equals("")){
@@ -23,6 +23,6 @@
 	
 	if(insertRow == 1){
 		msg = URLEncoder.encode("등록 성공","utf-8");
-		response.sendRedirect(request.getContextPath()+redirectUrl);
+		response.sendRedirect(request.getContextPath()+redirectUrl+msg);
 	}
 %>

@@ -26,6 +26,6 @@
 	
 	if(updateRow == 1){
 		msg = URLEncoder.encode("수정 성공","utf-8");
-		response.sendRedirect(request.getContextPath()+redirectUrl);
+		response.sendRedirect(request.getContextPath()+redirectUrl+msg);
 	}
 %>

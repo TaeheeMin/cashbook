@@ -25,30 +25,64 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>delete cash form</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+		<script type="text/javascript">
+			<%
+			if(request.getParameter("msg") != null) {         
+				%>   
+				alert("<%=request.getParameter("msg")%>");
+				<%   
+			}
+			%>
+		</script>
+		<style>
+			body {
+				padding: 4.5em;
+				background: #f5f5f5
+			}
+			table {
+			 	border: 1px #a39485 solid;
+				font-size: .9em;
+				box-shadow: 0 2px 5px rgba(0,0,0,.25);
+				border-collapse: collapse;
+				border-radius: 5px;
+				margin-left: auto; 
+				margin-right: auto;
+			}
+			a {
+				text-decoration : none;
+			}
+			button {
+				border: 0;
+			}
+			input {
+				width: 100%;
+			}
+		</style>
 	</head>
 	
 	<body>
 		<div>
-			<a href="<%=request.getContextPath()%>/cash/cashList.jsp">달력보기</a>
-			<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp">내정보수정</a>
-			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+			<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
 		</div>
-		<form action="<%=request.getContextPath()%>/cash/deleteCashAction.jsp" method="post">
-			<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
-			<input type="hidden" name="cashNo" value="<%=cashNo %>">
-			<table>
-				<tr>
-					<th>비밀번호</th>
-					<td>
-						<input type="password" name="memberPw">
-					</td>
-				</tr>
-				<tr>
-					<td colspan ="2">
-						<button type="submit">DELETE</button>
-					</td>
-				</tr>
-			</table>
-		</form>
+		
+		<div>
+			<form action="<%=request.getContextPath()%>/cash/deleteCashAction.jsp" method="post">
+				<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
+				<input type="hidden" name="cashNo" value="<%=cashNo %>">
+				<table class="table table-bordered" Style="width:50%;">
+					<tr>
+						<th>비밀번호</th>
+						<td>
+							<input type="password" name="memberPw">
+						</td>
+					</tr>
+				</table>
+				<div class="position-relative" Style="padding: 1.0em;">
+					<button type="submit" class="position-absolute top-100 start-50 translate-middle">DELETE</button>
+				</div>
+			</form>
+		</div>
 	</body>
 </html>

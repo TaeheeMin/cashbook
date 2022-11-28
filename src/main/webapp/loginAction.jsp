@@ -6,7 +6,8 @@
 	//1. 요정분석 : 로그인 사용할 아이디와 비밀번호 입력받아 사용
 	request.setCharacterEncoding("utf-8");
 	// 작성 확인
-	if(request.getParameter("memberId") == null || request.getParameter("memberPw") == null || request.getParameter("memberId").equals("") || request.getParameter("memberPw").equals("")){
+	if(request.getParameter("memberId") == null || request.getParameter("memberPw") == null 
+		|| request.getParameter("memberId").equals("") || request.getParameter("memberPw").equals("")){
 		String msg = URLEncoder.encode("입력정보를 작성해주세요","utf-8");
 		System.out.println("1.로그인실패");
 		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);

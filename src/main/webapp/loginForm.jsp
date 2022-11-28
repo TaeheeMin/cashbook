@@ -32,6 +32,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Login Form</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -41,14 +43,35 @@
 			}
 			%>
 		</script>
+		<style>
+			body {
+				padding: 4.5em;
+				background: #f5f5f5
+			}
+			table {
+			 	border: 1px #a39485 solid;
+				font-size: .9em;
+				box-shadow: 0 2px 5px rgba(0,0,0,.25);
+				border-collapse: collapse;
+				border-radius: 5px;
+				margin-left: auto; 
+				margin-right: auto;
+			}
+			button {
+				border: 0;
+			}
+			input {
+				width:100%;
+			}
+		</style>
 	</head>
 	
 	<body>
-		<h1>공지</h1>
+		<h1 Style="text-align:center;">공지</h1>
 		<!-- 공지5개목록 페이징 -> 수정 삭제는 관리자 페이지에서 그냥 읽기만 가능-->
 		<div>
-		<table border="1">
-			<tr>
+		<table class="table table-bordered">
+			<tr Style="text-align:center;">
 				<th>공지</th>
 				<th>날짜</th>
 			</tr>
@@ -63,43 +86,47 @@
 				}
 			%>
 			</table>
-			<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1">처음</a>
-			<%
-				if(currentPage > 1){
-			%>
-					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage-1%>">이전</a>
-			<%
-				}
-				if(currentPage < lastPage){
-			%>
-					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage+1%>">다음</a>
-			<%
-				}
-			%>
-			<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>">마지막</a>
+			<div Style="text-align:center;">
+				<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1">처음</a>
+				<%
+					if(currentPage > 1){
+				%>
+						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage-1%>">이전</a>
+				<%
+					}
+					if(currentPage < lastPage){
+				%>
+						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage+1%>">다음</a>
+				<%
+					}
+				%>
+				<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>">마지막</a>
+			</div>
 		</div>
 		
-		<h1>로그인</h1>
-		
-		<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
-			<table>
-				<tr>
-					<td>id</td>
-					<td>
-						<input type="text" name="memberId">
-					</td>
-				</tr>
-				<tr>
-					<td>pw</td>
-					<td>
-						<input type="password" name="memberPw">
-					</td>
-				</tr>
-			</table>
-			<button type="submit">로그인</button>
-		</form>
-		<div >
-			<button type="button" onclick="location.href='<%=request.getContextPath()%>/member/insertMemberForm.jsp'">회원가입</button>
+		<div Style="text-align:center; padding: 1.0em;">
+			<h1>로그인</h1>
+			
+			<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
+				<table class="table table-bordered" style="width:50%;">
+					<tr>
+						<td>id</td>
+						<td>
+							<input type="text" name="memberId">
+						</td>
+					</tr>
+					<tr>
+						<td>pw</td>
+						<td>
+							<input type="password" name="memberPw">
+						</td>
+					</tr>
+				</table>
+				<button type="submit">로그인</button>
+			</form>
+		</div>
+		<div class="position-relative" Style="text-align:center; padding: 0.5em;">
+			<button type="button" class="position-absolute top-100 start-50 translate-middle" onclick="location.href='<%=request.getContextPath()%>/member/insertMemberForm.jsp'">회원가입</button>
 		</div>
 	</body>
 </html>

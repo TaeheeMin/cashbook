@@ -47,6 +47,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>관리자 페이지</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -56,32 +58,44 @@
 			}
 			%>
 		</script>
+		<style>
+			body {
+				padding: 4.5em;
+				background: #f5f5f5
+			}
+			table {
+			 	border: 1px #a39485 solid;
+				font-size: .9em;
+				box-shadow: 0 2px 5px rgba(0,0,0,.25);
+				border-collapse: collapse;
+				border-radius: 5px;
+				margin-left: auto; 
+				margin-right: auto;
+				width: 50%;
+			}
+			a {
+				text-decoration: none;
+			}
+		</style>
 	</head>
 	
 	<body>
-		<h1>관리자 페이지</h1>
-		<ul>
-			<li><a href="<%=request.getContextPath() %>/admin/noticeList.jsp?currentPage=1">공지관리</a></li> <!-- notice 메서드 사용 -->
-			<li><a href="<%=request.getContextPath() %>/admin/categoryList.jsp">카테고리관리</a></li> <!-- category 메서드 사용 -->
-			<li><a href="<%=request.getContextPath() %>/admin/memberList.jsp">회원관리</a></li>
-			<li><a href="<%=request.getContextPath() %>/logout.jsp">로그아웃</a></li>
-		</ul>
 		<div>
-			<!-- adbmin 컨텐츠 내용 -->
-			<!-- 3가지 목록 모두 CRUD 필요+ 페이징 -->
-			<!-- noticeDao -> CRUD  카테고리 ->  페이징X -->
-			<h2>공지</h2>
-			<table border="1">
-				<tr>
-					<th>번호</th>
+			<jsp:include page="/inc/adminMenu.jsp"></jsp:include>
+		</div>
+		<div>
+			<h3 Style="text-align:center;">공지</h3>
+			<table class="table table-bordered">
+				<tr Style="text-align:center;">
+					<th style="width:100px;">번호</th>
 					<th>공지내용</th>
-					<th>작성일</th>
+					<th style="width:200px;">작성일</th>
 				</tr>
 				<%
 					for(Notice n : noticeList){
 					%>
 						<tr>
-							<td><%=n.getNoticeNo()%></td>
+							<td Style="text-align:center;"><%=n.getNoticeNo()%></td>
 							<td><%=n.getNoticeMemo() %></td>
 							<td><%=n.getCreatedate() %></td>
 						</tr>
@@ -89,10 +103,10 @@
 					}
 				%>
 			</table>
-			
-			<h2>회원</h2>
-			
-			<table border="1">
+		</div>
+		<div Style="text-align:center;">
+			<h3>회원목록</h3>
+			<table class="table table-bordered">
 				<tr>
 					<th>NO</th>
 					<th>ID</th>

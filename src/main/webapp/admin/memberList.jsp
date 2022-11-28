@@ -41,6 +41,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>memberList</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -50,30 +52,44 @@
 			}
 			%>
 		</script>
+		<style>
+			body {
+				padding: 4.5em;
+				background: #f5f5f5
+			}
+			table {
+			 	border: 1px #a39485 solid;
+				font-size: .9em;
+				box-shadow: 0 2px 5px rgba(0,0,0,.25);
+				border-collapse: collapse;
+				border-radius: 5px;
+				margin-left: auto; 
+				margin-right: auto;
+				width: 50%;
+			}
+			a {
+				text-decoration: none;
+			}
+		</style>
 	</head>
 	
 	<body>
-		<ul>
-			<li><a href="<%=request.getContextPath() %>/admin/adminMain.jsp">관리자 페이지</a></li>
-			<li><a href="<%=request.getContextPath() %>/admin/noticeList.jsp">공지관리</a></li> <!-- notice 메서드 사용 -->
-			<li><a href="<%=request.getContextPath() %>/admin/categoryList.jsp">카테고리관리</a></li> <!-- category 메서드 사용 -->
-			<li><a href="<%=request.getContextPath() %>/admin/memberList.jsp">회원관리</a></li>
-			<li><a href="<%=request.getContextPath() %>/logout.jsp">로그아웃</a></li>
-		</ul>
+		<div>
+			<jsp:include page="/inc/adminMenu.jsp"></jsp:include>
+		</div>
 
 		<!-- 회원관리(목록, 레벨수정, 강제탈퇴)  -->
-		<h1>회원 목록</h1>
+		<h1 Style="text-align:center;">회원 목록</h1>
 		<div>
-			<table border="1">
-				<tr>
+			<table class="table table-bordered">
+				<tr Style="text-align:center;">
 					<th>NO</th>
 					<th>ID</th>
 					<th>LEVEL</th>
 					<th>NAME</th>
 					<th>CREATEDATE</th>
 					<th>UPDATE DATE</th>
-					<th>UPDATE</th>
-					<th>DELETE</th>
+					<th>ACTION</th>
 				</tr>
 				<%
 					for(Member m : list) {
@@ -87,8 +103,6 @@
 							<td><%=m.getUpdatedate() %></td>
 							<td>
 								<a href="<%=request.getContextPath()%>/admin/updateMemberForm.jsp?memberNo=<%=m.getMemberNo()%>">수정</a>
-							</td>
-							<td>
 								<a href="<%=request.getContextPath()%>/admin/deleteMember.jsp?memberNo=<%=m.getMemberNo()%>">삭제</a>
 							</td>
 						</tr>
@@ -97,6 +111,8 @@
 				%>
 			</table>
 			
+		</div>
+		<div Style="text-align:center;">
 			<!-- 페이징 -->
 			<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=1">처음</a>
 			<%
@@ -113,6 +129,5 @@
 			%>
 			<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=lastPage%>">마지막</a>
 		</div>
-		
 	</body>
 </html>

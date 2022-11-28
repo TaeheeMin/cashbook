@@ -33,7 +33,7 @@
 	MemberDao memberDao = new MemberDao();
 
 	String msg = URLEncoder.encode("수정성공","utf-8");
-	String redirectUrl = "/member/updateMemberForm.jsp?msg="+msg;
+	String redirectUrl = "/member/updateMemberForm.jsp?msg=";
 	int resultRow = memberDao.updateMember(paramUpdate);
 	if(resultRow == 1){
 		// 수정 성공 -> 폼으로 이동
@@ -42,7 +42,7 @@
 	} else {
 		// 수정 실패 -> 폼으로 이동
 		msg = URLEncoder.encode("비밀번호를 확인해주세요", "utf-8");
-		redirectUrl = "/member/updateMemberForm.jsp?msg="+msg;
+		redirectUrl = "/member/updateMemberForm.jsp?msg=";
 	}
-	response.sendRedirect(request.getContextPath()+redirectUrl);
+	response.sendRedirect(request.getContextPath()+redirectUrl+msg);
 %>

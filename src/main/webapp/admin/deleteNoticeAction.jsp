@@ -14,11 +14,10 @@
 	int deleteRow = noticeDao.deleteNotice(noticeNo);
 	
 	String msg = URLEncoder.encode("삭제 실패","utf-8");;
-	String redirectUrl = "/admin/noticeList.jsp?msg="+msg;
+	String redirectUrl = "/admin/noticeList.jsp?msg=";
 	
 	if(deleteRow == 1){
 		msg = URLEncoder.encode("삭제 성공","utf-8");
+		response.sendRedirect(request.getContextPath()+redirectUrl+msg);
 	}
-	
-	response.sendRedirect(request.getContextPath()+redirectUrl);
 %>

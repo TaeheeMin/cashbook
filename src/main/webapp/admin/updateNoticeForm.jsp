@@ -31,6 +31,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>updateNoticeForm</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -40,33 +42,54 @@
 			}
 			%>
 		</script>
+		<style>
+			body {
+				padding: 4.5em;
+				background: #f5f5f5
+			}
+			table {
+			 	border: 1px #a39485 solid;
+				font-size: .9em;
+				box-shadow: 0 2px 5px rgba(0,0,0,.25);
+				border-collapse: collapse;
+				border-radius: 5px;
+				margin-left: auto; 
+				margin-right: auto;
+				width: 50%;
+			}
+			a {
+				text-decoration: none;
+			}
+			textarea {
+				border: 0.5px #a39485 solid;
+				font-size: .9em;
+				outline: none;
+				padding-left: 10px;
+				width: 100%;
+			}
+			button {
+				border: 0;
+			}
+			</style>
 	</head>
 	
 	<body>
-		<ul>
-			<li><a href="<%=request.getContextPath() %>/admin/adminMain.jsp">관리자 페이지</a></li>
-			<li><a href="<%=request.getContextPath() %>/admin/noticeList.jsp?currentPage=1">공지관리</a></li> <!-- notice 메서드 사용 -->
-			<li><a href="<%=request.getContextPath() %>/admin/categoryList.jsp">카테고리관리</a></li> <!-- category 메서드 사용 -->
-			<li><a href="<%=request.getContextPath() %>/admin/memberList.jsp">회원관리</a></li>
-			<li><a href="<%=request.getContextPath() %>/logout.jsp">로그아웃</a></li>
-		</ul>
-		<h1>공지 수정</h1>
+		<div>
+			<jsp:include page="/inc/adminMenu.jsp"></jsp:include>
+		</div>
+		
+		<h1 Style="text-align:center;">공지 수정</h1>
 		<form method="post" action="<%=request.getContextPath()%>/admin/updateNoticeAction.jsp">
 			<input type="hidden" value="<%=noticeNo%>" name="noticeNo">
-			<table border="1">
+			<table class="table table-bordered">
 				<tr>
 					<td>내용</td>
 					<td>
 					<textarea rows="5" cols="150" name="noticeMemo"><%=notice.getNoticeMemo()%></textarea>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="2">
-						<button type="submit">수정</button>
-					</td>
-				</tr>
 			</table>
+			<button type="submit" >수정</button>
 		</form>
-		
 	</body>
 </html>

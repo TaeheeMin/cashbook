@@ -6,7 +6,7 @@
 	request.setCharacterEncoding("utf-8");
 	
 	String msg = null;
-	String redirectUrl = "/admin/categoryList.jsp?msg="+msg;
+	String redirectUrl = "/admin/categoryList.jsp?msg=";
 	
 	// 작성 확인
 	if(request.getParameter("categoryNo") == null || request.getParameter("categoryNo").equals("")){
@@ -26,6 +26,6 @@
 	
 	if(deleteRow == 1){
 		msg = URLEncoder.encode("삭제 성공","utf-8");
-		response.sendRedirect(request.getContextPath()+redirectUrl);
+		response.sendRedirect(request.getContextPath()+redirectUrl+msg);
 	}
 %>

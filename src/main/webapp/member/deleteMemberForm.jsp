@@ -21,6 +21,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>delete member</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -30,31 +32,52 @@
 			}
 			%>
 		</script>
+		<style>
+			body {
+				padding: 4.5em;
+				background: #f5f5f5
+			}
+			table {
+			 	border: 1px #a39485 solid;
+				font-size: .9em;
+				box-shadow: 0 2px 5px rgba(0,0,0,.25);
+				border-collapse: collapse;
+				border-radius: 5px;
+				margin-left: auto; 
+				margin-right: auto;
+				width: 50%;
+			}
+			a {
+				text-decoration: none;
+			}
+			input {
+				width:100%;
+			}
+			button {
+				border: 0;
+			}
+		</style>
 	</head>
 	
 	<body>
-		<h1>회원탈퇴</h1>
 		<div>
-			<a href="<%=request.getContextPath()%>/cash/cashList.jsp">달력보기</a>
-			<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp">내정보수정</a>
-			<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+			<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
 		</div>
 		
+		<h1 Style="text-align:center;">회원탈퇴</h1>
 		<form action="<%=request.getContextPath()%>/member/deleteMemberAction.jsp" method="post">
 			<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
-			<table>
+			<table class="table table-bordered" style="width:50%;">
 				<tr>
 					<th>비밀번호</th>
 					<td>
 						<input type="password" name="memberPw">
 					</td>
 				</tr>
-				<tr>
-					<td colspan ="2">
-						<button type="submit">DELETE</button>
-					</td>
-				</tr>
 			</table>
+			<div class="position-relative" Style="padding: 1.0em;">
+				<button type="submit" class="position-absolute top-100 start-50 translate-middle">DELETE</button>
+			</div>
 		</form>
 	</body>
 </html>
