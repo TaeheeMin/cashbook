@@ -16,17 +16,12 @@
 		response.sendRedirect(request.getContextPath()+redirectUrl);
 		return;
 	}
-	// 2. model
-	CategoryDao categoryDao = new CategoryDao();
-	ArrayList<Category> categoryList = categoryDao.selectCategoryListByAdmin();
-	
-	// 3.view
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>categoryList</title>
+		<title>insertCategoryForm</title>
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -46,39 +41,14 @@
 			<li><a href="<%=request.getContextPath() %>/admin/memberList.jsp">회원관리</a></li>
 			<li><a href="<%=request.getContextPath() %>/logout.jsp">로그아웃</a></li>
 		</ul>
-		<div>
-			<!-- adbmin 컨텐츠 내용 -->
-			<h1>카테고리 목록</h1>
-			<a href="<%=request.getContextPath()%>/admin/insertCategoryForm.jsp">카테고리 추가</a>
-			<table border="1">
-				<tr>
-					<th>번호</th>
-					<th>종류</th>
-					<th>이름</th>
-					<th>수정 닐짜</th>
-					<th>생성일</th>
-					<th>수정/삭제</th>
-				</tr>
-				<%
-					for(Category c : categoryList) {
-						%>
-						<tr>
-							<td><%=c.getCategoryNo() %></td>
-							<td><%=c.getCategoryKind() %></td>
-							<td><%=c.getCategoryName() %></td>
-							<td><%=c.getUpdatedate() %></td>
-							<td><%=c.getUpdatedate() %></td>
-							<td>
-								<a href="<%=request.getContextPath()%>/admin/updateCategoryForm.jsp?categoryNo=<%=c.getCategoryNo()%>">수정</a>
-								<a href="<%=request.getContextPath()%>/admin/deleteCategory.jsp?categoryNo=<%=c.getCategoryNo()%>">삭제</a>
-							</td>
-						</tr>
-						<%
-					}
-				
-				%>
+		<form method ="post" action="<%=request.getContextPath()%>/admin/insertCategoryAction.jsp">
+			categoryKind
+			<input type="radio" name="categoryKind" value="수입">수입
+			<input type="radio" name="categoryKind" value="지출">지출
+			categoryName
+			<input type="text" name="categoryName">
+			<button>입력</button>
 			
-			</table>
-		</div>
+		</form>
 	</body>
 </html>

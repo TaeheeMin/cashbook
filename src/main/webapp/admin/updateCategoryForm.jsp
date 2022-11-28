@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "vo.*" %>
 <%@ page import = "dao.*" %>
-<%@ page import = "java.util.*" %>
 <%@ page import = "java.net.URLEncoder" %>
 <%
-	// 1.controller
+	request.setCharacterEncoding("utf-8");
+	//1.controller
 	// controller : session 검증
 	Member loginMember = (Member)session.getAttribute("loginMember");
-	String msg = URLEncoder.encode("삭제 실패","utf-8");;
+	String msg = URLEncoder.encode("수정 실패","utf-8");;
 	String redirectUrl = "/admin/noticeList.jsp?msg="+msg;
 	
 	if(loginMember == null || loginMember.getMemberLevel() < 1) {
@@ -16,17 +16,16 @@
 		response.sendRedirect(request.getContextPath()+redirectUrl);
 		return;
 	}
-	// 2. model
+	// 2. model 호출
+	int categoryNo = Integer.parseInt(request.getParameter("categoryNo"));
 	CategoryDao categoryDao = new CategoryDao();
-	ArrayList<Category> categoryList = categoryDao.selectCategoryListByAdmin();
-	
-	// 3.view
+	Category category = categoryDao.categoryOne(categoryNo); 
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>categoryList</title>
+		<title>updateCategoryForm</title>
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -46,39 +45,15 @@
 			<li><a href="<%=request.getContextPath() %>/admin/memberList.jsp">회원관리</a></li>
 			<li><a href="<%=request.getContextPath() %>/logout.jsp">로그아웃</a></li>
 		</ul>
-		<div>
-			<!-- adbmin 컨텐츠 내용 -->
-			<h1>카테고리 목록</h1>
-			<a href="<%=request.getContextPath()%>/admin/insertCategoryForm.jsp">카테고리 추가</a>
-			<table border="1">
-				<tr>
-					<th>번호</th>
-					<th>종류</th>
-					<th>이름</th>
-					<th>수정 닐짜</th>
-					<th>생성일</th>
-					<th>수정/삭제</th>
-				</tr>
-				<%
-					for(Category c : categoryList) {
-						%>
-						<tr>
-							<td><%=c.getCategoryNo() %></td>
-							<td><%=c.getCategoryKind() %></td>
-							<td><%=c.getCategoryName() %></td>
-							<td><%=c.getUpdatedate() %></td>
-							<td><%=c.getUpdatedate() %></td>
-							<td>
-								<a href="<%=request.getContextPath()%>/admin/updateCategoryForm.jsp?categoryNo=<%=c.getCategoryNo()%>">수정</a>
-								<a href="<%=request.getContextPath()%>/admin/deleteCategory.jsp?categoryNo=<%=c.getCategoryNo()%>">삭제</a>
-							</td>
-						</tr>
-						<%
-					}
-				
-				%>
-			
-			</table>
-		</div>
+		
+		<h1>카테고리 수정</h1>
+		<form method ="post" action="<%=request.getContextPath()%>/admin/updateCategoryAction.jsp?categoryNo=<%=categoryNo%>">
+			categoryKind
+			<input type="radio" name="categoryKind" value="수입">수입
+			<input type="radio" name="categoryKind" value="지출">지출
+			categoryName
+			<input type="text" name="categoryName" value="<%=category.getCategoryName()%>">
+			<button>수정</button>
+		</form>
 	</body>
 </html>
