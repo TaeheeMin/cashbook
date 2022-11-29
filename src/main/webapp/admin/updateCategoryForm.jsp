@@ -8,12 +8,12 @@
 	// controller : session 검증
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	String msg = URLEncoder.encode("수정 실패","utf-8");;
-	String redirectUrl = "/admin/noticeList.jsp?msg="+msg;
+	String redirectUrl = "/admin/noticeList.jsp?msg=";
 	
 	if(loginMember == null || loginMember.getMemberLevel() < 1) {
 		msg = URLEncoder.encode("관리자 권한 필요","utf-8");
 		redirectUrl= "/loginForm.jsp?msg="+msg;
-		response.sendRedirect(request.getContextPath()+redirectUrl);
+		response.sendRedirect(request.getContextPath()+redirectUrl+msg);
 		return;
 	}
 	// 2. model 호출

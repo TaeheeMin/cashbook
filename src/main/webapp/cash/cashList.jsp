@@ -2,7 +2,7 @@
 <%@ page import="vo.*"%>
 <%@ page import="dao.*"%>
 <%@ page import="java.util.*"%>
-<%@ page import = "java.net.URLEncoder" %>
+<%@ page import="java.net.URLEncoder" %>
 <%
 	// controller : session 검증
 	// 로그인 세션 정보 확인
@@ -104,8 +104,6 @@
 	</head>
 	
 	<body>
-		<div>
-		</div>
 		<div>
 			<%
 				if(loginMember.getMemberLevel() > 0) {

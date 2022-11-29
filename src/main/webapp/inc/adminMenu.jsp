@@ -32,6 +32,9 @@
          					 <a class="nav-link" href="<%=request.getContextPath()%>/admin/memberList.jsp">회원관리</a>
         				</li>
         				<li class="nav-item">
+         					 <a class="nav-link" href="<%=request.getContextPath()%>/admin/helpListAll.jsp">고객센터관리</a>
+        				</li>
+        				<li class="nav-item">
           					<a class="nav-link" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
         				</li>
       				</ul>

@@ -26,6 +26,9 @@
          					 <a class="nav-link" href="<%=request.getContextPath()%>/member/updateMemberForm.jsp">정보수정</a>
         				</li>
         				<li class="nav-item">
+          					<a class="nav-link" href="<%=request.getContextPath()%>/help/helpList.jsp">고객센터</a>
+        				</li>
+        				<li class="nav-item">
           					<a class="nav-link" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
         				</li>
       				</ul>

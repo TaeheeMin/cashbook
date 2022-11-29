@@ -33,7 +33,7 @@ public class CategoryDao {
 	}
 	
 	// 관리자 카테고리 관리 -> 카테고리 목록 -> 수정/삭제기능
-	public  ArrayList<Category> selectCategoryListByAdmin() throws Exception{
+	public ArrayList<Category> selectCategoryListByAdmin() throws Exception{
 		ArrayList<Category> list = null;
 		list = new ArrayList<Category>();
 		
@@ -77,7 +77,7 @@ public class CategoryDao {
 	}
 	
 	// insert category
-	//admin -> insert category Action
+	// admin -> insert category Action
 	public int insertCategory(Category category) throws Exception {
 		String sql = "INSERT INTO category ("
 				+ "category_kind"
