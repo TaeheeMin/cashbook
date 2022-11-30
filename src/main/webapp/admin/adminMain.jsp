@@ -45,91 +45,142 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>관리자 페이지</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-		<script type="text/javascript">
-			<%
-			if(request.getParameter("msg") != null) {         
-				%>   
-				alert("<%=request.getParameter("msg")%>");
-				<%   
-			}
-			%>
-		</script>
-		<style>
-			body {
-				padding: 4.5em;
-				background: #f5f5f5
-			}
-			table {
-			 	border: 1px #a39485 solid;
-				font-size: .9em;
-				box-shadow: 0 2px 5px rgba(0,0,0,.25);
-				border-collapse: collapse;
-				border-radius: 5px;
-				margin-left: auto; 
-				margin-right: auto;
-				width: 50%;
-			}
-			a {
-				text-decoration: none;
-			}
-		</style>
+		<meta charset="utf-8">
+	    <title>관리자 페이지</title>
+	    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+	    <meta content="" name="keywords">
+	    <meta content="" name="description">
+	    
+	    <!-- Google Web Fonts -->
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+	    
+	    <!-- Icon Font Stylesheet -->
+	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+	    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	
+	    <!-- Libraries Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+	    <link href="<%=request.getContextPath()%>/resources/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+	
+	    <!-- Customized Bootstrap Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Template Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
 	</head>
 	
 	<body>
 		<div>
 			<jsp:include page="/inc/adminMenu.jsp"></jsp:include>
 		</div>
-		<div>
-			<h3 Style="text-align:center;">공지</h3>
-			<table class="table table-bordered">
-				<tr Style="text-align:center;">
-					<th style="width:100px;">번호</th>
-					<th>공지내용</th>
-					<th style="width:200px;">작성일</th>
-				</tr>
-				<%
-					for(Notice n : noticeList){
-					%>
-						<tr>
-							<td Style="text-align:center;"><%=n.getNoticeNo()%></td>
-							<td><%=n.getNoticeMemo() %></td>
-							<td><%=n.getCreatedate() %></td>
-						</tr>
-					<%
-					}
-				%>
-			</table>
-		</div>
-		<div Style="text-align:center;">
-			<h3>회원목록</h3>
-			<table class="table table-bordered">
-				<tr>
-					<th>NO</th>
-					<th>ID</th>
-					<th>LEVEL</th>
-					<th>NAME</th>
-					<th>CREATEDATE</th>
-					<th>UPDATE DATE</th>
-				</tr>
-				<%
-					for(Member m : memberList) {
-						%>
-						<tr>
-							<td><%=m.getMemberNo() %></td>
-							<td><%=m.getMemberId() %></td>
-							<td><%=m.getMemberLevel() %></td>
-							<td><%=m.getMemberName() %></td>
-							<td><%=m.getCreatedate() %></td>
-							<td><%=m.getUpdatedate() %></td>
-						</tr>
-						<%
-					}
-				%>
-			</table>
+		
+		<div class="content">
+			<!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                
+                <form class="d-none d-md-flex ms-4" >
+                    <input class="form-control border-0" type="search" placeholder="Search" name="word">
+                </form>
+                    
+                <div class="nav-item dropdown ms-auto">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="<%=request.getContextPath()%>/img/profile.png" alt="" style="width: 40px; height: 40px;">
+                        <span class="d-none d-lg-inline-flex"><%=loginMember.getMemberName()%></span>
+                    </a>
+                    
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a href="#" class="dropdown-item">My Profile</a>
+                        <a href="#" class="dropdown-item">Settings</a>
+                        <a href="<%=request.getContextPath()%>/logout.jsp" class="dropdown-item">Log Out</a>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+            
+            <!-- 공지 5개 Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">공지</h6>
+                        <a href="<%=request.getContextPath()%>/admin/noticeList.jsp">Show All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th Style="text-align:center;" scope="col">NO</th>
+                                    <th scope="col">NOTICE</th>
+                                    <th scope="col">CREATE DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+	                            <%
+								for(Notice n : noticeList){
+								%>
+									<tr>
+										<td Style="text-align:center;"><%=n.getNoticeNo()%></td>
+										<td><%=n.getNoticeMemo() %></td>
+										<td><%=n.getCreatedate() %></td>
+									</tr>
+								<%
+								}
+								%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- 공지 5개 End -->
+            
+            <!-- 최근가입 회원 Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">회원목록</h6>
+                        <a href="<%=request.getContextPath()%>/admin/memberList.jsp">Show All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col">NO</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">LEVEL</th>
+                                    <th scope="col">NAME</th>
+                                    <th scope="col">CREATE DATE</th>
+                                    <th scope="col">UPDATE DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+	                           	<%
+								for(Member m : memberList) {
+								%>
+									<tr>
+										<td><%=m.getMemberNo() %></td>
+										<td><%=m.getMemberId() %></td>
+										<td><%=m.getMemberLevel() %></td>
+										<td><%=m.getMemberName() %></td>
+										<td><%=m.getCreatedate() %></td>
+										<td><%=m.getUpdatedate() %></td>
+									</tr>
+								<%
+								}
+								%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- 최근가입 회원 End -->
 		</div>
 	</body>
 </html>

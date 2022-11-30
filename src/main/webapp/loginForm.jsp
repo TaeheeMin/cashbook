@@ -32,8 +32,32 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Login Form</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	    <meta content="" name="keywords">
+	    <meta content="" name="description">
+	
+	    <!-- Favicon -->
+	    <link href="img/favicon.ico" rel="icon">
+	
+	    <!-- Google Web Fonts -->
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+	    
+	    <!-- Icon Font Stylesheet -->
+	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+	    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	
+	    <!-- Libraries Stylesheet -->
+	    <link href="resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+	    <link href="resources/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+	
+	    <!-- Customized Bootstrap Stylesheet -->
+	    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Template Stylesheet -->
+	    <link href="resources/css/style.css" rel="stylesheet">
+		
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -43,90 +67,55 @@
 			}
 			%>
 		</script>
-		<style>
-			body {
-				padding: 4.5em;
-				background: #f5f5f5
-			}
-			table {
-			 	border: 1px #a39485 solid;
-				font-size: .9em;
-				box-shadow: 0 2px 5px rgba(0,0,0,.25);
-				border-collapse: collapse;
-				border-radius: 5px;
-				margin-left: auto; 
-				margin-right: auto;
-			}
-			button {
-				border: 0;
-			}
-			input {
-				width:100%;
-			}
-		</style>
 	</head>
 	
 	<body>
-		<h1 Style="text-align:center;">공지</h1>
-		<!-- 공지5개목록 페이징 -> 수정 삭제는 관리자 페이지에서 그냥 읽기만 가능-->
-		<div>
-		<table class="table table-bordered">
-			<tr Style="text-align:center;">
-				<th>공지</th>
-				<th>날짜</th>
-			</tr>
-			<%
-				for(Notice n : list){
-					%>
-					<tr>
-						<td><%=n.getNoticeMemo() %></td>
-						<td><%=n.getCreatedate() %></td>
-					</tr>
-					<%
-				}
-			%>
-			</table>
-			<div Style="text-align:center;">
-				<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1">처음</a>
-				<%
-					if(currentPage > 1){
-				%>
-						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage-1%>">이전</a>
-				<%
-					}
-					if(currentPage < lastPage){
-				%>
-						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage+1%>">다음</a>
-				<%
-					}
-				%>
-				<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>">마지막</a>
-			</div>
+		<div class="container-xxl position-relative bg-white d-flex p-0">
+	        <!-- Sign In Start -->
+	        <div class="container-fluid">
+	            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+	                <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+	                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+	                        <div class="d-flex align-items-center justify-content-between mb-3">
+	                            <a href="<%=request.getContextPath() %>/main.jsp" class="">
+	                                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>CashBook</h3>
+	                            </a>
+	                            <h3>로그인</h3>
+	                        </div>
+	                        
+	                        <form action="<%=request.getContextPath()%>/loginAction.jsp">
+		                        <div class="form-floating mb-3">
+		                            <input type="text" class="form-control" name="memberId" id="floatingInput" placeholder="ID">
+		                            <label for="floatingInput">ID</label>
+		                        </div>
+		                        
+		                        <div class="form-floating mb-4">
+		                            <input type="password" class="form-control" name="memberPw" id="floatingPassword" placeholder="Password">
+		                            <label for="floatingPassword">Password</label>
+		                        </div>
+		                        
+		                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">로그인</button>
+		                        <p class="text-center mb-0">아직 회원이 아니신가요? <a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp">회원가입</a></p>
+	                        </form>
+                    	</div>
+                	</div>
+            	</div>
+        	</div>
+        	<!-- Sign In End -->
 		</div>
-		
-		<div Style="text-align:center; padding: 1.0em;">
-			<h1>로그인</h1>
-			
-			<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
-				<table class="table table-bordered" style="width:50%;">
-					<tr>
-						<td>id</td>
-						<td>
-							<input type="text" name="memberId">
-						</td>
-					</tr>
-					<tr>
-						<td>pw</td>
-						<td>
-							<input type="password" name="memberPw">
-						</td>
-					</tr>
-				</table>
-				<button type="submit">로그인</button>
-			</form>
-		</div>
-		<div class="position-relative" Style="text-align:center; padding: 0.5em;">
-			<button type="button" class="position-absolute top-100 start-50 translate-middle" onclick="location.href='<%=request.getContextPath()%>/member/insertMemberForm.jsp'">회원가입</button>
-		</div>
+
+	    <!-- JavaScript Libraries -->
+	    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	    <script src="resources/lib/chart/chart.min.js"></script>
+	    <script src="resources/lib/easing/easing.min.js"></script>
+	    <script src="resources/lib/waypoints/waypoints.min.js"></script>
+	    <script src="resources/lib/owlcarousel/owl.carousel.min.js"></script>
+	    <script src="resources/lib/tempusdominus/js/moment.min.js"></script>
+	    <script src="resources/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	    <script src="resources/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	
+	    <!-- Template Javascript -->
+	    <script src="resources/js/main.js"></script>
 	</body>
 </html>

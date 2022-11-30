@@ -14,6 +14,12 @@
 		return;
 	}
 	
+	if(loginMember.getMemberLevel() > 0) {
+		String redirectUrl= "/admin/adminMain.jsp?";
+		response.sendRedirect(request.getContextPath()+redirectUrl);
+		return;
+	}
+	
 	// request -> 년도 + 월
 	int year = 0;
 	int month = 0;
@@ -68,8 +74,29 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Cash List</title>
+		<meta charset="utf-8">
+	    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+	    <meta content="" name="keywords">
+	    <meta content="" name="description">
+	    
+	    <!-- Google Web Fonts -->
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+	    
+	    <!-- Icon Font Stylesheet -->
+	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+	    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	
+	    <!-- Libraries Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+	    <link href="<%=request.getContextPath()%>/resources/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+	
+	    <!-- Customized Bootstrap Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Template Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -79,32 +106,9 @@
 			}
 			%>
 		</script>
-		<style>
-			body {
-				padding: 3.5em;
-				background: #f5f5f5
-			}
-			table {
-			 	border: 1px #a39485 solid;
-				font-size: .9em;
-				box-shadow: 0 2px 5px rgba(0,0,0,.25);
-				border-collapse: collapse;
-				border-radius: 5px;
-				margin-left: auto; 
-				margin-right: auto;
-				width: 80%;
-			}
-			a {
-				text-decoration: none;
-			}
-			td {
-				height: 150px;
-			}
-		</style>
 	</head>
 	
 	<body>
-		<div>
 			<%
 				if(loginMember.getMemberLevel() > 0) {
 					%>
@@ -116,7 +120,6 @@
 					<%
 				}
 			%>
-		</div>
 		
 		<div>
 			<h1 class="text-center"><%=year%>년 <%=month+1%> 월</h1>
@@ -182,5 +185,20 @@
 					%>
 			</table>
 		</div>
+		
+		
+		<!-- JavaScript Libraries -->
+	    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	    <script src="<%=request.getContextPath()%>/resources/lib/chart/chart.min.js"></script>
+	    <script src="<%=request.getContextPath()%>/resources/lib/easing/easing.min.js"></script>
+	    <script src="<%=request.getContextPath()%>/resources/lib/waypoints/waypoints.min.js"></script>
+	    <script src="<%=request.getContextPath()%>/resources/lib/owlcarousel/owl.carousel.min.js"></script>
+	    <script src="<%=request.getContextPath()%>/resources/lib/tempusdominus/js/moment.min.js"></script>
+	    <script src="<%=request.getContextPath()%>/resources/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	    <script src="<%=request.getContextPath()%>/resources/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	
+	    <!-- Template Javascript -->
+	    <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
 	</body>
 </html>

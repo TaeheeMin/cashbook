@@ -39,5 +39,6 @@
 		session.setAttribute("loginMember", returnMember);
 		// 관리자기능위해 세션에 memberLevel도 추가해야함 
 	}
+	
 	response.sendRedirect(request.getContextPath()+redirectUrl);
 %>
