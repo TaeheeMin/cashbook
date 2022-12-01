@@ -73,10 +73,10 @@
 								
 								<div class="form-floating mb-4">
 								    <input type="password" class="form-control" name="memberPw2" id="floatingPassword" placeholder="Confirm Password">
-								    <label for="floatingPassword">Password</label>
+								    <label for="floatingPassword">Confirm Password</label>
 								</div>
 								
-								<button type="submit" class="btn btn-primary py-3 w-100 mb-4">로그인</button>
+								<button type="submit" class="btn btn-primary py-3 w-100 mb-4">회원가입</button>
 								<p class="text-center mb-0">이미 회원이신가요? <a href="<%=request.getContextPath()%>/loginForm.jsp">로그인</a></p>
 			                </form>
 			           	</div>
