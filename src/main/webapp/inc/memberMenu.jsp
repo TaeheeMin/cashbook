@@ -23,7 +23,7 @@
 			</div>
 				
 			<div class="navbar-nav w-100">
-			    <a href="<%=request.getContextPath()%>/admin/adminMain.jsp" class="nav-link nav-link"><i class="fa fa-laptop me-2"></i>홈</a>
+			    <a href="<%=request.getContextPath()%>/cash/cashMain.jsp" class="nav-link nav-link"><i class="fa fa-laptop me-2"></i>홈</a>
 				<a href="<%=request.getContextPath()%>/cash/cashList.jsp" class="nav-item nav-link"><i class="fa fa-table me-2"></i>달력보기</a>
 				<a href="<%=request.getContextPath()%>/help/helpList.jsp" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>고객센터</a>
 				<a href="" class="nav-item nav-link"><i class="fa fa-th me-2"></i>미정</a>

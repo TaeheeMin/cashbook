@@ -33,63 +33,50 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>insert comment</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-		<script type="text/javascript">
-			<%
-			if(request.getParameter("msg") != null) {         
-				%>   
-				alert("<%=request.getParameter("msg")%>");
-				<%   
-			}
-			%>
-		</script>
-		<style>
-			body {
-				padding: 4.5em;
-				background: #f5f5f5
-			}
-			table {
-			 	border: 1px #a39485 solid;
-				font-size: .9em;
-				box-shadow: 0 2px 5px rgba(0,0,0,.25);
-				border-collapse: collapse;
-				border-radius: 5px;
-				margin-left: auto; 
-				margin-right: auto;
-				width: 50%;
-			}
-			a {
-				text-decoration: none;
-			}
-			textarea {
-				border: 0.5px #a39485 solid;
-				font-size: .9em;
-				outline: none;
-				padding-left: 10px;
-				width: 100%;
-			}
-			button {
-				border: 0;
-			}
-		</style>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	    <meta content="" name="keywords">
+	    <meta content="" name="description">
+	    
+	    <!-- Google Web Fonts -->
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+	    
+	    <!-- Icon Font Stylesheet -->
+	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+	    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	
+	    <!-- Libraries Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+	    <link href="<%=request.getContextPath()%>/resources/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+	
+	    <!-- Customized Bootstrap Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Template Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
 	</head>
 	
 	<body>
-		<div Style="padding: 4.0em;">
-			<div>
-				<%
-					if(loginMember.getMemberLevel() > 0) {
-						%>
-							<jsp:include page="/inc/adminMenu.jsp"></jsp:include>
-						<%
-					} else {
-						%>
-							<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
-						<%
-					}
-				%>
-			</div>
+		<%
+			if(loginMember.getMemberLevel() > 0) {
+		%>
+					<div>
+						<!-- Sidebar -->
+						<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
+					</div>
+		<%
+			} else {
+		%>
+					<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
+		<%
+			}
+		%>
+		
+   		<div class="content">
+   			<!-- Navbar -->
+   			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
+			
 			<div>
 				<h3 style="text-align:center;">문의</h3>
 				<table class="table table-bordered">

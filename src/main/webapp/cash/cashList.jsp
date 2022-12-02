@@ -112,14 +112,12 @@
 		<%
 			if(loginMember.getMemberLevel() > 0) {
 		%>
-					<div>
-						<!-- Sidebar -->
-						<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
-					</div>
+				<!-- Sidebar -->
+				<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
 		<%
 			} else {
 		%>
-					<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
+				<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
 		<%
 			}
 		%>
@@ -128,164 +126,81 @@
    			<!-- Navbar -->
    			<jsp:include page="/inc/memberNav.jsp"></jsp:include>
 			
-		<div>
-			<h1 class="text-center"><%=year%>년 <%=month+1%> 월</h1>
-			<div class="d-flex justify-content-center">
-				<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>&nbsp;
-				<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
+			<div>
+				<h1 class="text-center"><%=year%>년 <%=month+1%> 월</h1>
+				<div class="d-flex justify-content-center">
+					<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>&nbsp;
+					<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
+				</div>
 			</div>
-		</div>
-		<div>
-			<table class="table table-bordered">
-				<tr Style="text-align:center;">
-					<th>일</th>
-					<th>월</th>
-					<th>화</th>
-					<th>수</th>
-					<th>목</th>
-					<th>금</th>
-					<th>토</th>
-				</tr>
-				<tr>
-					<% 
-					for(int i = 1; i <= totalTd; i++) {
-					%>
-						<td>
-							<%
-							int date = i - beginBlank;
-							if(date > 0 && date <= lastDate) {
-							%>
-								<div>
-									<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&day=<%=date%>">
-										<%=date%>
-									</a>
-								</div>
-								<div>
-									<%
-										//날짜별 수입지출
-										for(HashMap<String, Object> m : list){
-											String cashDate = (String)m.get("cashDate");
-											if(Integer.parseInt(cashDate.substring(8)) == date) {
-									%>
-												<div>
-													[<%=(String)m.get("categoryKind")%>]
-													<%=(String)m.get("categoryName")%>
-													&nbsp;
-													<%=(Integer)m.get("cashPrice")%>원
-												</div>
-									<%
-											}
-										}
-									%>
-								</div>
-							<%
-							}
-							%>
-						</td>
-						<%
-						if(i%7 == 0 && i != totalTd) { // td7개마다 tr끊어줌
+			<div>
+			
+				<div class="col-sm-12 col-md-6 col-xl-4">
+	                        <div class="h-100 bg-light rounded p-4">
+	                            <div class="d-flex align-items-center justify-content-between mb-4">
+	                                <h6 class="mb-0">Calender</h6>
+	                                <a href="<%= request.getContextPath()%>/cash/cashList.jsp">Show All</a>
+	                            </div>
+	                            <div id="calender"></div>
+	                        </div>
+	               </div>
+	               
+				<table class="table table-bordered">
+					<tr Style="text-align:center;">
+						<th>일</th>
+						<th>월</th>
+						<th>화</th>
+						<th>수</th>
+						<th>목</th>
+						<th>금</th>
+						<th>토</th>
+					</tr>
+					<tr>
+						<% 
+						for(int i = 1; i <= totalTd; i++) {
 						%>
-							</tr><tr>
-						<%		
+							<td>
+								<%
+								int date = i - beginBlank;
+								if(date > 0 && date <= lastDate) {
+								%>
+									<div>
+										<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&day=<%=date%>">
+											<%=date%>
+										</a>
+									</div>
+									<div>
+										<%
+											//날짜별 수입지출
+											for(HashMap<String, Object> m : list){
+												String cashDate = (String)m.get("cashDate");
+												if(Integer.parseInt(cashDate.substring(8)) == date) {
+										%>
+													<div>
+														[<%=(String)m.get("categoryKind")%>]
+														<%=(String)m.get("categoryName")%>
+														&nbsp;
+														<%=(Integer)m.get("cashPrice")%>원
+													</div>
+										<%
+												}
+											}
+										%>
+									</div>
+								<%
+								}
+								%>
+							</td>
+							<%
+							if(i%7 == 0 && i != totalTd) { // td7개마다 tr끊어줌
+							%>
+								</tr><tr>
+							<%		
+							}
 						}
-					}
-					%>
-			</table>
-		</div>
-	
-		
-		<div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">Calender</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div id="calender"></div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0">To Do List</h6>
-                                <a href="">Show All</a>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <input class="form-control bg-transparent" type="text" placeholder="Enter task">
-                                <button type="button" class="btn btn-primary ms-2">Add</button>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox" checked>
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><del>Short task goes here...</del></span>
-                                        <button class="btn btn-sm text-primary"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom py-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center pt-2">
-                                <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>Short task goes here...</span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Testimonial</h6>
-                            <div class="owl-carousel testimonial-carousel">
-                                <div class="testimonial-item text-center">
-                                    <img class="img-fluid rounded-circle mx-auto mb-4" src="img/testimonial-1.jpg" style="width: 100px; height: 100px;">
-                                    <h5 class="mb-1">Client Name</h5>
-                                    <p>Profession</p>
-                                    <p class="mb-0">Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam</p>
-                                </div>
-                                <div class="testimonial-item text-center">
-                                    <img class="img-fluid rounded-circle mx-auto mb-4" src="img/testimonial-2.jpg" style="width: 100px; height: 100px;">
-                                    <h5 class="mb-1">Client Name</h5>
-                                    <p>Profession</p>
-                                    <p class="mb-0">Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Chart End -->
+						%>
+				</table>
+			</div>
 			</div>
 		<!-- JavaScript Libraries -->
 	    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

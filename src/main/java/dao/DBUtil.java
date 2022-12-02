@@ -16,17 +16,21 @@ public class DBUtil {
 		return conn;
 	}
 	
-	public void close(ResultSet rs, PreparedStatement stmt, Connection conn) throws Exception {
+	public void close(ResultSet rs, PreparedStatement stmt, Connection conn) {
 		// 3가지 꼭 모두 사용안함 사용하는것만 -> null값 아니면 close
-		if(rs != null) {
-			rs.close(); 
+		try {
+			if(rs != null) {
+				rs.close(); 
+			}
+			if(stmt != null) {
+				stmt.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		if(stmt != null) {
-			stmt.close();
-		}
-		if(conn != null) {
-			conn.close();
-		}
-		
 	}
 }

@@ -28,8 +28,28 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>updateMemberForm</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	    <meta content="" name="keywords">
+	    <meta content="" name="description">
+	    
+	    <!-- Google Web Fonts -->
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+	    
+	    <!-- Icon Font Stylesheet -->
+	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+	    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	
+	    <!-- Libraries Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+	    <link href="<%=request.getContextPath()%>/resources/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+	
+	    <!-- Customized Bootstrap Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Template Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -39,76 +59,71 @@
 			}
 			%>
 		</script>
-		<style>
-			body {
-				padding: 4.5em;
-				background: #f5f5f5
-			}
-			table {
-			 	border: 1px #a39485 solid;
-				font-size: .9em;
-				box-shadow: 0 2px 5px rgba(0,0,0,.25);
-				border-collapse: collapse;
-				border-radius: 5px;
-				margin-left: auto; 
-				margin-right: auto;
-			}
-			a {
-				text-decoration : none;
-			}
-			button {
-				border: 0;
-			}
-		</style>
 	</head>
 	
 	<body>
-		<div>
-			<jsp:include page="/inc/adminMenu.jsp"></jsp:include>
-		</div>
+		<%
+			if(loginMember.getMemberLevel() > 0) {
+		%>
+					<div>
+						<!-- Sidebar -->
+						<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
+					</div>
+		<%
+			} else {
+		%>
+					<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
+		<%
+			}
+		%>
 		
-		<div>
-			<h3 Style="text-align:center;">회원 수정</h3>
-			<form method="post" action="<%=request.getContextPath()%>/admin/updateMemberAction.jsp">
-				<input type="hidden" name="memberNo" value="<%=memberOne.getMemberNo()%>">
-				<table class="table table-bordered" Style="width:50%;">
-					<tr>
-						<td Style="text-align:center;">아이디</td>
-						<td>
-							<input type="text" name="memberId" readonly="readonly" value="<%=memberOne.getMemberId()%>" style="width: 100%;">
-						</td>
-					</tr>
-					<tr>
-						<td Style="text-align:center;">이름</td>
-						<td>
-							<input type="text" name="memberName" value="<%=memberOne.getMemberName()%>" style="width: 100%;">
-						</td>
-					</tr>
-					<tr>
-						<td Style="text-align:center;">회원 레벨</td>
-						<td>
-						<%
-							if(memberOne.getMemberLevel() == 0) {
-								%>
-								<input type="radio" name="memberLevel" value="0" checked>일반
-								<input type="radio" name="memberLevel" value="1">관리자
-								<%
-							} else {
-								%>
-								<input type="radio" name="memberLevel" value="0">일반
-								<input type="radio" name="memberLevel" value="1" checked>관리자
-								<%
-							}
-						%>
-						</td>
-						
-					</tr>
-				</table>
-				<div class="position-relative" Style="padding: 1.0em;">
-					<button type="submit" class="position-absolute top-100 start-50 translate-middle">수정</button>
-				</div>
-				
-			</form>
+		<div class="content">
+   			<!-- Navbar -->
+   			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
+		
+			<div>
+				<h3 Style="text-align:center;">회원 수정</h3>
+				<form method="post" action="<%=request.getContextPath()%>/admin/updateMemberAction.jsp">
+					<input type="hidden" name="memberNo" value="<%=memberOne.getMemberNo()%>">
+					<table class="table table-bordered" Style="width:50%;">
+						<tr>
+							<td Style="text-align:center;">아이디</td>
+							<td>
+								<input type="text" name="memberId" readonly="readonly" value="<%=memberOne.getMemberId()%>" style="width: 100%;">
+							</td>
+						</tr>
+						<tr>
+							<td Style="text-align:center;">이름</td>
+							<td>
+								<input type="text" name="memberName" value="<%=memberOne.getMemberName()%>" style="width: 100%;">
+							</td>
+						</tr>
+						<tr>
+							<td Style="text-align:center;">회원 레벨</td>
+							<td>
+							<%
+								if(memberOne.getMemberLevel() == 0) {
+									%>
+									<input type="radio" name="memberLevel" value="0" checked>일반
+									<input type="radio" name="memberLevel" value="1">관리자
+									<%
+								} else {
+									%>
+									<input type="radio" name="memberLevel" value="0">일반
+									<input type="radio" name="memberLevel" value="1" checked>관리자
+									<%
+								}
+							%>
+							</td>
+							
+						</tr>
+					</table>
+					<div class="position-relative" Style="padding: 1.0em;">
+						<button type="submit" class="position-absolute top-100 start-50 translate-middle">수정</button>
+					</div>
+					
+				</form>
+			</div>
 		</div>
 	</body>
 </html>
