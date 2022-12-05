@@ -8,6 +8,8 @@
 	
 	String msg = null;
 	String redirectUrl = "/admin/categoryList.jsp?msg=";
+	System.out.println(request.getParameter("categoryKind"));
+	System.out.println(request.getParameter("categoryName"));
 	
 	// 작성 확인
 	if(request.getParameter("categoryKind") == null ||  request.getParameter("categoryName") == null
@@ -19,7 +21,6 @@
 
 	String categoryKind = request.getParameter("categoryKind");
 	String categoryName = request.getParameter("categoryName");
-	System.out.println(categoryKind);
 	
 	Category category = new Category();
 	category.setCategoryKind(categoryKind);

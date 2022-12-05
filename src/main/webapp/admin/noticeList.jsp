@@ -96,36 +96,47 @@
    			<!-- Navbar -->
    			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
    			
-			<!-- adbmin 컨텐츠 내용 -->
-			<h1 Style="text-align:center;"></h1>
-			<div>
-				<table class="table table-bordered">
-					<tr Style="text-align:center;">
-						<th>번호</th>
-						<th>공지내용</th>
-						<th>작성일</th>
-						<th>수정삭제</th>
-					</tr>
-					<%
-						for(Notice n : list){
-						%>
-							<tr>
-								<td Style="text-align:center; width:100px;"><%=n.getNoticeNo()%></td>
-								<td><%=n.getNoticeMemo() %></td>
-								<td style="text-align:center; width:200px;"><%=n.getCreatedate() %></td>
-								<td style="text-align:center; width:200px;">
-									<input type="hidden" name="noticeNo" value="<%=n.getNoticeNo()%>">
-									<a href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp?noticeNo=<%=n.getNoticeNo()%>">수정</a>
-									<a href="<%=request.getContextPath()%>/admin/deleteNoticeAction.jsp?noticeNo=<%=n.getNoticeNo()%>">삭제</a>
-								</td>
-							</tr>
-						<%
-						}
-					%>
-				</table>
-				
-				<div style="text-align:center;">
-				<!-- 페이징 -->
+			<!-- 공지 목록 Start -->
+			<div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Notice List</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col">번호</th>
+                                    <th scope="col">공지내용</th>
+                                    <th scope="col">작성일</th>
+                                    <th scope="col">ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+	                            <%
+	                            for(Notice n : list){
+								%>
+									<tr>
+										<td><%=n.getNoticeNo()%></td>
+										<td><%=n.getNoticeMemo() %></td>
+										<td><%=n.getCreatedate()%></td>
+										<td>
+											<input type="hidden" name="noticeNo" value="<%=n.getNoticeNo()%>">
+											<a class="btn btn-sm btn-primary" href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp?noticeNo=<%=n.getNoticeNo()%>">수정</a>
+											<a class="btn btn-sm btn-primary" href="<%=request.getContextPath()%>/admin/deleteNoticeAction.jsp?noticeNo=<%=n.getNoticeNo()%>">삭제</a>
+										</td>
+									</tr>
+								<%
+								}
+								%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+			<!-- 페이징 -->
+			<div Style="text-align: center;">
 				<a href="<%=request.getContextPath()%>/admin/noticeList.jsp?currentPage=1">처음</a>
 				<%
 					if(currentPage > 1){
@@ -140,25 +151,27 @@
 					}
 				%>
 				<a href="<%=request.getContextPath()%>/admin/noticeList.jsp?currentPage=<%=lastPage%>">마지막</a>
-				</div>
 			</div>
+			<!-- 공지 목록 End -->
 			
-			<div Style="padding: 4.0em;">
-				<!-- 입력폼 -->
-				<form action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp" method="post">
-					<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
-					<table class="table table-bordered">
-						<tr>
-							<th style="text-align:center;">공지등록</th>
-							<td>
-								<textarea rows="5" cols="150" name="noticeMemo"></textarea>
-							</td>
-					</table>
-					<div class="position-relative">
-					    <button type="submit" class="position-absolute top-100 start-50 translate-middle">등록</button>
-					</div>
-				</form>
+			<!-- 공지 입력 Start -->
+			<div class="container-fluid pt-4 px-4 ">
+				<div class="col-sm-12 col-xl-6">
+					<div class="bg-light rounded h-100 p-4">
+                        <h6 class="mb-4">공지 입력</h6>
+                        <form action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp" method="post">
+	                        <div class="form-floating">
+	                        	<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
+	                            <textarea class="form-control" name="noticeMemo" style="height: 150px;" id="floatingTextarea"></textarea>
+	                            <label for="floatingTextarea">Comments</label>
+	                        </div>
+	                        
+                    		<button type="submit" class="btn btn-sm btn-primary" >등록</button>
+                        </form>
+                    </div>
+                </div>
 			</div>
+			<!-- 공지 입력 End -->
 		</div>
 	</body>
 </html>

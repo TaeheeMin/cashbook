@@ -18,7 +18,7 @@
 	}
 
 	// 2. model
-	// 최근 공지 5개, 최근멤버 5명 페이징
+	// 최근 문의 5개, 공지 5개, 회원 5명 페이징
 	int currentPage = 1;
 	if(request.getParameter("currentPage") != null) {
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -26,14 +26,20 @@
 	int rowPerPage = 5;
 	int beginRow = (currentPage-1) * rowPerPage;
 	
-	// 회원 페이징
+	// 문의
+	HelpDao helpDao = new HelpDao();
+	ArrayList<HashMap<String, Object>> list = helpDao.selectHelpList(beginRow, rowPerPage);
+	int count = helpDao.selectHelpCount();
+	int lastPage = (int)Math.ceil((double)count / (double)rowPerPage);
+	
+	// 회원
 	MemberDao memberDao = new MemberDao();
 	ArrayList<Member> memberList = memberDao.selectMemverListByPage(beginRow, rowPerPage);
 	int memberCount = memberDao.selectMemberCount();
 	int memberLastPage = (int)Math.ceil((double)memberCount / (double)rowPerPage);
 	System.out.println(memberCount + "<-memberCount/" + memberLastPage + "lastPage"+ rowPerPage);
 	
-	// 공지 페이징
+	// 공지
 	NoticeDao noticeDao = new NoticeDao();
 	ArrayList<Notice> noticeList = noticeDao.selectNoticeByPage(beginRow, rowPerPage);
 	int noticeCount = noticeDao.selectNoticeCount();
@@ -90,6 +96,57 @@
    		<div class="content">
    			<!-- Navbar -->
    			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
+			
+			<!-- 최근 문의 Start -->
+			<div class="container-fluid pt-4 px-4">
+				<div class="bg-light text-center rounded p-4">
+					<div class="d-flex align-items-center justify-content-between mb-4">
+			      		<h6 class="mb-0">문의목록</h6>
+			        	<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp">Show All</a>
+					</div>
+                    
+                    <div class="table-responsive">
+                   		<table class="table text-start align-middle table-bordered table-hover mb-0">
+                        	<thead>
+                            	<tr class="text-dark">
+	                                <th scope="col">NO</th>
+	                                <th scope="col">문의내용</th>
+	                                <th scope="col">회원ID</th>
+	                                <th scope="col">작성일</th>
+	                                <th scope="col">답변</th>
+	                            </tr>
+                   			</thead>
+                           
+                           	<tbody>
+		                        <%
+		                        for(HashMap<String, Object> m : list){
+								%>
+									<tr>
+										<td><%=m.get("helpNo")%></td>
+										<td><%=m.get("helpMemo")%></td>
+										<td><%=m.get("memberId")%></td>
+										<td><%=m.get("helpCreatedate")%></td>
+										<%
+										if(m.get("commentMemo") != null) {
+										%>
+												<td>신규</td>
+											<%
+										} else {
+											%>
+												<td>답변 완료</td>
+										<%
+										}
+										%>
+									</tr>
+									<%
+									}
+									%>
+                            </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+            <!-- 최근 문의 End -->
 			
 			<!-- 공지 5개 Start -->
 			<div class="container-fluid pt-4 px-4">

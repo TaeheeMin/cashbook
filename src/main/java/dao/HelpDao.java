@@ -52,6 +52,7 @@ public class HelpDao {
 				+ ", c.createdate commentCreatedate"
 				+ " FROM HELP h LEFT OUTER JOIN COMMENT c"
 				+ " ON h.help_no=c.help_no"
+				+ " ORDER BY h.help_no DESC"
 				+ " LIMIT ?,?";
 		
 		DBUtil dbutil = new DBUtil();

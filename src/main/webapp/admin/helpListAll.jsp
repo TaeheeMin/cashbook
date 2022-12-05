@@ -40,7 +40,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>help List All</title>
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	    <meta content="" name="keywords">
 	    <meta content="" name="description">
 	    
@@ -84,67 +84,84 @@
    			<!-- Navbar -->
    			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
 			
-		
-		<div>
-			<table class="table table-bordered">
-				<tr>
-					<th>문의 내용</th>
-					<th>회원ID</th>
-					<th>작성일</th>
-					<th>답변</th>
-					<th>답변 작성일</th>
-					<th>수정삭제</th>
-				</tr>
+			<!-- 회원 목록 Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Memeber List</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col">번호</th>
+                                    <th scope="col">문의 내용</th>
+                                    <th scope="col">회원ID</th>
+                                    <th scope="col">작성일</th>
+                                    <th scope="col">답변</th>
+                                    <th scope="col">답변 작성일</th>
+                                    <th scope="col">수정삭제 DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <%
+                            	for(HashMap<String, Object> m : list){
+							%>
+									<tr>
+										<td><%=m.get("helpNo")%></td>
+										<td><%=m.get("helpMemo")%></td>
+										<td><%=m.get("memberId")%></td>
+										<td><%=m.get("helpCreatedate")%></td>
+										<%
+											if(m.get("commentMemo") != null) {
+										%>
+												<td><%=m.get("commentMemo")%></td>
+												<td><%=m.get("commentCreatedate")%></td>
+												<td>
+													<a class="btn btn-sm btn-primary" href="<%=request.getContextPath()%>/admin/updateCommentForm.jsp?helpNo=<%=m.get("helpNo")%>&commentNo=<%=m.get("commentNo")%>">답변수정</a>
+													<a class="btn btn-sm btn-primary" href="<%=request.getContextPath()%>/admin/deleteComment.jsp?commentNo=<%=m.get("commentNo")%>"">답변삭제</a>
+												</td>
+										<%
+											} else {
+										%>
+												<td> </td>
+												<td> </td>
+												<td>
+													<a class="btn btn-sm btn-primary" href="<%=request.getContextPath()%>/admin/insertCommentForm.jsp?helpNo=<%=m.get("helpNo")%>">답변등록</a>
+												</td>
+										<%
+											}
+										%>
+									</tr>
+									<%
+                            	}
+								%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+           	<!-- 회원 목록 End -->
+           	
+			<!-- 페이징 -->
+			<div Style="text-align:center;">
+				<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=1">처음</a>
 				<%
-				for(HashMap<String, Object> m : list){
+	
+				if(currentPage > 1){
 				%>
-					<tr>
-						<td><%=m.get("helpMemo")%></td>
-						<td><%=m.get("memberId")%></td>
-						<td><%=m.get("helpCreatedate")%></td>
-						<%
-							if(m.get("commentMemo") != null) {
-							%>
-								<td><%=m.get("commentMemo")%></td>
-								<td><%=m.get("commentCreatedate")%></td>
-								<td>
-									<a href="<%=request.getContextPath()%>/admin/updateCommentForm.jsp?helpNo=<%=m.get("helpNo")%>&commentNo=<%=m.get("commentNo")%>">답변수정</a>
-									<a href="<%=request.getContextPath()%>/admin/deleteComment.jsp?commentNo=<%=m.get("commentNo")%>"">답변삭제</a>
-								</td>
-							<%
-							} else {
-							%>
-								<td> </td>
-								<td> </td>
-								<td>
-									<a href="<%=request.getContextPath()%>/admin/insertCommentForm.jsp?helpNo=<%=m.get("helpNo")%>">답변등록</a>
-								</td>
-							<%
-							}
-							%>
-					</tr>
-					<%
-					}
-					%>
-			</table>
-			<div style="text-align:center;">
-				<!-- 페이징 -->
-				<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=1">처음</a>
-				<%
-					if(currentPage > 1){
-				%>
-						<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage-1%>">이전</a>
+						<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=currentPage-1%>">이전</a>
 				<%
 					}
 					if(currentPage < lastPage){
 				%>
-						<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage+1%>">다음</a>
+						<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=currentPage+1%>">다음</a>
 				<%
 					}
 				%>
-				<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=lastPage%>">마지막</a>
+				<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=lastPage%>">마지막</a>
 			</div>
-		</div>
+			<!-- 페이징 End-->
 		</div>
 	</body>
 </html>
