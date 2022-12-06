@@ -86,6 +86,19 @@
 	</head>
 	
 	<body>
+	
+	<%
+			if(loginMember.getMemberLevel() > 0) {
+		%>
+				<!-- Sidebar -->
+				<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
+		<%
+			} else {
+		%>
+				<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
+		<%
+			}
+		%>
 		<div>
 			<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
 		</div>

@@ -133,8 +133,8 @@
 					<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
 				</div>
 			</div>
-			<div>
 			
+			<div>
 				<div class="col-sm-12 col-md-6 col-xl-4">
 	                        <div class="h-100 bg-light rounded p-4">
 	                            <div class="d-flex align-items-center justify-content-between mb-4">
@@ -202,18 +202,5 @@
 				</table>
 			</div>
 			</div>
-		<!-- JavaScript Libraries -->
-	    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	    <script src="<%=request.getContextPath()%>/resources/lib/chart/chart.min.js"></script>
-	    <script src="<%=request.getContextPath()%>/resources/lib/easing/easing.min.js"></script>
-	    <script src="<%=request.getContextPath()%>/resources/lib/waypoints/waypoints.min.js"></script>
-	    <script src="<%=request.getContextPath()%>/resources/lib/owlcarousel/owl.carousel.min.js"></script>
-	    <script src="<%=request.getContextPath()%>/resources/lib/tempusdominus/js/moment.min.js"></script>
-	    <script src="<%=request.getContextPath()%>/resources/lib/tempusdominus/js/moment-timezone.min.js"></script>
-	    <script src="<%=request.getContextPath()%>/resources/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-	
-	    <!-- Template Javascript -->
-	    <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
 	</body>
 </html>
