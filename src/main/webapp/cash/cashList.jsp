@@ -75,132 +75,92 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-	    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-	    <meta content="" name="keywords">
-	    <meta content="" name="description">
-	    
-	    <!-- Google Web Fonts -->
-	    <link rel="preconnect" href="https://fonts.googleapis.com">
-	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-	    
-	    <!-- Icon Font Stylesheet -->
-	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-	    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-	
-	    <!-- Libraries Stylesheet -->
-	    <link href="<%=request.getContextPath()%>/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-	    <link href="<%=request.getContextPath()%>/resources/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-	
-	    <!-- Customized Bootstrap Stylesheet -->
-	    <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
-	
-	    <!-- Template Stylesheet -->
-	    <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
-		<script type="text/javascript">
-			<%
-			if(request.getParameter("msg") != null) {         
-				%>   
-				alert("<%=request.getParameter("msg")%>");
-				<%   
-			}
-			%>
-		</script>
+	    <link  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/NewFile.css">
 	</head>
 	
 	<body>
-		<%
-			if(loginMember.getMemberLevel() > 0) {
-		%>
-				<!-- Sidebar -->
-				<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
-		<%
-			} else {
-		%>
-				<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
-		<%
-			}
-		%>
-		
-   		<div class="content">
-   			<!-- Navbar -->
-   			<jsp:include page="/inc/memberNav.jsp"></jsp:include>
-			
-			<div>
-				<h1 class="text-center"><%=year%>년 <%=month+1%> 월</h1>
-				<div class="d-flex justify-content-center">
-					<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>&nbsp;
-					<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
+		<div class="wrapper">
+  			<main>
+				<div class="toolbar">
+				 	<div class="search-input">
+				        <i class="fa fa-search"></i>
+			     	</div>
+			        <div class="current-month"><%=year%>년 <%=month+1%> 월</div>
+					<div class="toggle">
+						<div class="toggle__option" OnClick="location.href ='<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>'">
+							PREVIOUS
+						</div>
+						<div class="toggle__option" OnClick="location.href ='<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>'">
+							NEXT
+						</div>
+					</div>
 				</div>
-			</div>
-			
-			<div>
-				<div class="col-sm-12 col-md-6 col-xl-4">
-	                        <div class="h-100 bg-light rounded p-4">
-	                            <div class="d-flex align-items-center justify-content-between mb-4">
-	                                <h6 class="mb-0">Calender</h6>
-	                                <a href="<%= request.getContextPath()%>/cash/cashList.jsp">Show All</a>
-	                            </div>
-	                            <div id="calender"></div>
-	                        </div>
-	               </div>
-	               
-				<table class="table table-bordered">
-					<tr Style="text-align:center;">
-						<th>일</th>
-						<th>월</th>
-						<th>화</th>
-						<th>수</th>
-						<th>목</th>
-						<th>금</th>
-						<th>토</th>
-					</tr>
-					<tr>
-						<% 
-						for(int i = 1; i <= totalTd; i++) {
-						%>
-							<td>
-								<%
-								int date = i - beginBlank;
-								if(date > 0 && date <= lastDate) {
+				<!-- 캘린더 시작 -->
+				<div class="calendar">
+					<div class="calendar__header">
+						<div>mon</div>
+						<div>tue</div>
+						<div>wed</div>
+						<div>thu</div>
+						<div>fri</div>
+						<div>sat</div>
+						<div>sun</div>
+					</div>
+					
+					<div class="calendar__week">
+				      	<% 
+								for(int i = 1; i <= totalTd; i++) {
 								%>
-									<div>
-										<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&day=<%=date%>">
-											<%=date%>
-										</a>
-									</div>
-									<div>
+									<div class="calendar__day day">
 										<%
-											//날짜별 수입지출
-											for(HashMap<String, Object> m : list){
-												String cashDate = (String)m.get("cashDate");
-												if(Integer.parseInt(cashDate.substring(8)) == date) {
+										int date = i - beginBlank;
+										if(date > 0 && date <= lastDate) {
 										%>
-													<div>
-														[<%=(String)m.get("categoryKind")%>]
-														<%=(String)m.get("categoryName")%>
-														&nbsp;
-														<%=(Integer)m.get("cashPrice")%>원
-													</div>
+											<div OnClick="location.href ='<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&day=<%=date%>'">
+													<%=date%>
+												<!--  
+												<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&day=<%=date%>">d</a>
+												-->
+											</div>
+											<div>
+												<%
+													//날짜별 수입지출
+													for(HashMap<String, Object> m : list){
+														String cashDate = (String)m.get("cashDate");
+														if(Integer.parseInt(cashDate.substring(8)) == date) {
+												%>
+															<div>
+																[<%=(String)m.get("categoryKind")%>]
+																<%=(String)m.get("categoryName")%>
+																&nbsp;
+																<%=(Integer)m.get("cashPrice")%>원
+															</div>
+												<%
+														}
+													}
+												%>
+											</div>
 										<%
-												}
-											}
+										}
 										%>
 									</div>
-								<%
+									<%
+									if(i%7 == 0 && i != totalTd) { // td7개마다 tr끊어줌
+									%>
+										</div><div class="calendar__week">
+									<%		
+									}
 								}
 								%>
-							</td>
-							<%
-							if(i%7 == 0 && i != totalTd) { // td7개마다 tr끊어줌
-							%>
-								</tr><tr>
-							<%		
-							}
-						}
-						%>
-				</table>
-			</div>
-			</div>
+					</div>
+				</div>
+				<!-- 캘린더 끝 -->
+  			</main>
+  			<!-- 사이드바 -->
+			<jsp:include page="/inc/member.jsp"></jsp:include>
+		</div>
 	</body>
 </html>
