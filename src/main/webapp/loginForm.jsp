@@ -32,6 +32,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Login Form</title>
+		<link  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/NewFile.css">
+	
 		<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	    <meta content="" name="keywords">
 	    <meta content="" name="description">
@@ -75,35 +80,34 @@
 	        <div class="container-fluid">
 	            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
 	                <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
-	                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-	                        <div class="d-flex align-items-center justify-content-between mb-3">
-	                            <a href="<%=request.getContextPath() %>/main.jsp" class="">
-	                                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>CashBook</h3>
-	                            </a>
-	                            <h3>로그인</h3>
-	                        </div>
-	                        
-	                        <form action="<%=request.getContextPath()%>/loginAction.jsp">
-		                        <div class="form-floating mb-3">
-		                            <input type="text" class="form-control" name="memberId" id="floatingInput" placeholder="ID">
-		                            <label for="floatingInput">ID</label>
+	                       <sidebar class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+		                       <div class="d-flex align-items-center justify-content-between mb-3">
+		                            <a href="<%=request.getContextPath() %>/main.jsp" class="">
+		                                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>CashBook</h3>
+		                            </a>
+		                            <h3>로그인</h3>
 		                        </div>
 		                        
-		                        <div class="form-floating mb-4">
-		                            <input type="password" class="form-control" name="memberPw" id="floatingPassword" placeholder="Password">
-		                            <label for="floatingPassword">Password</label>
-		                        </div>
-		                        
-		                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">로그인</button>
-		                        <p class="text-center mb-0">아직 회원이 아니신가요? <a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp">회원가입</a></p>
-	                        </form>
-                    	</div>
+		                        <form action="<%=request.getContextPath()%>/loginAction.jsp">
+			                        <div class="form-floating mb-3">
+			                            <input type="text" class="form-control" name="memberId" id="floatingInput" placeholder="ID">
+			                            <label for="floatingInput">ID</label>
+			                        </div>
+			                        
+			                        <div class="form-floating mb-4">
+			                            <input type="password" class="form-control" name="memberPw" id="floatingPassword" placeholder="Password">
+			                            <label for="floatingPassword">Password</label>
+			                        </div>
+			                        
+			                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">로그인</button>
+			                        <p class="text-center mb-0">아직 회원이 아니신가요? <a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp">회원가입</a></p>
+		                        </form>
+	                       </sidebar>
+                       </div>
                 	</div>
             	</div>
         	</div>
-        	<!-- Sign In End -->
-		</div>
-
+			<!-- Sign In End -->
 	    <!-- JavaScript Libraries -->
 	    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

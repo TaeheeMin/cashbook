@@ -99,7 +99,7 @@
 			
 			<!-- 최근 문의 Start -->
 			<div class="container-fluid pt-4 px-4">
-				<div class="bg-light text-center rounded p-4">
+				<div class="text-center rounded p-4">
 					<div class="d-flex align-items-center justify-content-between mb-4">
 			      		<h6 class="mb-0">문의목록</h6>
 			        	<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp">Show All</a>
@@ -150,7 +150,7 @@
 			
 			<!-- 공지 5개 Start -->
 			<div class="container-fluid pt-4 px-4">
-    			<div class="bg-light text-center rounded p-4">
+    			<div class="text-center rounded p-4">
         			<div class="d-flex align-items-center justify-content-between mb-4">
             			<h6 class="mb-0">공지</h6>
             			<a href="<%=request.getContextPath()%>/admin/noticeList.jsp">Show All</a>
@@ -187,7 +187,7 @@
             
             <!-- 최근가입 회원 Start -->
 			<div class="container-fluid pt-4 px-4">
-				<div class="bg-light text-center rounded p-4">
+				<div class="text-center rounded p-4">
 					<div class="d-flex align-items-center justify-content-between mb-4">
 			      		<h6 class="mb-0">회원목록</h6>
 			        	<a href="<%=request.getContextPath()%>/admin/memberList.jsp">Show All</a>

@@ -83,20 +83,29 @@
 		<div class="content">
    			<!-- Navbar -->
    			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
-   			
-		<h1 Style="text-align:center;">공지 수정</h1>
-		<form method="post" action="<%=request.getContextPath()%>/admin/updateNoticeAction.jsp">
+   			<div class="container-fluid pt-4 px-4">
+                <div class="text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">공지수정</h6>
+                    </div>
+                    <form method="post" action="<%=request.getContextPath()%>/admin/updateNoticeAction.jsp">
 			<input type="hidden" value="<%=noticeNo%>" name="noticeNo">
-			<table class="table table-bordered">
-				<tr>
+			<table class="table">
+				<tr class="text-dark">
 					<td>내용</td>
 					<td>
 					<textarea rows="5" cols="150" name="noticeMemo"><%=notice.getNoticeMemo()%></textarea>
 					</td>
 				</tr>
 			</table>
-			<button type="submit" >수정</button>
+			<button type="submit" class="btn btn-primary" >수정</button>
 		</form>
+		</div>
+		</div>
+		
+		
+                   
+		
 		</div>
 	</body>
 </html>

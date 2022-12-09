@@ -24,7 +24,7 @@
 			</div>
 				
 			<div class="navbar-nav w-100">
-			    <a href="<%=request.getContextPath()%>/admin/adminMain.jsp" class="nav-link nav-link"><i class="fa fa-laptop me-2"></i>홈</a>
+			    <a href="<%=request.getContextPath()%>/admin/adminMain.jsp" class="nav-link nav-link"><i class="menu__icon fa fa-home"></i>홈</a>
 				<a href="<%=request.getContextPath()%>/admin/memberList.jsp" class="nav-item nav-link"><i class="fa fa-th me-2"></i>회원관리</a>
 				<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>고객센터 관리</a>
 				<a href="<%=request.getContextPath()%>/admin/categoryList.jsp" class="nav-item nav-link"><i class="fa fa-table me-2"></i>카테고리 관리</a>

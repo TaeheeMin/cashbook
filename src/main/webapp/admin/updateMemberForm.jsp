@@ -81,17 +81,27 @@
    			<!-- Navbar -->
    			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
 		
-			<div>
-				<h3 Style="text-align:center;">회원 수정</h3>
+			<!-- 입력폼 -->
+			<div class="container-fluid">
+				<div class="row h-100 align-items-center justify-content-center" style="min-height: 30vh;">
+					<div class="col-12 col-xl-6">
+						<div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
 				<form method="post" action="<%=request.getContextPath()%>/admin/updateMemberAction.jsp">
 					<input type="hidden" name="memberNo" value="<%=memberOne.getMemberNo()%>">
-					<table class="table table-bordered" Style="width:50%;">
-						<tr>
-							<td Style="text-align:center;">아이디</td>
-							<td>
-								<input type="text" name="memberId" readonly="readonly" value="<%=memberOne.getMemberId()%>" style="width: 100%;">
-							</td>
-						</tr>
+					<div class="container-fluid pt-4 px-4">
+					
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">회원수정</h6>
+                    </div>
+                   <div class="table-responsive">
+	                    <table class="table">
+								<tr>
+									<td Style="text-align:center;">아이디</td>
+									<td>
+										<input type="text" name="memberId" readonly="readonly" value="<%=memberOne.getMemberId()%>" style="width: 100%;">
+									</td>
+								</tr>
 						<tr>
 							<td Style="text-align:center;">이름</td>
 							<td>
@@ -103,27 +113,43 @@
 							<td>
 							<%
 								if(memberOne.getMemberLevel() == 0) {
-									%>
-									<input type="radio" name="memberLevel" value="0" checked>일반
-									<input type="radio" name="memberLevel" value="1">관리자
-									<%
+							%>
+									<div class="form-check form-check-inline">
+		                                <input class="form-check-input" type="radio" name="memberLevel" value="0" checked="checked">
+		                                <label class="form-check-label" for="inlineRadio1">일반</label>
+		                            </div>
+		                            <div>
+		                                <input class="form-check-input" type="radio" name="memberLevel" value="1">
+		                                <label class="form-check-label" for="inlineRadio1">관리자</label>
+		                            </div>
+							<%
 								} else {
-									%>
-									<input type="radio" name="memberLevel" value="0">일반
-									<input type="radio" name="memberLevel" value="1" checked>관리자
-									<%
+							%>
+									<div class="form-check form-check-inline">
+		                                <input class="form-check-input" type="radio" name="memberLevel" value="0">
+		                                <label class="form-check-label" for="inlineRadio1">일반</label>
+		                                </div>
+		                            <div>
+		                                <input class="form-check-input" type="radio" name="memberLevel" value="1" checked="checked">
+		                                <label class="form-check-label" for="inlineRadio1">관리자</label>
+		                            </div>
+                            <%
 								}
 							%>
 							</td>
 							
 						</tr>
 					</table>
-					<div class="position-relative" Style="padding: 1.0em;">
-						<button type="submit" class="position-absolute top-100 start-50 translate-middle">수정</button>
+					</div>
+					</div>
 					</div>
 					
-				</form>
-			</div>
+						<button type="submit" class="btn btn-primary">수정</button>
+			</form>
+                       </div>
+	                </div>
+	            </div>
+	        </div>
 		</div>
 	</body>
 </html>

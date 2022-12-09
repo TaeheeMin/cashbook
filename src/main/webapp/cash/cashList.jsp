@@ -11,6 +11,7 @@
 		String msg = URLEncoder.encode("로그인해주세요","utf-8");
 		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
 		System.out.println("로그인 필요");
+		
 		return;
 	}
 	
@@ -68,21 +69,48 @@
 	// view : 달력 출력+ 일별 csah 목록
 	// 날짜 클릭 수입지출 내역 확인 기능
 	// 수입 지출 입력 기능
-	// 
+	
 %>
 
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
-	    <link  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta charset="UTF-8">
+		<title>cash Date List</title>
+		<link  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/NewFile.css">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	    <meta content="" name="keywords">
+	    <meta content="" name="description">
+	    
+	    <!-- Google Web Fonts -->
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+	    
+ 		<!-- Customized Bootstrap Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Template Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
+	
+		<script type="text/javascript">
+			<%
+			if(request.getParameter("msg") != null) {         
+				%>   
+				alert("<%=request.getParameter("msg")%>");
+				<%   
+			}
+			%>
+		</script>
 	</head>
 	
 	<body>
 		<div class="wrapper">
+		
   			<main>
 				<div class="toolbar">
 				 	<div class="search-input">
@@ -121,11 +149,8 @@
 										%>
 											<div OnClick="location.href ='<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&day=<%=date%>'">
 													<%=date%>
-												<!--  
-												<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&day=<%=date%>">d</a>
-												-->
 											</div>
-											<div>
+											<div >
 												<%
 													//날짜별 수입지출
 													for(HashMap<String, Object> m : list){
@@ -148,14 +173,14 @@
 										%>
 									</div>
 									<%
-									if(i%7 == 0 && i != totalTd) { // td7개마다 tr끊어줌
+										if(i%7 == 0 && i != totalTd) { // td7개마다 tr끊어줌
 									%>
 										</div><div class="calendar__week">
 									<%		
-									}
-								}
-								%>
-					</div>
+											}
+										}
+									%>
+						</div>
 				</div>
 				<!-- 캘린더 끝 -->
   			</main>

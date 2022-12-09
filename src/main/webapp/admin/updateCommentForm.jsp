@@ -89,41 +89,51 @@
 		<div class="content">
    			<!-- Navbar -->
    			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
-		
-			<div>
-				<h3 style="text-align:center;">문의</h3>
-				<table class="table table-bordered">
-					<tr>
-						<td style="width:100px;">작성자</td>
-						<td>
-							<%=updateHelp.getMemberId()%>
-						</td>
-					</tr>
-					<tr>
-						<td style="width:100px;">내용</td>
-						<td>
-							<%=updateHelp.getHelpMemo() %>
-						</td>
-					</tr>
-				</table>
+			<!-- 문의내용 -->
+			<div class="container-fluid pt-4 px-4">
+                <div class="text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">문의 내용</h6>
+                    </div>
+                   <div class="table-responsive">
+	                    <table class="table">
+                            <thead>
+                                <tr class="text-dark">
+									<td>작성자</td>
+									<td>내용</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><%=updateHelp.getMemberId()%></td>
+									<td><%=updateHelp.getHelpMemo() %></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 			
 			<!-- 입력폼 -->
-			<form action="<%=request.getContextPath()%>/admin/updateCommentAction.jsp" method="post">
-				<input type="hidden" value="<%=comment.getCommentNo()%>" name="commentNo">
-				<input type="hidden" value="<%=comment.getCommentNo()%>" name="commentNo">
-				<table class="table table-bordered">
-					<tr>
-						<td style="text-align:center;">답변수정</td>
-						<td>
-							<textarea rows="5" cols="150" name="commentMemo"><%=comment.getCommentMemo() %></textarea>
-						</td>
-					</tr>
-				</table>
-				<div class="position-relative">
-				    <button type="submit" class="position-absolute top-100 start-50 translate-middle">수정</button>
-				</div>
-			</form>
-		</div>
+		<div class="container-fluid">
+				<div class="row h-100 align-items-center justify-content-center" style="min-height: 30vh;">
+					<div class="col-12 col-xl-6">
+						<div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+	                    	<h6 class="mb-4">답변수정</h6>
+								<form action="<%=request.getContextPath()%>/admin/updateCommentAction.jsp" method="post">
+									<input type="hidden" value="<%=comment.getCommentNo()%>" name="commentNo">
+									<div class="row mb-3">
+			                        	<div class="form-floating">
+	                                		<textarea class="form-control" placeholder="Leave a comment here" style="height: 150px;" name="commentMemo"><%=comment.getCommentMemo() %></textarea>
+	                                		<label for="floatingTextarea">Comments</label>
+	                           			</div>
+		                     		</div>
+	                     			<button type="submit" class="btn btn-primary">수정</button>
+	                     		</form>
+                       </div>
+	                </div>
+	            </div>
+	        </div>
+	        </div>
 	</body>
 </html>

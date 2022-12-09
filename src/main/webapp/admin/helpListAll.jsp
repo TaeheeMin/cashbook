@@ -86,12 +86,12 @@
 			
 			<!-- 회원 목록 Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="bg-light text-center rounded p-4">
+                <div class="rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Memeber List</h6>
+                        <h6 class="mb-0">hlep List</h6>
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+	                    <table class="table">
                             <thead>
                                 <tr class="text-dark">
                                     <th scope="col">번호</th>
@@ -100,7 +100,7 @@
                                     <th scope="col">작성일</th>
                                     <th scope="col">답변</th>
                                     <th scope="col">답변 작성일</th>
-                                    <th scope="col">수정삭제 DATE</th>
+                                    <th scope="col">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>

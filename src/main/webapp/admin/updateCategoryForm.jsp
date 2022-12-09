@@ -70,20 +70,24 @@
    			<!-- Navbar -->
    			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
 			
-		<div Style="text-align:center; padding: 4.0em;">
-			<h3>카테고리 수정</h3>
-			<form method ="post" action="<%=request.getContextPath()%>/admin/updateCategoryAction.jsp?categoryNo=<%=categoryNo%>">
-				<table class="table table-bordered" Style="width:50%;">
-					<tr>
-						<th>categoryName</th>
-						<td>
-							<input type="text" name="categoryName" value="<%=category.getCategoryName()%>">
-						</td>
-					</tr>
-				</table>
-				<button type="submit">수정</button>
-			</form>
-		</div>
+		<div class="container-fluid">
+	            <div class="row h-100 align-items-center justify-content-center" style="min-height: 30vh;">
+	                <div class="col-12 col-xl-6">
+                       <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                       		<h6 class="mb-4">카테고리 수정</h6>
+							<form method ="post" action="<%=request.getContextPath()%>/admin/updateCategoryAction.jsp?categoryNo=<%=categoryNo%>">
+								<div class="row mb-3">
+			                         <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+			                         <div class="col-sm-10">
+			                             <input class="form-control mb-3" type="text" name="categoryName" value="<%=category.getCategoryName()%>">
+			                         </div>
+		                     	</div>
+								<button type="submit" class="btn btn-primary">수정</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

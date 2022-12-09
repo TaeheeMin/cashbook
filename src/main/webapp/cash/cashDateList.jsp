@@ -1,5 +1,5 @@
-<%@page import="java.lang.StackWalker.Option"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.lang.StackWalker.Option"%>
 <%@ page import="dao.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="vo.*"%>
@@ -41,8 +41,26 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>cash Date List</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+		<link  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/NewFile.css">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	    <meta content="" name="keywords">
+	    <meta content="" name="description">
+	    
+	    <!-- Google Web Fonts -->
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+	    
+ 		<!-- Customized Bootstrap Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Template Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
+	
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -52,140 +70,115 @@
 			}
 			%>
 		</script>
-		<style>
-			body {
-				padding: 4.5em;
-				background: #f5f5f5
-			}
-			table {
-			 	border: 1px #a39485 solid;
-				font-size: .9em;
-				box-shadow: 0 2px 5px rgba(0,0,0,.25);
-				border-collapse: collapse;
-				border-radius: 5px;
-				margin-left: auto; 
-				margin-right: auto;
-			}
-			a {
-				text-decoration : none;
-			}
-			button {
-				border: 0;
-			}
-			textarea {
-				border: 0.5px #a39485 solid;
-				font-size: .9em;
-				outline: none;
-				padding-left: 10px;
-				width: 100%;
-			}
-			input {
-				width: 100%;
-			}
-		</style>
 	</head>
 	
 	<body>
-	
-	<%
-			if(loginMember.getMemberLevel() > 0) {
-		%>
-				<!-- Sidebar -->
-				<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
-		<%
-			} else {
-		%>
-				<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
-		<%
-			}
-		%>
-		<div>
-			<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
-		</div>
-		
-		<h1><%=year%>년 <%=month+1%> 월 <%=date %>일</h1>
-		<div>
-			<!-- 입력폼 -->
-			<form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp" method="post">
-				<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
-				<table class="table table-bordered">
-					<tr>
-						<td Style="width: 200px;">categoryNo</td>
-						<td>
-							<select name="catagoryNo">
-								<%
-									// 카테고리 넘버
-									for(Category c : categoryList) {
-										%>
-											<option value="<%=c.getCategoryNo()%>">
-												[<%=c.getCategoryKind()%>] <%=c.getCategoryName()%>
-											</option>
-										<%
-									}
+		<div class="wrapper">
+			
+			<main>
+			
+			<div class="col-12">
+	            <div class="rounded h-100 p-4">
+                    <h1 class="display-6"><%=year%>년 <%=month%> 월 <%=date %>일</h1>
+
+	                <div class="table-responsive">
+	                    <table class="table">
+	                        <thead>
+	                            <tr>
+	                                <th scope="col">날짜</th>
+	                                <th scope="col">종류</th>
+	                                <th scope="col">가격</th>
+	                                <th scope="col">메모</th>
+	                                <th scope="col">수정삭제</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	                        	<%
+								//날짜별 수입지출
+								for(HashMap<String, Object> m : dateList){
+									String cashDate = (String)m.get("cashDate");
+									System.out.println((String)m.get("cashDate"));
+				
+									if(Integer.parseInt(cashDate.substring(8)) == date) {
+									int cashNo = (Integer)m.get("cashNo");
 								%>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td Style="width: 200px;">cashDate</td>
-						<td>
-							<input type="text" name="cashDate" value="<%=year%>-<%=month%>-<%=date%>" readonly="readonly">
-						</td>
-					</tr>
-					<tr>
-						<td Style="width: 200px;">cashPrice</td>
-						<td>
-							<input type="text" name="cashPrice">
-						</td>
-					</tr>
-					<tr>
-						<td Style="width: 200px;">cashMemo</td>
-						<td>
-							<textarea rows="5" cols="10" name="cashMemo"></textarea>
-						</td>
-					</tr>
-				</table>
-				<div class="position-relative" Style="padding: 1.0em;">
-					<button type="submit" class="position-absolute bottom-0 start-50 translate-middle-x">입력</button>
-				</div>
-			</form>
-		</div>
-		
-		<div Style="padding: 1.0em;">
-			<table class="table table-bordered">
-				<tr>
-					<th>cashDate</th>
-					<th>categoryKind</th>
-					<th>categoryName</th>
-					<th>cashPrice</th>
-					<th>cashMemo</th>
-					<th>Action</th>
-				</tr>
-					<%
-					//날짜별 수입지출
-					for(HashMap<String, Object> m : dateList){
-						String cashDate = (String)m.get("cashDate");
-						System.out.println((String)m.get("cashDate"));
-	
-						if(Integer.parseInt(cashDate.substring(8)) == date) {
-						int cashNo = (Integer)m.get("cashNo");
-					%>
-					<tr>
-						<td><%=(String)m.get("cashDate")%></td>
-						<td>[<%=(String)m.get("categoryKind")%>]</td>
-						<td><%=(String)m.get("categoryName")%></td>
-						<td><%=(Integer)m.get("cashPrice")%>원</td>
-						<td><%=(String)m.get("cashMemo")%></td>
-						<td>
-							<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=cashNo%>&year=<%=year %>&month=<%=month %>&day=<%=date %>">수정</a>
-							<a href="<%=request.getContextPath()%>/cash/deleteCashForm.jsp?cashNo=<%=cashNo%>&year=<%=year %>&month=<%=month %>&day=<%=date %>">삭제</a>
-						</td>
-					</tr>
-					<%
-						}
-					}
-					%>
-			</table>
+								<tr>
+									<td><%=(String)m.get("cashDate")%></td>
+									<td>[<%=(String)m.get("categoryKind")%>] <%=(String)m.get("categoryName")%></td>
+									<td><%=(Integer)m.get("cashPrice")%>원</td>
+									<td><%=(String)m.get("cashMemo")%></td>
+									<td>
+										<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=cashNo%>&year=<%=year %>&month=<%=month %>&day=<%=date %>">수정</a>
+										<a href="<%=request.getContextPath()%>/cash/deleteCashForm.jsp?cashNo=<%=cashNo%>&year=<%=year %>&month=<%=month %>&day=<%=date %>">삭제</a>
+									</td>
+								</tr>
+								<%
+									}
+								}
+								%>
+	                          
+	                        </tbody>
+	                    </table>
+	                </div>
+	            </div>
+	        </div>
+	        
+	        <div class="container-fluid">
+	            <div class="row h-100 align-items-center justify-content-center" style="min-height: 50vh;">
+	                <div class="col-12 col-sm-8 col-md-6 col-lg-10 col-xl-10">
+	                       <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+	                       <form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp" method="post">
+					<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
+					<table class="table table-bordered">
+						<tr>
+							<td Style="width: 200px;">categoryNo</td>
+							<td>
+								<select name="catagoryNo">
+									<%
+										// 카테고리 넘버
+										for(Category c : categoryList) {
+											%>
+												<option value="<%=c.getCategoryNo()%>">
+													[<%=c.getCategoryKind()%>] <%=c.getCategoryName()%>
+												</option>
+											<%
+										}
+									%>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td Style="width: 200px;">cashDate</td>
+							<td>
+								<input type="text" name="cashDate" value="<%=year%>-<%=month%>-<%=date%>" readonly="readonly">
+							</td>
+						</tr>
+						<tr>
+							<td Style="width: 200px;">cashPrice</td>
+							<td>
+								<input type="text" name="cashPrice">
+							</td>
+						</tr>
+						<tr>
+							<td Style="width: 200px;">cashMemo</td>
+							<td>
+								<textarea rows="5" cols="10" name="cashMemo"></textarea>
+							</td>
+						</tr>
+					</table>
+					<div class="position-relative" Style="padding: 1.0em;">
+						<button type="submit" class="position-absolute bottom-0 start-50 translate-middle-x">입력</button>
+					</div>
+				</form>
+	                       </div>
+	                </div>
+	               </div>
+	              </div>
+				<!-- 입력폼 -->
+
+		</main>
+		<!-- 사이드바 -->
+			<jsp:include page="/inc/member.jsp"></jsp:include>
 		</div>
 	</body>
 </html>

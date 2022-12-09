@@ -98,12 +98,12 @@
    			
 			<!-- 공지 목록 Start -->
 			<div class="container-fluid pt-4 px-4">
-                <div class="bg-light text-center rounded p-4">
+                <div class="text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Notice List</h6>
                     </div>
                     <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <table class="table">
                             <thead>
                                 <tr class="text-dark">
                                     <th scope="col">번호</th>
@@ -118,8 +118,8 @@
 								%>
 									<tr>
 										<td><%=n.getNoticeNo()%></td>
-										<td><%=n.getNoticeMemo() %></td>
-										<td><%=n.getCreatedate()%></td>
+										<td class = "align-items-left "><%=n.getNoticeMemo() %></td>
+										<td ><%=n.getCreatedate()%></td>
 										<td>
 											<input type="hidden" name="noticeNo" value="<%=n.getNoticeNo()%>">
 											<a class="btn btn-sm btn-primary" href="<%=request.getContextPath()%>/admin/updateNoticeForm.jsp?noticeNo=<%=n.getNoticeNo()%>">수정</a>
@@ -155,21 +155,23 @@
 			<!-- 공지 목록 End -->
 			
 			<!-- 공지 입력 Start -->
-			<div class="container-fluid pt-4 px-4 ">
-				<div class="col-sm-12 col-xl-6">
-					<div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4">공지 입력</h6>
-                        <form action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp" method="post">
-	                        <div class="form-floating">
-	                        	<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
-	                            <textarea class="form-control" name="noticeMemo" style="height: 150px;" id="floatingTextarea"></textarea>
-	                            <label for="floatingTextarea">Comments</label>
-	                        </div>
-	                        
-                    		<button type="submit" class="btn btn-sm btn-primary" >등록</button>
-                        </form>
-                    </div>
-                </div>
+			<div class="container-fluid">
+	            <div class="row h-100 align-items-center justify-content-center" style="min-height: 30vh;">
+	                <div class="col-12 col-xl-6">
+                       <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                   			<label class="form-label">공지</label>
+                   			<form action="<%=request.getContextPath()%>/admin/insertNoticeAction.jsp" method="post">
+		                        <div class="form-floating">
+		                        	<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
+		                            	<div class="input-group">
+		                                	<textarea class="form-control" aria-label="With textarea" placeholder="공지를 입력해주세요" name="noticeMemo"></textarea>
+	                      				</div>
+	                        	</div>
+           					<button type="submit" class="btn btn-sm btn-primary" >등록</button>
+                   			</form>
+               		 	</div>
+               		</div>
+				</div>
 			</div>
 			<!-- 공지 입력 End -->
 		</div>

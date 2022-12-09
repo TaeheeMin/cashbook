@@ -36,8 +36,26 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>update cash form</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+		<link  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/NewFile.css">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	    <meta content="" name="keywords">
+	    <meta content="" name="description">
+	    
+	    <!-- Google Web Fonts -->
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+	    
+ 		<!-- Customized Bootstrap Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
+	
+	    <!-- Template Stylesheet -->
+	    <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
+	
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -47,46 +65,13 @@
 			}
 			%>
 		</script>
-		<style>
-			body {
-				padding: 4.5em;
-				background: #f5f5f5
-			}
-			table {
-			 	border: 1px #a39485 solid;
-				font-size: .9em;
-				box-shadow: 0 2px 5px rgba(0,0,0,.25);
-				border-collapse: collapse;
-				border-radius: 5px;
-				margin-left: auto; 
-				margin-right: auto;
-			}
-			a {
-				text-decoration : none;
-			}
-			button {
-				border: 0;
-			}
-			textarea {
-				border: 0.5px #a39485 solid;
-				font-size: .9em;
-				outline: none;
-				padding-left: 10px;
-				width: 100%;
-			}
-			input {
-				width: 100%;
-			}
-		</style>
 	</head>
 	
 	<body>
-		<div>
-			<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
-		</div>
+	
+		<div class="wrapper">
 		
-		<h1><%=year%>년 <%=month+1%> 월 <%=date %>일</h1>
-		
+   			<main>
 		<div>
 			<form action="<%=request.getContextPath()%>/cash/updateCashAction.jsp?cashNo=<%=cashNo %>" method="post">
 				<input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>">
@@ -134,6 +119,10 @@
 					<button type="submit" class="position-absolute top-100 start-50 translate-middle">UPDATE</button>
 				</div>
 			</form>
+		</div>
+		</main>
+  			<!-- 사이드바 -->
+			<jsp:include page="/inc/member.jsp"></jsp:include>
 		</div>
 	</body>
 </html>

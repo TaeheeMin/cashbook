@@ -44,7 +44,7 @@
 	    
 	    <!-- Icon Font Stylesheet -->
 	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-	    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 	    <!-- Libraries Stylesheet -->
 	    <link href="<%=request.getContextPath()%>/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -76,39 +76,52 @@
    		<div class="content">
    			<!-- Navbar -->
    			<jsp:include page="/inc/adminNav.jsp"></jsp:include>
-			
-			<div>
-				<h3 style="text-align:center;">문의</h3>
-				<table class="table table-bordered">
-					<tr>
-						<td style="width:100px;">작성자</td>
-						<td>
-							<%=insertComment.getMemberId()%>
-						</td>
-					</tr>
-					<tr>
-						<td style="width:100px;">내용</td>
-						<td>
-							<%=insertComment.getHelpMemo() %>
-						</td>
-					</tr>
-				</table>
-			</div>
-			
-			<!-- 입력폼 -->
-			<form action="<%=request.getContextPath()%>/admin/insertCommentAction.jsp" method="post">
-				<input type="hidden" value="<%=insertComment.getHelpNo()%>" name="helpNo">
-				<table class="table table-bordered">
-					<tr>
-						<td style="text-align:center;">답변등록</td>
-						<td>
-							<textarea rows="5" cols="150" name="commentMemo"></textarea>
-						</td>
-				</table>
-				<div class="position-relative">
-				    <button type="submit" class="position-absolute top-100 start-50 translate-middle">등록</button>
+   			<!-- 문의내용 -->
+			<div class="container-fluid pt-4 px-4">
+                <div class="text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">문의 내용</h6>
+                    </div>
+                   <div class="table-responsive">
+	                    <table class="table">
+                            <thead>
+                                <tr class="text-dark">
+									<td>작성자</td>
+									<td>내용</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><%=insertComment.getMemberId()%></td>
+									<td><%=insertComment.getHelpMemo() %></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</form>
+			</div>
+
+			<!-- 입력폼 -->
+			<div class="container-fluid">
+				<div class="row h-100 align-items-center justify-content-center" style="min-height: 30vh;">
+					<div class="col-12 col-xl-6">
+						<div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+	                    	<h6 class="mb-4">답변등록</h6>
+		                 	<form action="<%=request.getContextPath()%>/admin/insertCommentAction.jsp" method="post">
+		                     	<input type="hidden" value="<%=insertComment.getHelpNo()%>" name="helpNo">
+		                     	<div class="row mb-3">
+			                         <div class="form-floating">
+	                                	<textarea class="form-control" placeholder="Leave a comment here" style="height: 150px;" name="commentMemo"></textarea>
+	                                	<label for="floatingTextarea">Comments</label>
+	                           		</div>
+		                     	</div>
+	                     		<button type="submit" class="btn btn-primary">추가</button>
+	                 		</form>
+                       </div>
+	                </div>
+	            </div>
+	        </div>
+	        <!-- 입력폼 -->
 		</div>
 	</body>
 </html>

@@ -20,6 +20,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>update member</title>
+		<link  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/NewFile.css">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	    <meta content="" name="keywords">
 	    <meta content="" name="description">
@@ -29,19 +34,12 @@
 	    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 	    
-	    <!-- Icon Font Stylesheet -->
-	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-	    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-	
-	    <!-- Libraries Stylesheet -->
-	    <link href="<%=request.getContextPath()%>/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-	    <link href="<%=request.getContextPath()%>/resources/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-	
-	    <!-- Customized Bootstrap Stylesheet -->
+ 		<!-- Customized Bootstrap Stylesheet -->
 	    <link href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" rel="stylesheet">
 	
 	    <!-- Template Stylesheet -->
 	    <link href="<%=request.getContextPath()%>/resources/css/style.css" rel="stylesheet">
+	
 		<script type="text/javascript">
 			<%
 			if(request.getParameter("msg") != null) {         
@@ -54,23 +52,10 @@
 	</head>
 	
 	<body>
-		<%
-			if(loginMember.getMemberLevel() > 0) {
-		%>
-				<!-- Sidebar -->
-				<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
-		<%
-			} else {
-		%>
-				<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
-		<%
-			}
-		%>
+	
+		<div class="wrapper">
 		
-   		<div class="content">
-   			<!-- Navbar -->
-   			<jsp:include page="/inc/memberNav.jsp"></jsp:include>
-			
+   			<main>
 		<!-- 개인정보 수정 -->
 		<div>
 			<h1 Style="text-align:center;">정보 수정</h1>
@@ -124,6 +109,9 @@
 		<div class="position-relative" Style="padding: 1.0em;">
 			<button type="button" class="position-absolute top-100 start-50 translate-middle" onclick="location.href='<%=request.getContextPath()%>/member/deleteMemberForm.jsp'">회원탈퇴</button>
 		</div>
+		</main>
+  			<!-- 사이드바 -->
+			<jsp:include page="/inc/member.jsp"></jsp:include>
 		</div>
 	</body>
 </html>
