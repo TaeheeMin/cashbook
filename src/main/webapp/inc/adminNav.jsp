@@ -23,7 +23,6 @@
 				<img class="rounded-circle me-lg-2" src="<%=request.getContextPath()%>/img/profile.png" alt="" style="width: 40px; height: 40px;">
 				<span class="d-none d-lg-inline-flex"><%=loginMember.getMemberName()%></span>
 			</a>
-
 			<div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
 				<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp" class="dropdown-item">My Profile</a>
 				<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp" class="dropdown-item">Settings</a>

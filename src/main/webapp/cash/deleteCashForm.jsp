@@ -57,9 +57,22 @@
 	</head>
 	
 	<body>
-	
-		<div class="wrapper">
+	<%
+			if(loginMember.getMemberLevel() > 0) {
+		%>
+					<div>
+						<!-- Sidebar -->
+						<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
+					</div>
+		<%
+			} else {
+		%>
+					<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
+		<%
+			}
+		%>
 		
+   		<div class="content">
    			<main>
 		<div>
 			<form action="<%=request.getContextPath()%>/cash/deleteCashAction.jsp" method="post">
@@ -79,8 +92,6 @@
 			</form>
 		</div>
 		</main>
-  			<!-- 사이드바 -->
-			<jsp:include page="/inc/member.jsp"></jsp:include>
 		</div>
 	</body>
 </html>

@@ -4,7 +4,6 @@
 	Member loginMember = (Member)session.getAttribute("loginMember");
 %>
 <div class="sidebar pe-4 pb-3">
-	<!-- Sidebar Start -->
 	<div class="sidebar pe-4 pb-3">
 		<nav class="navbar bg-light navbar-light">
 	        <a href="" class="navbar-brand mx-4 mb-3">
@@ -23,12 +22,37 @@
 			</div>
 				
 			<div class="navbar-nav w-100">
-			    <a href="<%=request.getContextPath()%>/cash/cashMain.jsp" class="nav-link nav-link"><i class="fa fa-laptop me-2"></i>홈</a>
-				<a href="<%=request.getContextPath()%>/cash/cashList.jsp" class="nav-item nav-link"><i class="fa fa-table me-2"></i>달력보기</a>
-				<a href="<%=request.getContextPath()%>/help/helpList.jsp" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>고객센터</a>
-				<a href="" class="nav-item nav-link"><i class="fa fa-th me-2"></i>미정</a>
-				<a href="" class="nav-link nav-link"><i class="far fa-file-alt me-2"></i>미정</a>
-        	</div>
-	    </nav>
-	</div>
+				<nav class="menu">
+					<a class="nav-link nav-link" href="<%=request.getContextPath()%>/cash/cashMain.jsp">
+						<i class="fa fa-home"></i>
+						<span class="menu__text">홈</span>
+					</a>
+					<a class="nav-link nav-link" href="<%=request.getContextPath()%>/cash/cashList.jsp">
+						<i class="fa fa-calendar"></i>
+						<span class="menu__text">calendar</span>
+					</a>
+					<a class="nav-link nav-link" href="<%=request.getContextPath()%>/help/helpList.jsp">
+						<i class="fa fa-envelope"></i>
+						<span class="menu__text">고객센터</span>
+					</a>
+					<a class="nav-link nav-link" href="<%=request.getContextPath()%>/member/updateMemberForm.jsp">
+					    <i class="fa fa-sliders"></i>
+					    <span class="menu__text">my profile</span>
+					</a>
+					<a class="nav-link nav-link" href="#">
+						<i class="fa fa-list"></i>
+						<span class="menu__text">미정</span>
+					</a>
+					<a class="nav-link nav-link" href="#">
+						<i class="fa fa-bar-chart"></i>
+						<span class="menu__text">미정</span>
+					</a>
+					<a class="nav-link nav-link" href="<%=request.getContextPath()%>/logout.jsp">
+						<i class="fa fa-trophy"></i>
+						<span class="menu__text">logout</span>
+					</a>
+				</nav>
+			</div>
+		</nav>
+    </div>
 </div>

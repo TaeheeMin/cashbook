@@ -30,7 +30,7 @@
 
 main {
   grid-area: content;
-  padding: 48px;
+  padding: 15px;
 }
 
 sidebar {
@@ -243,7 +243,7 @@ main {
   font-weight: bold;
 }
 .toggle__option{
-  padding: 16px;
+  padding: 15px;
   border: 1px solid #e1e1e1;
   border-radius: 8px;
   text-transform: capitalize;

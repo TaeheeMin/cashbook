@@ -109,14 +109,30 @@
 	</head>
 	
 	<body>
-		<div class="wrapper">
+		<%
+			if(loginMember.getMemberLevel() > 0) {
+		%>
+					<div>
+						<!-- Sidebar -->
+						<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
+					</div>
+		<%
+			} else {
+		%>
+					<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
+		<%
+			}
+		%>
 		
+   		<div class="content">
   			<main>
 				<div class="toolbar">
 				 	<div class="search-input">
 				        <i class="fa fa-search"></i>
 			     	</div>
-			        <div class="current-month"><%=year%>년 <%=month+1%> 월</div>
+			        <div class="current-month"> 
+			        	<h3><%=year%>년 <%=month+1%> 월</h3>
+			        </div>
 					<div class="toggle">
 						<div class="toggle__option" OnClick="location.href ='<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>'">
 							PREVIOUS
@@ -184,8 +200,7 @@
 				</div>
 				<!-- 캘린더 끝 -->
   			</main>
-  			<!-- 사이드바 -->
-			<jsp:include page="/inc/member.jsp"></jsp:include>
+
 		</div>
 	</body>
 </html>

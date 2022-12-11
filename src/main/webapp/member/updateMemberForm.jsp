@@ -52,9 +52,22 @@
 	</head>
 	
 	<body>
-	
-		<div class="wrapper">
+	<%
+			if(loginMember.getMemberLevel() > 0) {
+		%>
+					<div>
+						<!-- Sidebar -->
+						<jsp:include page="/inc/adminSideMenu.jsp"></jsp:include>
+					</div>
+		<%
+			} else {
+		%>
+					<jsp:include page="/inc/memberMenu.jsp"></jsp:include>
+		<%
+			}
+		%>
 		
+   		<div class="content">
    			<main>
 		<!-- 개인정보 수정 -->
 		<div>
@@ -110,8 +123,6 @@
 			<button type="button" class="position-absolute top-100 start-50 translate-middle" onclick="location.href='<%=request.getContextPath()%>/member/deleteMemberForm.jsp'">회원탈퇴</button>
 		</div>
 		</main>
-  			<!-- 사이드바 -->
-			<jsp:include page="/inc/member.jsp"></jsp:include>
 		</div>
 	</body>
 </html>
